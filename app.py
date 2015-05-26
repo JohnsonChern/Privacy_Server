@@ -6,7 +6,7 @@ import requests
 import json
 import cgi
 import copy
-from config import AUTH_BASE, API_BASE, CLIENT_SECRET, CLIENT_ID, REDIRECT_URI
+from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI
 
 # we use this to shorten a long resource reference when displaying it
 MAX_LINK_LEN = 20
@@ -32,7 +32,6 @@ def get_access_token(auth_code):
         'code': auth_code,
         'redirect_uri': REDIRECT_URI,
         'client_id': CLIENT_ID,
-        'client_secret': CLIENT_SECRET,
         'grant_type': 'authorization_code'
     }
     resp = requests.post(AUTH_BASE+'/token', data=exchange_data)
