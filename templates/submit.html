@@ -1,0 +1,25 @@
+
+<html>
+<title>Submit</title>
+<body>
+<h1>Submit</h1>
+<form action="" method="post" name="login">
+    {{ form.hidden_tag() }}
+    <p>
+          Please enter patient's ID:<br>
+          {{ form.identifier }}
+          {% for error in form.identifier.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}<br>
+      </p>
+    <p> Select the item you want to know </p>
+    {% for item in form %}
+      {% if item.type == "BooleanField" %}
+      <p>{{ item }} {{item.label}}</p>
+      {% endif %}
+    {% endfor %}
+    <p><input type="submit" value="Submit"></p>
+
+</form>
+</body>
+</html>

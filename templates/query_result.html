@@ -1,0 +1,17 @@
+<html>
+    <title>Result</title>
+    <body>
+        <h1>Query Result</h1>
+        <div>
+            
+	    {% if token=='Not_Found' %}
+		<h1>Invalid patient id</h1>
+	    {% else %}
+		
+            <pre><code>
+		{{json}}
+            </code></pre>
+	    {% endif %}           
+        </div>
+    </body>
+</html>

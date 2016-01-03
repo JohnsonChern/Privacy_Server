@@ -6,6 +6,7 @@ import requests
 import json
 import cgi
 import copy
+import transfer as tr
 from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI
 
 # we use this to shorten a long resource reference when displaying it
@@ -23,6 +24,13 @@ app = Flask(__name__)
 
 class OAuthError(Exception):
     pass
+
+def get_resource_identifier(url,bundle):
+    #get unique identifier from url 
+    # Transferred data might not have key identifier, although this is quite strange
+    pattern = re.compile(r'(?<=\/)[0-9A-Za-z-]*(?=\?)')
+    identifier = pattern.search(url+'?').group()
+    return identifier
 
 def get_access_token(auth_code):
     '''
@@ -81,6 +89,23 @@ def render_fhir(resource):
 
     return render_template('bundle_view.html', **resource)
 
+def render_fhir_extended(resource):
+    '''
+    render a "nice" view of a FHIR bundle
+    '''
+    #Here we implement privacy policy issue before we render a FHIR bundle
+    #We call function to check each type resource and cover those 
+    #protected data 
+    for i in range(len(resource['entry'])):
+	resource_id = get_resource_identifier(resource['entry'][i]['id'],resource['entry'][i]['content'])
+ 	resource['entry'][i]['content']=tr.check_private_policy(resource['entry'][i]['content'],10000,CLIENT_ID)
+ 	resource['entry'][i]['id'] = to_internal_id(resource['entry'][i].get('id', ''))  
+    '''with open('log.txt', 'wt') as f:
+        s= repr(json.dumps(resource,separators=(',',':'),indent=2))
+	f.write(s)
+        f.close()'''
+    return render_template('bundle_view.html', **resource)
+
 
 def make_links(resource):
     '''
@@ -109,7 +134,6 @@ def get_code_snippet(resource):
     # replace internal references with anchor tags
     make_links(code)
     return json.dumps(code, indent=4)
-
 
 
 def require_oauth(view):
@@ -152,14 +176,37 @@ def forward_api(forwarded_url):
     api_url = '/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
     api_resp = api_call(api_url)
     bundle = api_resp.json()
+    
+    # Here should install the privacy policy for patient
     # not bundle but plain resource
-    if ('type' in bundle and bundle['type'] != 'searchset') or ('resourceType' in bundle and bundle['resourceType']!='bundle'):
-        resource = bundle
+    # There is a sudden change in server so this is modified to avoid throw TypeError
+    if 'type' in bundle and bundle['type'] != 'searchset':
+	#Here is the trick        
+	#Note that identifer is seeming not found in some recieved data
+	#Instead, it might change to be shown in url when get posted data
+  	identifier = get_resource_identifier(forwarded_url,bundle)
+	resource = tr.check_private_policy(bundle,identifier,CLIENT_ID) 
+	bundle = {
+            'resourceType': resource['resourceType'],
+
+            'entry': [{
+                'content': resource,
+                'id': forwarded_url,
+		'identifier' : identifier		
+            }],
+            'is_single_resource': True,
+            'code_snippet': get_code_snippet(resource) 
+        }
+    elif 'resourceType' in bundle and bundle['resourceType']!='bundle':
+	#Here is the trick        
+  	identifier = get_resource_identifier(forwarded_url,bundle)
+	resource = tr.check_private_policy(bundle,identifier,CLIENT_ID) 
         bundle = {
             'resourceType': resource['resourceType'],
             'entry': [{
                 'content': resource,
-                'id': forwarded_url
+                'id': forwarded_url,
+		'identifier' : identifier
             }],
             'is_single_resource': True,
             'code_snippet': get_code_snippet(resource) 
@@ -167,7 +214,7 @@ def forward_api(forwarded_url):
     elif len(bundle.get('entry', [])) > 0:
         bundle['resourceType'] = bundle['entry'][0]['content']['resourceType']
 
-    return render_fhir(bundle)
+    return render_fhir_extended(bundle)
 
 
 if __name__ == '__main__':
