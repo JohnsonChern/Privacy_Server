@@ -18,14 +18,14 @@ This is application of privacy filter on Demo app for [Privacy Server](https://g
 
 ##### Run for static test
 1. Run the original server at localhost with:
-```
-$ python app.py
-```
+   ```
+   $ python app.py
+   ```
 
 2. Run modified server at localhost with:
-```
-$ python app.py
-```
+   ```
+   $ python app.py
+   ```
 
 3. You will need local database support to see dynamic interation on how this policy works
 
