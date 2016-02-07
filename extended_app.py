@@ -27,7 +27,7 @@ class OAuthError(Exception):
     pass
 
 def get_resource_identifier(url,bundle):
-    #get unique identifier from url 
+    #get unique identifier from url
     # Transferred data might not have key identifier, although this is quite strange
     pattern = re.compile(r'(?<=\/)[0-9A-Za-z-]*(?=\?)')
     identifier = pattern.search(url+'?').group()
@@ -51,7 +51,7 @@ def get_access_token(auth_code):
 
 def api_call(api_endpoint):
     '''
-    helper function that makes API call 
+    helper function that makes API call
     '''
     access_token = request.cookies['access_token']
     auth_header = {'Authorization': 'Bearer %s'% access_token}
@@ -77,7 +77,7 @@ def has_access():
         return False
     # we are being lazy here and don't keep a status of our access token,
     # so we just make a simple API call to see if it expires yet
-    test_call = api_call('/Patient?_count=1') 
+    test_call = api_call('/Patient?_count=1')
     return test_call.status_code != 403
 
 
@@ -95,12 +95,12 @@ def render_fhir_extended(resource):
     render a "nice" view of a FHIR bundle
     '''
     #Here we implement privacy policy issue before we render a FHIR bundle
-    #We call function to check each type resource and cover those 
-    #protected data 
+    #We call function to check each type resource and cover those
+    #protected data
     for i in range(len(resource['entry'])):
 	resource_id = tr.get_resource_identifier(resource['entry'][i]['id'],resource['entry'][i]['content'])
  	resource['entry'][i]['content']=tr.check_private_policy(resource['entry'][i]['content'],None,CLIENT_ID)
- 	resource['entry'][i]['id'] = to_internal_id(resource['entry'][i].get('id', ''))  
+ 	resource['entry'][i]['id'] = to_internal_id(resource['entry'][i].get('id', ''))
     '''with open('log.txt', 'wt') as f:
         s= repr(json.dumps(resource,separators=(',',':'),indent=2))
 	f.write(s)
@@ -150,7 +150,7 @@ def require_oauth(view):
                 'redirect_uri': REDIRECT_URI,
                 'response_type': 'code'}
             return redirect('%s/authorize?%s'% (AUTH_BASE, urlencode(redirect_args)))
-    
+
     return authorized_view
 
 
@@ -180,7 +180,7 @@ def doctor():
                 rawlist.append(item.name)
 
         token,query_dict = tr.query_info(rawlist,form.identifier.data)
-        
+
         return render_template('query_result.html',
                           token= token,
                           json= json.dumps(query_dict,indent=4))
@@ -208,43 +208,39 @@ def forward_api(forwarded_url):
     # Here we install the privacy policy for patient
     # There is a sudden change in server so this is modified to avoid throw TypeError
     if 'type' in bundle and bundle['type'] != 'searchset':
-	#Here is the trick        
-	#Note that identifer is seeming not found in some recieved data
-	#Instead, it might change to be shown in url when get posted data
-  	identifier = tr.get_resource_identifier(forwarded_url,bundle)
-	resource = tr.check_private_policy(bundle,identifier,CLIENT_ID) 
-        #resource = json.dumps(resource, separators=(',',':'))
-        '''with open("log.txt",'wt') as f:
-	   x=json.dumps(resource_data, separators=(',',':'), indent=4)	
-	   f.write(x)'''
-	bundle = {
-            'resourceType': resource['resourceType'],
-
-            'entry': [{
-                'content': resource,
-                'id': forwarded_url,
-		'identifier' : identifier		
-            }],
-            'is_single_resource': True,
-            'code_snippet': get_code_snippet(resource) 
-        }
-    elif 'resourceType' in bundle and bundle['resourceType']!='bundle':
-	#Here is the trick        
-  	identifier = tr.get_resource_identifier(forwarded_url,bundle)
-	resource = tr.check_private_policy(bundle,identifier,CLIENT_ID)
-        with open("log.txt",'wt') as f:	
-	    x = json.dumps(resource, separators=(',',':'))
-	    f.write(x)
+        #Here is the trick
+        #Note that identifer is seeming not found in some recieved data
+        #Instead, it might change to be shown in url when get posted data
+        identifier = tr.get_resource_identifier(forwarded_url,bundle)
+        resource = tr.check_private_policy(bundle,identifier,CLIENT_ID)
+            #resource = json.dumps(resource, separators=(',',':'))
         bundle = {
             'resourceType': resource['resourceType'],
             'entry': [{
                 'content': resource,
                 'id': forwarded_url,
-		'identifier' : identifier
+                'identifier' : identifier
             }],
             'is_single_resource': True,
-            'code_snippet': get_code_snippet(resource) 
+            'code_snippet': get_code_snippet(resource)
         }
+    elif 'resourceType' in bundle and bundle['resourceType']!='bundle':
+        #Here is the trick
+        identifier = tr.get_resource_identifier(forwarded_url,bundle)
+        resource = tr.check_private_policy(bundle,identifier,CLIENT_ID)
+        with open("log.txt",'wt') as f:
+            x = json.dumps(resource, separators=(',',':'))
+            f.write(x)
+            bundle = {
+                'resourceType': resource['resourceType'],
+                'entry': [{
+                    'content': resource,
+                    'id': forwarded_url,
+                    'identifier' : identifier
+                }],
+                'is_single_resource': True,
+                'code_snippet': get_code_snippet(resource)
+            }
     elif len(bundle.get('entry', [])) > 0:
         bundle['resourceType'] = bundle['entry'][0]['content']['resourceType']
 

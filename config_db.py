@@ -1,6 +1,6 @@
 # settings for Postgres
 
-dbuser          = "chern"
+dbuser          = "jcm"
 dbname          = "privacy_server"
 dbuserpassword  = "johnson"
 
