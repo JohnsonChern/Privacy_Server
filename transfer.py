@@ -149,29 +149,35 @@ def get_resource_refpatientID(resource):
     It may involve serveral Patient or has no conncection with a patient.
     So this function return a list of value of patient_id
     '''
-    if resource['reference'] is None:
-        return STATUS_UNRELATED
-    for ref in resource['reference']:
-        '''
-        Usage of _revinclude
-       identifer = resource['Identifer']['value']
-       forward_args = request.args.to_dict(flat=False)
-       forward_args['_format'] = 'json'
-       forwarded_url = resource['resourceType']+ '/'+ identifer
-       api_url = '/%s?%s'% (forwarded_url, '_revinclude')
-       api_resp = extend_api.api_call(api_url)
+    '''
+    Usage of _revinclude
+    identifer = resource['Identifer']['value']
+    forward_args = request.args.to_dict(flat=False)
+    forward_args['_format'] = 'json'
+    forwarded_url = resource['resourceType']+ '/'+ identifer
+    api_url = '/%s?%s'% (forwarded_url, '_revinclude')
+    api_resp = extend_api.api_call(api_url)
 
-        if api_resp.status_code != '403':
-            response=api_resp.json()
-        else:
-            return "Http_403_error"
-        '''
-        # In this demo, however, we simplify this process by assuming certain scenario
-        if ref['subject'] == 'Patient':
-            pattern = re.compile(r'(?<=\/)[0-9A-Za-z-]*(?=\?)')
-            identifier = pattern.search(ref['reference']+'?').group()
-        else:
-            pass
+    if api_resp.status_code != '403':
+        response=api_resp.json()
+    else:
+        return "Http_403_error"
+    '''
+    # In this demo, however, we simplify this process by assuming certain scenario
+    if resource.has_key('reference'):
+        for ref in resource['reference']:
+            if ref.has_key('subject') and ref['subject']=='Patient':
+		        patient_id = ref['text']
+    elif resource.has_key('patient'):
+        ref=resource['patient']['reference'] 
+        patient_id = ref.split('/')[1]
+    else: 
+        patient_id = STATUS_ERROR
+    
+    return patient_id
+
+
+
 def check_private_policy(resource, resource_id, client_id):
     '''
     check whether resource have something need to be covered
@@ -196,16 +202,20 @@ def check_private_policy(resource, resource_id, client_id):
     '''
 
     if resource['resourceType'] == 'Patient':
+	    #resource['gender']= 'Protected Due to Policy'
         resource = cover_protected_data(resource, resource, resource_id)
+        
     elif resource['resourceType'] is not None:
         # In this part , the query data might have reference on patient's data and
         # it is meaningful to filter some policies that forbid someone from access
         # to these info.
         patient_id = get_resource_refpatientID(resource)
-        if patient_id == 'ERROR':
+        print patient_id
+        if patient_id == STATUS_ERROR:
             #This means it cannot find its source patient's id (or it has no connection with a patient)
             return resource
         resource = cover_protected_data(resource, resource, patient_id)
+	pass
     else:
         pass
     return resource
