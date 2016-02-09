@@ -2,25 +2,25 @@ example_policy = {
     "Patient":{
     "name": [
         {
-            "text": "Victor Bland"
+            "text": "Elizabeth Murray"
         }
     ],
     "resourceType": "Patient",
     "text": {
         "status": "generated",
-        "div": "<div><p>Victor Bland</p></div>"
+        "div": "<div><p>Elizabeth Murray</p></div>"
     },
     "meta": {
         "versionID": 1,
-        "lastUpdated": "2016-01-13T15:31:28.723332"
+        "lastUpdated": "2016-01-13T15:31:27.105922"
     },
-    "gender": "male",
-    "id": "4b9f9ab9-d723-45d2-b185-3439a7f51690"
+    "gender": "female",
+    "id": "17dd336d-1562-40a4-89f3-23649c5c85d8"
     }
 }
 
 
-example_id= "4b9f9ab9-d723-45d2-b185-3439a7f51690"
+example_id= "17dd336d-1562-40a4-89f3-23649c5c85d8"
 
 
 
