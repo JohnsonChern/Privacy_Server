@@ -95,9 +95,7 @@ def render_fhir(resource):
     return render_template('bundle_view.html', **resource)
 
 def render_fhir_extended(resource):
-    '''
-    render a "nice" view of a FHIR bundle
-    '''
+
     #Here we implement privacy policy issue before we render a FHIR bundle
     #We call function to check each type resource and cover those
     #protected data
@@ -198,7 +196,7 @@ def forward_api(forwarded_url):
     api_resp = api_call(api_url)
     '''
 	The best way to add privacy policy on json data is to decorate it at serverside,
-	however this is not accomplished.
+	however this is not accomplished until now.
 	So, we apply a little bit complicated way:
 	remember to change the value of json data before
         the apps will do some processing issues (e.g. encoding,extracting,rendering)

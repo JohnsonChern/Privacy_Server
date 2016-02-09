@@ -1,5 +1,5 @@
 #Author:  Panzer_wy
-#Last updated: 2016/01/03
+#Last updated: 2016/02/09
 
 import re
 from datetime import datetime, timedelta
@@ -210,12 +210,11 @@ def check_private_policy(resource, resource_id, client_id):
         # it is meaningful to filter some policies that forbid someone from access
         # to these info.
         patient_id = get_resource_refpatientID(resource)
-        print patient_id
+        #print patient_id
         if patient_id == STATUS_ERROR:
             #This means it cannot find its source patient's id (or it has no connection with a patient)
             return resource
         resource = cover_protected_data(resource, resource, patient_id)
-	pass
     else:
         pass
     return resource
