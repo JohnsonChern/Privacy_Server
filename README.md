@@ -3,9 +3,9 @@ This is application of privacy filter on Demo app for [Privacy Server](https://g
 ### How to use
 
 #####Setup basic environment
-1. This demo app needs support of `postgresql` and python site-package `requests,flask,psycopg2`. If you have `pip`, simply do
+1. This demo app needs support of `postgresql` and python site-package `requests,flask,psycopg2,flask-wtf`. If you have `pip`, simply do
    ```
-   $ pip install requests flask psycopg2
+   $ pip install requests flask psycopg2 flask-wtf
 
    ```
    Or simply
