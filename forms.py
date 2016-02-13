@@ -15,3 +15,6 @@ class SubmitForm(Form):
     contact_relationship = BooleanField('contact_relationship',default=False)
     contact_name = BooleanField('contact_name',default=False)
     #remember_me = BooleanField('address', default=False)
+
+class AuthenticationForm(Form):
+    identifier = StringField('identifier', validators=[DataRequired(message=u'You must input patient\'s ID')])

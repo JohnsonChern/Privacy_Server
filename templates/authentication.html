@@ -13,12 +13,6 @@
           {% endfor %}
           <br>
     </p>
-    <p> Select the item you want to know </p>
-    {% for item in form %}
-      {% if item.type == "BooleanField" %}
-      <p>{{ item }} {{item.label}}</p>
-      {% endif %}
-    {% endfor %}
     <p><input type="submit" value="Submit"></p>
 
 </form>

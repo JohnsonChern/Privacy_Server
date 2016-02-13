@@ -239,7 +239,7 @@ def query_info (data_list, patient_id):
         This is the query port to ask for specific sequence from remote server
      And , add filter policy
     '''
-    #Now time to ask for patient's data
+    # Now time to ask for patient's data
     resource = search_request_patient(patient_id)
 
     if resource == 'Http_403_error' :

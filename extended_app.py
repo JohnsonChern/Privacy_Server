@@ -7,7 +7,7 @@ import json
 import cgi
 import copy
 import transfer as tr
-from forms import SubmitForm
+from forms import SubmitForm, AuthenticationForm
 from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI
 
 # we use this to shorten a long resource reference when displaying it
@@ -175,17 +175,38 @@ def doctor():
     if form.validate_on_submit():
         rawlist = []
         for item in form:
-            if item.type == "BooleanField" and item.data==True:
+            if item.type == "BooleanField" and item.data == True:
                 rawlist.append(item.name)
 
         token,query_dict = tr.query_info(rawlist,form.identifier.data)
 
         return render_template('query_result.html',
                           token= token,
-                          json= json.dumps(query_dict,indent=4))
+                          json = json.dumps(query_dict,indent=4))
+
     return render_template('submit.html',
                            form=form)
 
+@app.route('/submit_policy/', methods=['GET', 'POST'])
+@require_oauth
+def submit_policy_page():
+    form = AuthenticationForm(csrf_enabled=False)
+    
+    if form.validate_on_submit():
+        patient_id = form.identifier.data
+        data_dict = {}
+        for resource_type in ['Patient', 'Sequence', 'Condition', 'Observation']:
+            forward_args = request.args.to_dict(flat=False)
+            forward_args['_format'] = 'json'
+            forwarded_url =  resource_type + '/' + patient_id
+            api_url = '/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
+            api_resp = api_call(api_url)
+            if api_resp.status_code not in [403, 404]:
+                data_dict[resource_type] = api_resp.json()
+
+        return render_template('submit_policy.html')
+    
+    return render_template('authentication.html',form=form)
 
 @app.route('/resources/<path:forwarded_url>')
 @require_oauth
@@ -203,6 +224,9 @@ def forward_api(forwarded_url):
 	We extend the original example to claim how this works
     '''
     bundle = api_resp.json()
+    f = open('./log.txt','w')
+    f.write(json.dumps(bundle, indent=2))
+    f.close
     # Here we install the privacy policy for patient
     # There is a sudden change in server so this is modified to avoid throw TypeError
 
@@ -215,12 +239,12 @@ def forward_api(forwarded_url):
                 'id': forwarded_url
             }],
             'is_single_resource': True,
-            'code_snippet': get_code_snippet(tr.check_private_policy(resource,None,CLIENT_ID)) 
+            'code_snippet': get_code_snippet(tr.check_private_policy(resource,None,CLIENT_ID))
         }
     elif len(bundle.get('entry', [])) > 0:
         bundle['resourceType'] = bundle['entry'][0]['resource']['resourceType']
 
-    #Here is the trick, to use a modified function instead of original one
+    # Here is the trick, to use a modified function instead of original one
     return render_fhir_extended(bundle)
 
 
