@@ -7,7 +7,7 @@ import json
 import cgi
 import copy
 import transfer as tr
-from forms import SubmitForm, AuthenticationForm
+from forms import SubmitForm, AuthenticationForm, SubmitDictForm
 from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI
 
 # we use this to shorten a long resource reference when displaying it
@@ -187,26 +187,36 @@ def doctor():
     return render_template('submit.html',
                            form=form)
 
+
 @app.route('/submit_policy/', methods=['GET', 'POST'])
 @require_oauth
-def submit_policy_page():
+def submit_policy_authentication():
     form = AuthenticationForm(csrf_enabled=False)
     
     if form.validate_on_submit():
         patient_id = form.identifier.data
-        data_dict = {}
-        for resource_type in ['Patient', 'Sequence', 'Condition', 'Observation']:
-            forward_args = request.args.to_dict(flat=False)
-            forward_args['_format'] = 'json'
-            forwarded_url =  resource_type + '/' + patient_id
-            api_url = '/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
-            api_resp = api_call(api_url)
-            if api_resp.status_code not in [403, 404]:
-                data_dict[resource_type] = api_resp.json()
+        redirected_url = '/submit_policy/' + patient_id
 
-        return render_template('submit_policy.html')
+        return redirect(redirected_url)
     
     return render_template('authentication.html',form=form)
+
+
+@app.route('/submit_policy/<path:patient_id>', methods=['GET', 'POST'])
+def submit_policy_page(patient_id):
+    data_dict = {}
+    for resource_type in ['Patient', 'Sequence', 'Condition', 'Observation']:
+        forward_args = request.args.to_dict(flat=False)
+        forward_args['_format'] = 'json'
+        forwarded_url =  resource_type + '/' + patient_id
+        api_url = '/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
+        api_resp = api_call(api_url)
+        if api_resp.status_code not in [403, 404]:
+            data_dict[resource_type] = api_resp.json()
+        form = SubmitDictForm("root", data_dict)
+
+    return render_template('submit_policy.html', form=form)
+
 
 @app.route('/resources/<path:forwarded_url>')
 @require_oauth
