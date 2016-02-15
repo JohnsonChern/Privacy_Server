@@ -3,15 +3,15 @@
     <body>
         <h1>Query Result</h1>
         <div>
-            
-	    {% if token=='Not_Found' %}
-		<h1>Invalid patient id</h1>
-	    {% else %}
-		
+
+        {% if token=='Not_Found' %}
+        <h1>Invalid patient id</h1>
+        {% else %}
+
             <pre><code>
-		{{json}}
+        {{json}}
             </code></pre>
-	    {% endif %}           
+        {% endif %}
         </div>
     </body>
 </html>

@@ -1,26 +1,25 @@
 example_policy = {
-	"Sequence":{
-		"resourceType": "Sequence",
-   	 	"observedAllele": "masked",
-		"variationID": {
-        		"coding": [
-            			{
-                			"code": "masked"
-				}
-			]
-		}
-	},
-	"Patient":{
-		"name": [
-        	{
-            	"text": "Garret Doremus"
-        	}
-    	],
-    	"gender": "male"
-	}
-}
+    "Patient":{
+    "name": [
+        {
+            "text": "David Penrod"
+        }
+    ],
+    "resourceType": "Patient",
+    "text": {
+        "status": "generated",
+        "div": "<div><p>David Penrod</p></div>"
+    },
+    "meta": {
+        "versionID": 1,
+        "lastUpdated": "2016-01-13T15:31:33.555627"
+    },
+    "gender": "male",
+    "id": "a770136e-616f-45b0-8752-3be0ad9cab42"
+}}
 
-example_id= "4d5532fa-d5a1-42bf-82ea-3a223f2cce0b"
+
+example_id= "a770136e-616f-45b0-8752-3be0ad9cab42"
 
 
 

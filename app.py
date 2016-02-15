@@ -76,8 +76,12 @@ def render_fhir(resource):
     '''
     render a "nice" view of a FHIR bundle
     '''
-    for entry in resource['entry']:
-        entry['id'] = to_internal_id(entry.get('id', ''))
+    if 'is_single_resource' in resource and resource['is_single_resource'] == True:
+        resource['entry'][0]['id'] = to_internal_id(resource['entry'][0].get('id', ''))
+        resource['entry'][0]['resource'].get('id',resource['entry'][0]['id'])
+    else:
+        for entry in resource['entry']:
+            entry['resource']['id'] = to_internal_id(resource['resourceType']+'/'+entry['resource'].get('id', ''))
 
     return render_template('bundle_view.html', **resource)
 
@@ -153,20 +157,22 @@ def forward_api(forwarded_url):
     api_url = '/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
     api_resp = api_call(api_url)
     bundle = api_resp.json()
+    print forwarded_url
     # not bundle but plain resource
-    if ('type' in bundle and bundle['type'] != 'searchset') or ('resourceType' in bundle and bundle['resourceType']!='bundle'):
+    if ('type' in bundle and bundle['type'] != 'searchset') or ('resourceType' in bundle and bundle['resourceType']!='Bundle'):
+        
         resource = bundle
         bundle = {
             'resourceType': resource['resourceType'],
             'entry': [{
-                'content': resource,
+                'resource': resource,
                 'id': forwarded_url
             }],
             'is_single_resource': True,
             'code_snippet': get_code_snippet(resource) 
         }
     elif len(bundle.get('entry', [])) > 0:
-        bundle['resourceType'] = bundle['entry'][0]['content']['resourceType']
+        bundle['resourceType'] = bundle['entry'][0]['resource']['resourceType']
 
     return render_fhir(bundle)
 

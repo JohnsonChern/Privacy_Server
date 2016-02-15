@@ -34,7 +34,6 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ resourceType }}<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
               <li><a href="/resources/Patient">Patient</a></li>
-              <li><a href="/resources/Procedure">Procedure (Sequencing Lab)</a></li>
               <li><a href="/resources/Sequence">Sequence</a></li>
               <li><a href="/resources/Condition">Condition</a></li>
               <li><a href="/resources/Observation">Observation (Genetic Observation)</a></li>
@@ -53,17 +52,17 @@
         </tr>
         {% for resource in entry %}
         <tr>
-          <td>{{ resource.id|safe }}</td>
+          <td>{{ resource.resource.id|safe }}</td>
           <td>
-          {% if resource.content.text %}
-            {{ resource.content.text.div|safe }}
+          {% if resource.resource.text %}
+            {{ resource.resource.text.div|safe }}
           {% else %}
             N/A
           {% endif %}
           </td>
           <td>
-            {% if resource.summary %}
-              {{ resource.summary }}
+            {% if resource.resource.summary %}
+              {{ resource.resource.summary }}
             {% else %}
               N/A
             {% endif %}

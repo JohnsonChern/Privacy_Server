@@ -3,7 +3,7 @@ This is application of privacy filter on Demo app for [Privacy Server](https://g
 ### How to use
 
 #####Setup basic environment
-1. This demo app uses `requests` and `flask`. If you have `pip`, simply do
+1. This demo app needs support of `postgresql` and python site-package `requests,flask,psycopg2`. If you have `pip`, simply do
    ```
    $ pip install requests flask psycopg2
 
@@ -24,11 +24,13 @@ This is application of privacy filter on Demo app for [Privacy Server](https://g
 
 2. Run modified server at localhost with:
    ```
-   $ python app.py
+   $ python extended_app.py
    ```
 
-3. You will need local database support to see dynamic interation on how this policy works
+##### Run query interaction
+You will need local database set by psql to see dynamic interation on how this policy works:
 
-   * Confirm that psycopg2 and postgresql is isntalled properly
+   * Confirm that `psycopg2` and `postgresql` is installed properly
    
    * Please read and modify config_db.py and the run setup_db.py
+   * To see query part, goto url `[base index]/doctor` to submit a query action. The default base index is `http://localhost:8000`
