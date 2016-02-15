@@ -129,6 +129,7 @@ def require_oauth(view):
     return authorized_view
 
 
+
 @app.route('/')
 @require_oauth
 def index():
