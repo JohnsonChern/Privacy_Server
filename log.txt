@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "updated": "2016-02-15T16:33:46.909470", 
   "resourceType": "Bundle", 
   "link": [
@@ -222,4 +223,22 @@
   "total": 10, 
   "type": "searchset", 
   "id": "http://genomics-advisor.smartplatforms.org:2048/api/Patient?_format=json"
+=======
+  "name": [
+    {
+      "text": "Elizabeth Murray"
+    }
+  ], 
+  "resourceType": "Patient", 
+  "text": {
+    "status": "generated", 
+    "div": "<div><p>Elizabeth Murray</p></div>"
+  }, 
+  "meta": {
+    "versionID": 1, 
+    "lastUpdated": "2016-01-13T15:31:27.105922"
+  }, 
+  "gender": "female", 
+  "id": "17dd336d-1562-40a4-89f3-23649c5c85d8"
+>>>>>>> 6fefb4afa8b86344e2ab46bea8cd14572eaf2186
 }
