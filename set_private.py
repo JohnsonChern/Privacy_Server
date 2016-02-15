@@ -12,9 +12,6 @@ class private_Form(Form):
     pass
 
 
-
-
-
 class json_struct:
     def __init__(self,key,type,value):
         self.type = type

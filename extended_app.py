@@ -188,6 +188,7 @@ def doctor():
                            form=form)
 
 
+"""
 @app.route('/submit_policy/', methods=['GET', 'POST'])
 @require_oauth
 def submit_policy_authentication():
@@ -200,8 +201,10 @@ def submit_policy_authentication():
         return redirect(redirected_url)
     
     return render_template('authentication.html',form=form)
+"""
 
 
+"""
 @app.route('/submit_policy/<path:patient_id>', methods=['GET', 'POST'])
 def submit_policy_page(patient_id):
     data_dict = {}
@@ -216,7 +219,7 @@ def submit_policy_page(patient_id):
         form = SubmitDictForm("root", data_dict)
 
     return render_template('submit_policy.html', form=form)
-
+"""
 
 @app.route('/resources/<path:forwarded_url>')
 @require_oauth

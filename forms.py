@@ -19,7 +19,7 @@ class SubmitForm(Form):
 class AuthenticationForm(Form):
     identifier = StringField('identifier', validators=[DataRequired(message=u'You must input patient\'s ID')])
 
-class SubmitDictForm(Form):
+class SubmitDictForm():
     """docstring for SubmitDictForm"""
 
     def __init__(self, key, content):
