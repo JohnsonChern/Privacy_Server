@@ -1,1 +1,225 @@
-<class 'wtforms.fields.core.UnboundField'>
+{
+  "updated": "2016-02-15T16:33:46.909470", 
+  "resourceType": "Bundle", 
+  "link": [
+    {
+      "url": "http://genomics-advisor.smartplatforms.org:2048/api/Patient?_format=json", 
+      "relation": "self"
+    }
+  ], 
+  "entry": [
+    {
+      "resource": {
+        "name": [
+          {
+            "text": "Elizabeth Murray"
+          }
+        ], 
+        "resourceType": "Patient", 
+        "text": {
+          "status": "generated", 
+          "div": "<div><p>Elizabeth Murray</p></div>"
+        }, 
+        "meta": {
+          "versionID": 1, 
+          "lastUpdated": "2016-01-13T15:31:27.105922"
+        }, 
+        "gender": "female", 
+        "id": "17dd336d-1562-40a4-89f3-23649c5c85d8"
+      }, 
+      "fullUrl": "http://genomics-advisor.smartplatforms.org:2048/api/Patient/17dd336d-1562-40a4-89f3-23649c5c85d8"
+    }, 
+    {
+      "resource": {
+        "name": [
+          {
+            "text": "Victor Bland"
+          }
+        ], 
+        "resourceType": "Patient", 
+        "text": {
+          "status": "generated", 
+          "div": "<div><p>Victor Bland</p></div>"
+        }, 
+        "meta": {
+          "versionID": 1, 
+          "lastUpdated": "2016-01-13T15:31:28.723332"
+        }, 
+        "gender": "male", 
+        "id": "4b9f9ab9-d723-45d2-b185-3439a7f51690"
+      }, 
+      "fullUrl": "http://genomics-advisor.smartplatforms.org:2048/api/Patient/4b9f9ab9-d723-45d2-b185-3439a7f51690"
+    }, 
+    {
+      "resource": {
+        "name": [
+          {
+            "text": "John Perry"
+          }
+        ], 
+        "resourceType": "Patient", 
+        "text": {
+          "status": "generated", 
+          "div": "<div><p>John Perry</p></div>"
+        }, 
+        "meta": {
+          "versionID": 1, 
+          "lastUpdated": "2016-01-13T15:31:35.272476"
+        }, 
+        "gender": "male", 
+        "id": "7ff9db40-783d-48c4-b564-fffa42d45e04"
+      }, 
+      "fullUrl": "http://genomics-advisor.smartplatforms.org:2048/api/Patient/7ff9db40-783d-48c4-b564-fffa42d45e04"
+    }, 
+    {
+      "resource": {
+        "name": [
+          {
+            "text": "Frederick Orloff"
+          }
+        ], 
+        "resourceType": "Patient", 
+        "text": {
+          "status": "generated", 
+          "div": "<div><p>Frederick Orloff</p></div>"
+        }, 
+        "meta": {
+          "versionID": 1, 
+          "lastUpdated": "2016-01-13T15:31:29.609217"
+        }, 
+        "gender": "male", 
+        "id": "823d254a-5e02-4e70-8a91-5914a916c50b"
+      }, 
+      "fullUrl": "http://genomics-advisor.smartplatforms.org:2048/api/Patient/823d254a-5e02-4e70-8a91-5914a916c50b"
+    }, 
+    {
+      "resource": {
+        "name": [
+          {
+            "text": "David Penrod"
+          }
+        ], 
+        "resourceType": "Patient", 
+        "text": {
+          "status": "generated", 
+          "div": "<div><p>David Penrod</p></div>"
+        }, 
+        "meta": {
+          "versionID": 1, 
+          "lastUpdated": "2016-01-13T15:31:33.555627"
+        }, 
+        "gender": "male", 
+        "id": "a770136e-616f-45b0-8752-3be0ad9cab42"
+      }, 
+      "fullUrl": "http://genomics-advisor.smartplatforms.org:2048/api/Patient/a770136e-616f-45b0-8752-3be0ad9cab42"
+    }, 
+    {
+      "resource": {
+        "name": [
+          {
+            "text": "Lee Ortiz"
+          }
+        ], 
+        "resourceType": "Patient", 
+        "text": {
+          "status": "generated", 
+          "div": "<div><p>Lee Ortiz</p></div>"
+        }, 
+        "meta": {
+          "versionID": 1, 
+          "lastUpdated": "2016-01-13T15:31:32.387865"
+        }, 
+        "gender": "male", 
+        "id": "b1399e5e-e8d0-4d86-80a2-760d30872994"
+      }, 
+      "fullUrl": "http://genomics-advisor.smartplatforms.org:2048/api/Patient/b1399e5e-e8d0-4d86-80a2-760d30872994"
+    }, 
+    {
+      "resource": {
+        "name": [
+          {
+            "text": "Luke Miller"
+          }
+        ], 
+        "resourceType": "Patient", 
+        "text": {
+          "status": "generated", 
+          "div": "<div><p>Luke Miller</p></div>"
+        }, 
+        "meta": {
+          "versionID": 1, 
+          "lastUpdated": "2016-01-13T15:31:39.211140"
+        }, 
+        "gender": "male", 
+        "id": "cff99146-8045-4bba-acb6-d04342edc7b8"
+      }, 
+      "fullUrl": "http://genomics-advisor.smartplatforms.org:2048/api/Patient/cff99146-8045-4bba-acb6-d04342edc7b8"
+    }, 
+    {
+      "resource": {
+        "name": [
+          {
+            "text": "Jerrold Crowe"
+          }
+        ], 
+        "resourceType": "Patient", 
+        "text": {
+          "status": "generated", 
+          "div": "<div><p>Jerrold Crowe</p></div>"
+        }, 
+        "meta": {
+          "versionID": 1, 
+          "lastUpdated": "2016-01-13T15:31:31.748141"
+        }, 
+        "gender": "male", 
+        "id": "d65c0829-4e15-48eb-8b06-e6beb0428fef"
+      }, 
+      "fullUrl": "http://genomics-advisor.smartplatforms.org:2048/api/Patient/d65c0829-4e15-48eb-8b06-e6beb0428fef"
+    }, 
+    {
+      "resource": {
+        "name": [
+          {
+            "text": "Ofelia Boles"
+          }
+        ], 
+        "resourceType": "Patient", 
+        "text": {
+          "status": "generated", 
+          "div": "<div><p>Ofelia Boles</p></div>"
+        }, 
+        "meta": {
+          "versionID": 1, 
+          "lastUpdated": "2016-01-13T15:31:41.194128"
+        }, 
+        "gender": "female", 
+        "id": "d79c4bc6-b3d8-443a-89ad-a6521a6e2647"
+      }, 
+      "fullUrl": "http://genomics-advisor.smartplatforms.org:2048/api/Patient/d79c4bc6-b3d8-443a-89ad-a6521a6e2647"
+    }, 
+    {
+      "resource": {
+        "name": [
+          {
+            "text": "Sylvia Brown"
+          }
+        ], 
+        "resourceType": "Patient", 
+        "text": {
+          "status": "generated", 
+          "div": "<div><p>Sylvia Brown</p></div>"
+        }, 
+        "meta": {
+          "versionID": 1, 
+          "lastUpdated": "2016-01-13T15:31:37.875984"
+        }, 
+        "gender": "female", 
+        "id": "f01f00a3-a38a-4401-a3e4-53c4239badb4"
+      }, 
+      "fullUrl": "http://genomics-advisor.smartplatforms.org:2048/api/Patient/f01f00a3-a38a-4401-a3e4-53c4239badb4"
+    }
+  ], 
+  "total": 10, 
+  "type": "searchset", 
+  "id": "http://genomics-advisor.smartplatforms.org:2048/api/Patient?_format=json"
+}

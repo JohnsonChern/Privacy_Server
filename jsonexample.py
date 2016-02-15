@@ -1,9 +1,9 @@
 import json
 import requests
 
-r = requests.get('http://www.hl7.org/implement/standards/fhir/patient-example-a.json')
+#r = requests.get('http://www.hl7.org/implement/standards/fhir/patient-example-a.json')
 
-example = r.json()
+#example = r.json()
 
 s = json.loads('''
   {

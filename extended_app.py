@@ -8,7 +8,10 @@ import cgi
 import copy
 import transfer as tr
 from forms import SubmitForm, AuthenticationForm, SubmitDictForm
-from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI
+from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI,WTF_CSRF_ENABLED
+import set_private as sp
+import jsonexample as jp
+
 
 # we use this to shorten a long resource reference when displaying it
 MAX_LINK_LEN = 20
@@ -256,6 +259,20 @@ def forward_api(forwarded_url):
 
     # Here is the trick, to use a modified function instead of original one
     return render_fhir_extended(bundle)
+
+
+@app.route('/patient',methods=['GET','POST'])
+def set():
+    e = jp.s
+    reserved_word = 'test'
+    fieldname = 'fieldname'
+    class_list,class_dict,form = sp.strcture_json(e,reserved_word,fieldname)
+    length = len(class_list)
+    if form.validate_on_submit():
+        sp.set_mask(form,e,reserved_word,fieldname)
+        return render_template('temp.html')
+    return render_template('bt.html',class_list=class_list,form =form,length = length,
+                           str = str,getattr= getattr,fieldname = fieldname,word_len=len(reserved_word),reserved_word = reserved_word)
 
 
 if __name__ == '__main__':
