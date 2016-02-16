@@ -8,7 +8,7 @@ import cgi
 import copy
 import transfer as tr
 from forms import SubmitForm, AuthenticationForm, SubmitDictForm
-from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI,WTF_CSRF_ENABLED
+from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI,SECRET_KEY
 import set_private as sp
 import jsonexample as jp
 
@@ -279,4 +279,5 @@ def set():
 
 
 if __name__ == '__main__':
+    app.config.from_object('config')
     app.run(debug=True, port=8000)
