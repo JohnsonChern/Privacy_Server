@@ -19,7 +19,7 @@ def is_reserved_layer(dict,reserved_word):
 def json_reduce_layer(source,reserved_word):
     if type(source)==list:
         if is_reserved_layer(source[0],reserved_word):
-            #print source
+
             for i in range(len(source)):
                 temp_dict = source.pop(0);
 
@@ -27,7 +27,7 @@ def json_reduce_layer(source,reserved_word):
 
                     source.append(temp_dict[temp_key][0])
 
-            #print source
+
             json_reduce_layer(source,reserved_word)
         else:
             for item in source:
@@ -198,7 +198,6 @@ def conver(item, templist, result,reserved_word):
 
 def json2list(jsonfile,reserved_word):
     '''
-
     :param jsonfile: dict come from json.dumps
     :return:a list, every item in this list is a list [key1,key2,...,keyn,value],
             it show the position of value in original json file

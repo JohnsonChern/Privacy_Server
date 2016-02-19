@@ -264,25 +264,27 @@ def set_mask(form,json_file,reserved_word,fieldname):
 
     length = len(fieldname)
     json_list,json_class = get_list_and_class(json_file, reserved_word)
+    policy_list = []
     for field in form:
         if field.type == "BooleanField" and field.data == True:
 
             templist = json_class[int(str(field.id)[length:])].get_pos_list()
 
             for item in json_list:
-                if is_prefix(templist,item):
+                if is_prefix(templist,item) and not item in policy_list:
 
-                    item[-1] = 'mask'
-
-
-
-
-
-    j = jd.list2json(json_list,reserved_word)
+                    policy_list.append(item)
+                    # item[-1] = 'mask'
 
 
 
-    return j
+
+
+    policy_dict = jd.list2json(policy_list,reserved_word)
+
+
+
+    return policy_dict
 
 
 reserved_word = 'test'
