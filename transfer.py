@@ -85,6 +85,7 @@ def cover_protected_data(data_list, resource, patient_id, status='full'):
     patient_id : extract identifier of policy_list
     '''
     privacy_policy = db.select_policy(patient_id)
+
     if (privacy_policy == -2):
         #No record in the database
         return resource
@@ -92,14 +93,17 @@ def cover_protected_data(data_list, resource, patient_id, status='full'):
     policy_data = jd.json2list(privacy_policy,RESERVED_WORD)
 
     if type(data_list) is dict:
+        jd.json_reduce_structure(data_list)
         data_list = jd.json2list(data_list, RESERVED_WORD)
 
     if isinstance(resource['resourceType'], unicode):
         s=resource['resourceType']
     else:
         s=unicode(resource['resourceType'],"utf-8")
+
+    jd.json_reduce_structure(resource)
     resource_data = jd.json2list(resource,RESERVED_WORD)
-    print json.dumps(resource, indent=4)
+
     for i in range(len(resource_data)):
         resource_data[i].insert(0,s)
 
@@ -107,10 +111,7 @@ def cover_protected_data(data_list, resource, patient_id, status='full'):
 
     for i in range(len(data)):
         data[i].insert(0,s)
-    print 'llala'
-    for item in data:
-        print item
-    print 'lalala'
+    
     #If the query is only part of data,then do the intersection
     for i in range(len(data)):
         if data[i][1] == 'text' or data[i][1] == 'resourceType':
@@ -125,16 +126,18 @@ def cover_protected_data(data_list, resource, patient_id, status='full'):
     for i in range(len(data)):
         if data[i][1]=='text' or data[i][1]=='resourceType':
             continue
-        tmp =retrieve(data[i],policy_data)
+        tmp = retrieve(data[i],policy_data)
         # Not found or unmasked means we should not change the value
         if tmp[0] == 'Mask':
-            #Here we need to filter the policy
+            # Here we need to filter the policy
             data[i][-1] = 'Protected data due to privacy policy'
 
     for i in range(len(data)):
         del data[i][0]
 
-    return jd.list2json(data,RESERVED_WORD)
+    result = jd.list2json(data,RESERVED_WORD)
+    return result
+
 
 '''
     Note: The official way to resolve this problem is to use
@@ -217,6 +220,7 @@ def check_private_policy(resource, resource_id, client_id):
         resource = cover_protected_data(resource, resource, patient_id)
     else:
         pass
+
     return resource
 
 

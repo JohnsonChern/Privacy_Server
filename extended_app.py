@@ -109,11 +109,13 @@ def render_fhir_extended(resource):
     #Here we implement privacy policy issue before we render a FHIR bundle
     #We call function to check each type resource and cover those
     #protected data
+    
     for i in range(len(resource['entry'])):
-	#print resource['entry'][i]
-	resource_id = resource['entry'][i]['resource']['id']
- 	resource['entry'][i]['resource']=tr.check_private_policy(resource['entry'][i]['resource'],None,CLIENT_ID)
- 	resource['entry'][i]['resource']['id'] = to_internal_id(resource['resourceType']+'/'+resource['entry'][i]['resource'].get('id', ''))
+        #print resource['entry'][i]
+        resource_id = resource['entry'][i]['resource']['id']
+        resource['entry'][i]['resource'] = tr.check_private_policy(resource['entry'][i]['resource'],resource_id,CLIENT_ID)
+        resource['entry'][i]['resource']['id'] = to_internal_id(resource['resourceType']+'/'+resource['entry'][i]['resource'].get('id', ''))
+    
     return render_template('bundle_view.html', **resource)
 
 
@@ -252,6 +254,9 @@ def forward_api(forwarded_url):
 
     if ('type' in bundle and bundle['type'] != 'searchset') or ('resourceType' in bundle and bundle['resourceType']!='Bundle'):
         resource = bundle
+        patient_id = resource['id']
+        modified_resource = tr.check_private_policy(resource,patient_id,CLIENT_ID)
+        code_snippet = get_code_snippet(modified_resource)
         bundle = {
             'resourceType': resource['resourceType'],
             'entry': [{
@@ -259,7 +264,7 @@ def forward_api(forwarded_url):
                 'id': forwarded_url
             }],
             'is_single_resource': True,
-            'code_snippet': get_code_snippet(tr.check_private_policy(resource,None,CLIENT_ID))
+            'code_snippet': code_snippet
         }
     elif len(bundle.get('entry', [])) > 0:
         bundle['resourceType'] = bundle['entry'][0]['resource']['resourceType']
@@ -285,9 +290,6 @@ def set(patient_id):
     length = len(class_list)
     if form.validate_on_submit():
         result = sp.set_mask(form,e,reserved_word,fieldname)
-        f = open('log.txt', 'w')
-        f.write(json.dumps(result, indent=2))
-        f.close()
         tag = db.insert_record(patient_id, result, datetime.now())
         if tag == 1:
             return STATUS_OK

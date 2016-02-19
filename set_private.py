@@ -274,13 +274,13 @@ def set_mask(form,json_file,reserved_word,fieldname):
                 if is_prefix(templist,item) and not item in policy_list:
 
                     policy_list.append(item)
-                    # item[-1] = 'mask'
+                    # item[-1] = 'Mask'
 
 
 
 
 
-    policy_dict = jd.list2json(policy_list,reserved_word)
+    policy_dict = jd.list2json(policy_list, reserved_word)
 
 
 

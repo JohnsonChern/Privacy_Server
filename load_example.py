@@ -28,6 +28,11 @@ example_id= "a770136e-616f-45b0-8752-3be0ad9cab42"
 
 
 import database as db
+import json
 
 db.delete_record(example_id)
 db.insert_record(example_id, example_policy, None)
+
+
+if __name__ == '__main__':
+    print json.dumps(db.select_policy("cff99146-8045-4bba-acb6-d04342edc7b8"),indent=2)
