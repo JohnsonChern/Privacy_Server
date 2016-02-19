@@ -261,18 +261,28 @@ def is_prefix(list1,list2):
 
 
 def set_mask(form,json_file,reserved_word,fieldname):
+
     length = len(fieldname)
     json_list,json_class = get_list_and_class(json_file, reserved_word)
     for field in form:
         if field.type == "BooleanField" and field.data == True:
+
             templist = json_class[int(str(field.id)[length:])].get_pos_list()
+
             for item in json_list:
                 if is_prefix(templist,item):
+
                     item[-1] = 'mask'
+
+
+
+
 
     j = jd.list2json(json_list,reserved_word)
 
-    print json.dumps(j)
+
+
+    return j
 
 
 reserved_word = 'test'

@@ -14,11 +14,11 @@
 
 
 </head>
-<body>
+<body >
 <div>Result: <a href="/index">Home</a></div>
 <hr>
 
-<form action="" method="post" name="private">
+<form name = "form" action="" method="post" name="private">
     <div class="card">
                 <div class="card-content">
 
@@ -30,14 +30,14 @@
         {% if  class_list[i].get_level()>class_list[i].get_pred() %}
             <div class="panel panel-default" id ="{{'panel'+str(i-1)}}" >
                 <div class="panel-body">
-                    <p>  <input id="{{ getattr(form,fieldname+str(i)).id }}" name="{{ i }}" type="checkbox" value="y" onchange="change_status(this)">    <label for= "{{ fieldname+str(i) }}" >Hide </label>  </p>
+                    <p>  <input id="{{ getattr(form,fieldname+str(i)).id }}" name="{{ getattr(form,fieldname+str(i)).name }}" type="checkbox" value="y" onchange="change_status(this)">    <label for= "{{ fieldname+str(i) }}" >Hide </label>  </p>
                     {% if not class_list[i].get_key()[:word_len]==reserved_word %}
                     <p> {{ class_list[i].get_key()}}  </p>
                     {% endif %}
 
 
                     {% elif class_list[i].get_level()==class_list[i].get_pred() %}
-                    <p>  <input id="{{ getattr(form,fieldname+str(i)).id }}" name="{{ i }}" type="checkbox" value="y" onchange="change_status(this)">    <label for= "{{ fieldname+str(i) }}" >Hide </label>  </p>
+                    <p>  <input id="{{ getattr(form,fieldname+str(i)).id }}" name="{{ getattr(form,fieldname+str(i)).name }}" type="checkbox" value="y" onchange="change_status(this)">     <label for= "{{ fieldname+str(i) }}" >Hide </label>  </p>
                     {% if not class_list[i].get_key()[:word_len]==reserved_word %}
                     <p> {{ class_list[i].get_key()}}  </p>
                     {% endif %}
@@ -49,7 +49,7 @@
                     </div>
                     {% endfor %}
 
-                    <p>  <input id="{{ getattr(form,fieldname+str(i)).id }}" name="{{ i }}" type="checkbox" value="y" onchange="change_status(this)">    <label for= "{{ fieldname+str(i) }}" >Hide </label>  </p>
+                    <p>  <input id="{{ getattr(form,fieldname+str(i)).id }}" name="{{ getattr(form,fieldname+str(i)).name }}" type="checkbox" value="y" onchange="change_status(this)">     <label for= "{{ fieldname+str(i) }}" >Hide </label>  </p>
                     {% if not class_list[i].get_key()[:word_len]==reserved_word %}
                     <p> {{ class_list[i].get_key()}}  </p>
                     {% endif %}
@@ -72,22 +72,24 @@
 
 
 <script type="text/javascript">
+
+
+
 var change_status = function(obj){
 
-    var num = obj.name
-    var id = 'panel'+num
+    var name = obj.name
+    var id = 'panel'+name.substring({{ len(fieldname) }})
+
 
     var target = document.getElementById(id)
     if (target!=null){
+        if(obj.checked){
+            target.style.display = "none"
+        }else{
+            target.style.display = ""
+        }
 
 
-        if (target.style.display=="none"){
-
-                target.style.display="";
-            } else {
-
-                target.style.display="none";
-            }
     }
 
 }

@@ -272,9 +272,9 @@ def set():
     class_list,class_dict,form = sp.strcture_json(e,reserved_word,fieldname)
     length = len(class_list)
     if form.validate_on_submit():
-        sp.set_mask(form,e,reserved_word,fieldname)
-        return render_template('temp.html')
-    return render_template('bt.html',class_list=class_list,form =form,length = length,
+        result = sp.set_mask(form,e,reserved_word,fieldname)
+        return render_template('temp.html',result = result)
+    return render_template('bt.html',class_list=class_list,form =form,length = length,len = len,tier
                            str = str,getattr= getattr,fieldname = fieldname,word_len=len(reserved_word),reserved_word = reserved_word)
 
 
