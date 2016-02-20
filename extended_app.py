@@ -257,6 +257,9 @@ def forward_api(forwarded_url):
         patient_id = resource['id']
         modified_resource = tr.check_private_policy(resource,patient_id,CLIENT_ID)
         code_snippet = get_code_snippet(modified_resource)
+        f = open('log.txt', 'w')
+        f.write(json.dumps(modified_resource,indent=4))
+        f.close()
         bundle = {
             'resourceType': resource['resourceType'],
             'entry': [{

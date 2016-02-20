@@ -35,4 +35,4 @@ db.insert_record(example_id, example_policy, None)
 
 
 if __name__ == '__main__':
-    print json.dumps(db.select_policy("cff99146-8045-4bba-acb6-d04342edc7b8"),indent=2)
+    print json.dumps(db.select_policy("7ff9db40-783d-48c4-b564-fffa42d45e04"),indent=2)
