@@ -17,7 +17,8 @@ DELETE = "DELETE FROM privacy_server WHERE patient_id = %s"
 SELECT = "SELECT * FROM privacy_server WHERE patient_id = %s"
 UPDATE = "UPDATE privacy_server set policy=%s, last_modified=%s WHERE patient_id=%s"
 
-
+# the privacy policy in the data base is of type: string.
+# i.e dumped json data.
 
 def search_record(patient_id):
     """

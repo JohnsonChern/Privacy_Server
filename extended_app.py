@@ -11,6 +11,13 @@ from forms import SubmitForm, AuthenticationForm, SubmitDictForm
 from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI,SECRET_KEY
 import set_private as sp
 import jsonexample as jp
+import database as db
+from datetime import datetime, timedelta
+
+STATUS_OK = "OK"
+STATUS_ERROR = "ERROR"
+STATUS_UNKNOWN = "UNKNOWN"
+STATUS_UNRELATED = "UNRELATED"
 
 
 # we use this to shorten a long resource reference when displaying it
@@ -102,11 +109,13 @@ def render_fhir_extended(resource):
     #Here we implement privacy policy issue before we render a FHIR bundle
     #We call function to check each type resource and cover those
     #protected data
+    
     for i in range(len(resource['entry'])):
-	#print resource['entry'][i]
-	resource_id = resource['entry'][i]['resource']['id']
- 	resource['entry'][i]['resource']=tr.check_private_policy(resource['entry'][i]['resource'],None,CLIENT_ID)
- 	resource['entry'][i]['resource']['id'] = to_internal_id(resource['resourceType']+'/'+resource['entry'][i]['resource'].get('id', ''))
+        #print resource['entry'][i]
+        resource_id = resource['entry'][i]['resource']['id']
+        resource['entry'][i]['resource'] = tr.check_private_policy(resource['entry'][i]['resource'],resource_id,CLIENT_ID)
+        resource['entry'][i]['resource']['id'] = to_internal_id(resource['resourceType']+'/'+resource['entry'][i]['resource'].get('id', ''))
+    
     return render_template('bundle_view.html', **resource)
 
 
@@ -191,20 +200,20 @@ def doctor():
                            form=form)
 
 
-"""
-@app.route('/submit_policy/', methods=['GET', 'POST'])
+
+@app.route('/patient/', methods=['GET', 'POST'])
 @require_oauth
 def submit_policy_authentication():
     form = AuthenticationForm(csrf_enabled=False)
     
     if form.validate_on_submit():
         patient_id = form.identifier.data
-        redirected_url = '/submit_policy/' + patient_id
+        redirected_url = '/patient/' + patient_id
 
         return redirect(redirected_url)
     
     return render_template('authentication.html',form=form)
-"""
+
 
 
 """
@@ -240,14 +249,14 @@ def forward_api(forwarded_url):
 	We extend the original example to claim how this works
     '''
     bundle = api_resp.json()
-    f = open('./log.txt','w')
-    f.write(json.dumps(bundle, indent=2))
-    f.close
     # Here we install the privacy policy for patient
     # There is a sudden change in server so this is modified to avoid throw TypeError
 
     if ('type' in bundle and bundle['type'] != 'searchset') or ('resourceType' in bundle and bundle['resourceType']!='Bundle'):
         resource = bundle
+        patient_id = resource['id']
+        modified_resource = tr.check_private_policy(resource,patient_id,CLIENT_ID)
+        code_snippet = get_code_snippet(modified_resource)
         bundle = {
             'resourceType': resource['resourceType'],
             'entry': [{
@@ -255,7 +264,7 @@ def forward_api(forwarded_url):
                 'id': forwarded_url
             }],
             'is_single_resource': True,
-            'code_snippet': get_code_snippet(tr.check_private_policy(resource,None,CLIENT_ID))
+            'code_snippet': code_snippet
         }
     elif len(bundle.get('entry', [])) > 0:
         bundle['resourceType'] = bundle['entry'][0]['resource']['resourceType']
@@ -264,15 +273,34 @@ def forward_api(forwarded_url):
     return render_fhir_extended(bundle)
 
 
-@app.route('/patient',methods=['GET','POST'])
-def set():
-    e = jp.s
+@app.route('/patient/<path:patient_id>',methods=['GET','POST'])
+def set(patient_id):
+    e = {}
+    for resource_type in ['Patient', 'Sequence', 'Condition', 'Observation']:
+        forward_args = request.args.to_dict(flat=False)
+        forward_args['_format'] = 'json'
+        forwarded_url =  resource_type + '/' + patient_id
+        api_url = '/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
+        api_resp = api_call(api_url)
+        if api_resp.status_code not in [403, 404]:
+            e[resource_type] = api_resp.json()
     reserved_word = 'test'
     fieldname = 'fieldname'
     class_list,class_dict,form = sp.strcture_json(e,reserved_word,fieldname)
     length = len(class_list)
     if form.validate_on_submit():
         result = sp.set_mask(form,e,reserved_word,fieldname)
+        tag = db.insert_record(patient_id, result, datetime.now())
+        if tag == 1:
+            return STATUS_OK
+        elif tag == 0:
+            tag2 = db.add_policy(patient_id, result, datetime.now())
+            if tag2 == -1:
+                return STATUS_ERROR
+            else:
+                return STATUS_OK
+        else:
+            return STATUS_ERROR
         return render_template('temp.html',result = result)
     return render_template('bt.html',class_list=class_list,form =form,length = length,len = len,
                            str = str,getattr= getattr,fieldname = fieldname,word_len=len(reserved_word),reserved_word = reserved_word)

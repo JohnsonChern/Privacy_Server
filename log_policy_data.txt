@@ -1,0 +1,4 @@
+[u'Patient', u'gender', u'male']
+[u'Patient', u'meta', u'lastUpdated', u'2016-01-13T15:31:39.211140']
+[u'Patient', u'name', u'text', u'Luke Miller']
+[u'Patient', u'text', u'div', u'<div><p>Luke Miller</p></div>']
