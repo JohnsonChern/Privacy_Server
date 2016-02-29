@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="79519c76-89d4-4f35-a07c-1a8235b1c69b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/temp.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extended_app.py" afterPath="$PROJECT_DIR$/extended_app.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log.txt" afterPath="$PROJECT_DIR$/log.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/set_private.py" afterPath="$PROJECT_DIR$/set_private.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/bt.html" afterPath="$PROJECT_DIR$/templates/bt.html" />
     </list>
     <ignored path="Privacy_Server.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -22,7 +18,7 @@
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Privacy_Server$config.coverage" NAME="config Coverage Results" MODIFIED="1454769318869" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Privacy_Server$extended_app.coverage" NAME="extended_app Coverage Results" MODIFIED="1455857077316" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Privacy_Server$extended_app.coverage" NAME="extended_app Coverage Results" MODIFIED="1456231978656" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Privacy_Server$Privacy_Server.coverage" NAME="Privacy_Server Coverage Results" MODIFIED="1454769323661" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="CreatePatchCommitExecutor">
@@ -72,11 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="extended_app.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="extended_app.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/extended_app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9303944">
-              <caret line="276" column="100" selection-start-line="276" selection-start-column="100" selection-end-line="276" selection-end-column="100" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="276" column="96" selection-start-line="276" selection-start-column="96" selection-end-line="276" selection-end-column="96" />
               <folding>
                 <element signature="e#0#78#0" expanded="true" />
               </folding>
@@ -84,11 +80,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="set_private.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="set_private.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/set_private.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="266" column="22" selection-start-line="266" selection-start-column="22" selection-end-line="266" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.4861111">
+              <caret line="162" column="21" selection-start-line="162" selection-start-column="21" selection-end-line="162" selection-end-column="21" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
                 <element signature="e#253#257#0" expanded="false" />
@@ -104,7 +100,7 @@
       <file leaf-file-name="bt.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/bt.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-61.875">
+            <state vertical-scroll-proportion="0.0">
               <caret line="99" column="7" selection-start-line="99" selection-start-column="7" selection-end-line="99" selection-end-column="7" />
               <folding />
             </state>
@@ -539,13 +535,13 @@
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29886913" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3085622" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329429" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32796487" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32650074" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329429" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -644,17 +640,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#241#385#0" expanded="false" />
-            <element signature="e#436#1048#0" expanded="false" />
-            <element signature="e#1050#2022#1" expanded="false" />
-            <element signature="e#2064#2409#0" expanded="false" />
-            <element signature="e#2458#3044#0" expanded="false" />
-            <element signature="e#3087#3344#0" expanded="false" />
-            <element signature="e#3385#3563#0" expanded="false" />
-            <element signature="e#3597#3905#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -666,15 +651,15 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
       <provider editor-type-id="MultiMarkdownFxPreviewEditor">
-        <state />
-      </provider>
-      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
         <state />
       </provider>
     </entry>
@@ -725,17 +710,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#241#385#0" expanded="false" />
-            <element signature="e#436#1048#0" expanded="false" />
-            <element signature="e#1050#2022#1" expanded="false" />
-            <element signature="e#2064#2409#0" expanded="false" />
-            <element signature="e#2458#3044#0" expanded="false" />
-            <element signature="e#3087#3344#0" expanded="false" />
-            <element signature="e#3385#3563#0" expanded="false" />
-            <element signature="e#3597#3905#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -747,15 +721,15 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
       <provider editor-type-id="MultiMarkdownFxPreviewEditor">
-        <state />
-      </provider>
-      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
         <state />
       </provider>
     </entry>
@@ -806,17 +780,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#241#385#0" expanded="false" />
-            <element signature="e#436#1048#0" expanded="false" />
-            <element signature="e#1050#2022#1" expanded="false" />
-            <element signature="e#2064#2409#0" expanded="false" />
-            <element signature="e#2458#3044#0" expanded="false" />
-            <element signature="e#3087#3344#0" expanded="false" />
-            <element signature="e#3385#3563#0" expanded="false" />
-            <element signature="e#3597#3905#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -828,15 +791,15 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
       <provider editor-type-id="MultiMarkdownFxPreviewEditor">
-        <state />
-      </provider>
-      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
         <state />
       </provider>
     </entry>
@@ -858,17 +821,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#241#385#0" expanded="false" />
-            <element signature="e#436#1048#0" expanded="false" />
-            <element signature="e#1050#2022#1" expanded="false" />
-            <element signature="e#2064#2409#0" expanded="false" />
-            <element signature="e#2458#3044#0" expanded="false" />
-            <element signature="e#3087#3344#0" expanded="false" />
-            <element signature="e#3385#3563#0" expanded="false" />
-            <element signature="e#3597#3905#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -880,15 +832,15 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
       <provider editor-type-id="MultiMarkdownFxPreviewEditor">
-        <state />
-      </provider>
-      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
         <state />
       </provider>
     </entry>
@@ -910,17 +862,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#241#385#0" expanded="false" />
-            <element signature="e#436#1048#0" expanded="false" />
-            <element signature="e#1050#2022#1" expanded="false" />
-            <element signature="e#2064#2409#0" expanded="false" />
-            <element signature="e#2458#3044#0" expanded="false" />
-            <element signature="e#3087#3344#0" expanded="false" />
-            <element signature="e#3385#3563#0" expanded="false" />
-            <element signature="e#3597#3905#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -932,28 +873,28 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
       <provider editor-type-id="MultiMarkdownFxPreviewEditor">
-        <state />
-      </provider>
-      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
         <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
       <provider editor-type-id="MultiMarkdownFxPreviewEditor">
-        <state />
-      </provider>
-      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
         <state />
       </provider>
     </entry>
@@ -1010,17 +951,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="144" column="20" selection-start-line="144" selection-start-column="16" selection-end-line="144" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#241#385#0" expanded="false" />
-            <element signature="e#436#1048#0" expanded="false" />
-            <element signature="e#1050#2022#1" expanded="false" />
-            <element signature="e#2064#2409#0" expanded="false" />
-            <element signature="e#2458#3044#0" expanded="false" />
-            <element signature="e#3087#3344#0" expanded="false" />
-            <element signature="e#3385#3563#0" expanded="false" />
-            <element signature="e#3597#3905#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1092,24 +1022,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/set_private.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="266" column="22" selection-start-line="266" selection-start-column="22" selection-end-line="266" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-            <element signature="e#253#257#0" expanded="false" />
-            <element signature="e#283#3312#0" expanded="false" />
-            <element signature="e#3337#3866#0" expanded="false" />
-            <element signature="e#3913#4020#0" expanded="false" />
-            <element signature="e#4766#6015#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/bt.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-61.875">
+        <state vertical-scroll-proportion="0.0">
           <caret line="99" column="7" selection-start-line="99" selection-start-column="7" selection-end-line="99" selection-end-column="7" />
           <folding />
         </state>
@@ -1117,10 +1032,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/extended_app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9303944">
-          <caret line="276" column="100" selection-start-line="276" selection-start-column="100" selection-end-line="276" selection-end-column="100" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="276" column="96" selection-start-line="276" selection-start-column="96" selection-end-line="276" selection-end-column="96" />
           <folding>
             <element signature="e#0#78#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/set_private.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4861111">
+          <caret line="162" column="21" selection-start-line="162" selection-start-column="21" selection-end-line="162" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#253#257#0" expanded="false" />
+            <element signature="e#283#3312#0" expanded="false" />
+            <element signature="e#3337#3866#0" expanded="false" />
+            <element signature="e#3913#4020#0" expanded="false" />
+            <element signature="e#4766#6015#0" expanded="false" />
           </folding>
         </state>
       </provider>
