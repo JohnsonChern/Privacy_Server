@@ -34,8 +34,10 @@ def json_reduce_layer(source,reserved_word):
                 json_reduce_layer(item,reserved_word)
     elif type(source)==dict:
         for key in source:
-            print source[key]
+            #print source[key]
             json_reduce_layer(source[key],reserved_word)
+
+
 
 '''
 def json_reduce_layer(source, reserved_word):
@@ -61,16 +63,17 @@ def json_reduce_layer(source, reserved_word):
 '''
 
 
-def json_reduce_structure(source):
+def json_reduce_structure(source,reserved_word):
     if type(source)==dict:
         for key in source:
-            if(type(source[key])==list and len(source[key])==1):
+            if(type(source[key])==list and len(source[key])==1 and not is_reserved_layer(source[key][0],reserved_word)):
                 source[key] = source[key][0]
-                json_reduce_structure(source[key])
+            json_reduce_structure(source[key],reserved_word)
     elif type(source)==list:
         for item in source:
             if(type(item)==dict):
-                json_reduce_structure(item)
+                json_reduce_structure(item,reserved_word)
+
 
 def json_write(source,list,reserved_word):
     if(len(source)==1):
@@ -99,10 +102,14 @@ def list2json(source,reserved_word):
 
     dest = json_gene(source,reserved_word)
 
+    json_reduce_structure(dest,reserved_word)
     json_reduce_layer(dest,reserved_word)
-    json_reduce_structure(dest)
 
     return dest
+
+
+
+
 
 def json_gene(list,reserved_word):
     proto = {}
