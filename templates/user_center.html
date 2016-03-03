@@ -12,12 +12,21 @@
 </div>
 
 <div class="selection_panel" style="text-align:center;padding-top: 4em;">
-<button type="button" class="btn btn-default" onclick="window.open('\\Privacy/'+'{{ form.user_id.data }}')" style="width:20%;height:50px;background: #806F63;color:#ffffff">My Profile</button>
+<button type="button" class="btn btn-default" onclick="window.open('\\Privacy/'+'{{ form.user_id.data }}')" style="background: transparent;">My Profile</button>
     <hr>
-<button type="button" class="btn btn-default" onclick="window.open('\\Privacy/'+'{{ form.user_id.data }}')" style="width:20%;height:50px;background: #806F63;color:#ffffff">Query by ID</button>
+<p>
+    <input type="text" id="id_input">
+</p>
+<button type="button" class="btn btn-default" onclick="query_by_id()" style="background: transparent;">Query by ID</button>
 
 </div>
-
+<script>
+    var query_by_id=function()
+    {
+        var target_id = document.getElementById("id_input")
+        window.open('\\Privacy/'+target_id.value)
+    }
+</script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/js/bootstrap.min.js') }}"></script>
 
