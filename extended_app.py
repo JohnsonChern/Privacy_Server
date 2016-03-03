@@ -7,7 +7,7 @@ import json
 import cgi
 import copy
 import transfer as tr
-from forms import SubmitForm, AuthenticationForm, SubmitDictForm
+from forms import SubmitForm, AuthenticationForm, SubmitDictForm,UserLoginForm
 from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI,SECRET_KEY
 import set_private as sp
 import jsonexample as jp
@@ -305,6 +305,13 @@ def set(patient_id):
     return render_template('bt.html',class_list=class_list,form =form,length = length,len = len,
                            str = str,getattr= getattr,fieldname = fieldname,word_len=len(reserved_word),reserved_word = reserved_word)
 
+
+@app.route('/user_login',methods=['GET','POST'])
+def user_login():
+    form = UserLoginForm(csrf_enabled=False)
+    if form.validate_on_submit():
+        return render_template('user_center.html',form=form)
+    return render_template('login.html',form=form)
 
 if __name__ == '__main__':
     app.config.from_object('config')

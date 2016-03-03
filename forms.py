@@ -1,5 +1,5 @@
 from flask.ext.wtf import Form
-from wtforms import StringField, BooleanField
+from wtforms import StringField, BooleanField,PasswordField
 from wtforms.validators import DataRequired
 
 class SubmitForm(Form):
@@ -43,4 +43,11 @@ class SubmitDictForm():
             self.formtype = "normal"
             self.content = content
             self.form = BooleanField(key, default=False)
+
+
+class UserLoginForm(Form):
+
+    user_id = StringField('user id',validators = [DataRequired(message=u"You must imput user ID")])
+    password = PasswordField('password', validators=[DataRequired(message=u"You must input password")])
+
         

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap.min.css') }}">
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="header" style="height:100px;background: #77BBA5">
+<h1 style="color:#E5F2DB;margin-top: 0;padding-top: 50px;padding-left: 10px">Welcome {{ form.user_id.data }}</h1>
+</div>
+
+<div class="selection_panel" style="text-align:center;padding-top: 4em;">
+<button type="button" class="btn btn-default" onclick="window.open('\\Privacy/'+'{{ form.user_id.data }}')" style="width:20%;height:50px;background: #806F63;color:#ffffff">My Profile</button>
+    <hr>
+<button type="button" class="btn btn-default" onclick="window.open('\\Privacy/'+'{{ form.user_id.data }}')" style="width:20%;height:50px;background: #806F63;color:#ffffff">Query by ID</button>
+
+</div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/js/bootstrap.min.js') }}"></script>
+
+</body>
+</html>
