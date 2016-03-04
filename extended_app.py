@@ -254,7 +254,10 @@ def forward_api(forwarded_url):
 
     if ('type' in bundle and bundle['type'] != 'searchset') or ('resourceType' in bundle and bundle['resourceType']!='Bundle'):
         resource = bundle
-
+        patient_id = resource['id']
+        #modified_resource = tr.check_private_policy(resource,patient_id,CLIENT_ID)
+        #code_snippet = get_code_snippet(modified_resource)
+        code_snippet = get_code_snippet(resource)
         bundle = {
             'resourceType': resource['resourceType'],
             'entry': [{
@@ -262,12 +265,13 @@ def forward_api(forwarded_url):
                 'id': forwarded_url
             }],
             'is_single_resource': True,
-            'code_snippet':  get_code_snippet(resource)
+            'code_snippet': code_snippet
         }
     elif len(bundle.get('entry', [])) > 0:
         bundle['resourceType'] = bundle['entry'][0]['resource']['resourceType']
 
     # Here is the trick, to use a modified function instead of original one
+    #return render_fhir_extended(bundle)
     return render_fhir(bundle)
 
 
@@ -278,7 +282,7 @@ def set(patient_id):
         forward_args = request.args.to_dict(flat=False)
         forward_args['_format'] = 'json'
         forwarded_url =  resource_type + '/' + patient_id
-        api_url = '/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
+        api_url = '/neprivacy/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
         api_resp = api_call(api_url)
         if api_resp.status_code not in [403, 404]:
             e[resource_type] = api_resp.json()
