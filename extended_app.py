@@ -8,11 +8,8 @@ import cgi
 import copy
 import transfer as tr
 from forms import SubmitForm, AuthenticationForm, SubmitDictForm,UserLoginForm
-from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI,SECRET_KEY
+from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI, PRIVACY_BASE
 import set_private as sp
-import jsonexample as jp
-import database as db
-from datetime import datetime, timedelta
 
 STATUS_OK = "OK"
 STATUS_ERROR = "ERROR"
@@ -292,18 +289,28 @@ def set(patient_id):
     length = len(class_list)
     if form.validate_on_submit():
         result = sp.set_mask(form,e,reserved_word,fieldname)
-        tag = db.insert_record(patient_id, result, datetime.now())
-        if tag == 1:
-            return STATUS_OK
-        elif tag == 0:
-            tag2 = db.add_policy(patient_id, result, datetime.now())
-            if tag2 == -1:
-                return STATUS_ERROR
-            else:
-                return STATUS_OK
-        else:
+        #tag = db.insert_record(patient_id, result, datetime.now())
+        resource = {
+             'Policy': result,
+             'Identifier': patient_id,
+             'resourceType': "Patient"
+        }
+        resp = requests.post('%s/%s' %(PRIVACY_BASE,patient_id), data=json.dumps(resource), headers={'Content-Type': 'application/json'})
+        if resp.status_code == 404:
             return STATUS_ERROR
-        return render_template('temp.html',result = result)
+        else:
+            return render_template('temp.html',result = result)
+        #if tag == 1:
+        #    return STATUS_OK
+        #elif tag == 0:
+        #    tag2 = db.add_policy(patient_id, result, datetime.now())
+        #    if tag2 == -1:
+        #        return STATUS_ERROR
+        #    else:
+        #        return STATUS_OK
+        #else:
+        #    return STATUS_ERROR
+        #return render_template('temp.html',result = result)
     return render_template('bt.html',class_list=class_list,form =form,length = length,len = len,
                            str = str,getattr= getattr,fieldname = fieldname,word_len=len(reserved_word),reserved_word = reserved_word)
 
