@@ -290,19 +290,20 @@ def set(patient_id):
     if form.validate_on_submit():
         result = sp.set_mask(form,e,reserved_word,fieldname)
         #tag = db.insert_record(patient_id, result, datetime.now())
-        print result
-        resource = {
-             'Policy': result['Patient'],
+        #print result
+        for key, value in result.items():
+            resource = {
+             'Policy': value,
              'Identifier': patient_id,
-             'resourceType': "Patient",
+             'resourceType': key,
              'Scope' : 'All'
-        }
-        resp = requests.put('%s/%s' %(PRIVACY_BASE,patient_id), data=json.dumps(resource), headers={'Content-Type': 'application/json'})
+            }
+            resp = requests.put('%s/%s' %(PRIVACY_BASE,patient_id), data=json.dumps(resource), headers={'Content-Type': 'application/json'})
         #print resp
-        if resp.status_code == 404:
-            return STATUS_ERROR
-        else:
-            return render_template('temp.html',result = resp._content)
+            if resp.status_code == 404:
+                return STATUS_ERROR
+        resp = requests.get('%s/%s' %(PRIVACY_BASE,patient_id))
+        return render_template('temp.html',result = resp._content)
         #if tag == 1:
         #    return STATUS_OK
         #elif tag == 0:
