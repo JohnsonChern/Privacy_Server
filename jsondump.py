@@ -19,25 +19,22 @@ def is_reserved_layer(dict,reserved_word):
 def json_reduce_layer(source,reserved_word):
     if type(source)==list:
         if is_reserved_layer(source[0],reserved_word):
-
-            for i in range(len(source)):
-                temp_dict = source.pop(0);
-
-                for temp_key in temp_dict:
-
+            temp_dict = source.pop();
+            for temp_key in temp_dict:
+                if type(temp_dict[temp_key])==list:
+                    print temp_dict[temp_key]
+                    print type(temp_dict[temp_key])
                     source.append(temp_dict[temp_key][0])
-
-
-            json_reduce_layer(source,reserved_word)
+                else:
+                    source.append(temp_dict[temp_key])
+            for item in source:
+                json_reduce_layer(item,reserved_word)
         else:
             for item in source:
                 json_reduce_layer(item,reserved_word)
     elif type(source)==dict:
         for key in source:
-            #print source[key]
             json_reduce_layer(source[key],reserved_word)
-
-
 
 '''
 def json_reduce_layer(source, reserved_word):
