@@ -7,25 +7,30 @@
     <title>Title</title>
 </head>
 <body>
-<div class="header" style="height:100px;background: #77BBA5">
-<h1 style="color:#E5F2DB;margin-top: 0;padding-top: 50px;padding-left: 10px">Welcome {{ form.user_id.data }}</h1>
-</div>
+<nav class="navbar navbar-default" style="margin-top: 10px;width:90%;margin-left: auto;margin-right: auto">
+  <div class="container-fluid">
+    <div class="navbar-header">
+     <p class="navbar-text"> Welcome {{ form.user_id.data }}</p>
+    </div>
 
-<div class="selection_panel" style="text-align:center;padding-top: 4em;">
-<<<<<<< HEAD
-<button type="button" class="btn btn-default" onclick="window.open('http://localhost:5000/Privacy/'+'{{ form.user_id.data }}'+'?_format=json')" style="width:20%;height:50px;background: #806F63;color:#ffffff">My Profile</button>
-    <hr>
-<button type="button" class="btn btn-default" onclick="window.open('http://localhost:5000/Privacy/'+'{{ form.user_id.data }}'+'?_format=json')" style="width:20%;height:50px;background: #806F63;color:#ffffff">Query by ID</button>
-=======
-<button type="button" class="btn btn-default" onclick="window.open('http://localhost:5000/Privacy/'+'{{ form.user_id.data }}'+'?_format=json')" style="background: transparent;">My Profile</button>
-    <hr>
-<p>
-    <input type="text" id="id_input">
+  </div>
+</nav>
+
+<div class="container">
+
+      <p style="padding: 15px">
+          <button type="button" class="btn btn-default" onclick="window.open('http://localhost:5000/Privacy/'+'{{ form.user_id.data }}'+'?_format=json')" >My Profile</button>
 </p>
-<button type="button" class="btn btn-default" onclick="query_by_id()" style="background: transparent;">Query by ID</button>
->>>>>>> lx
 
+<form class="navbar-form navbar-left" >
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="User ID" id="id_input">
+  </div>
+  <button type="button" class="btn btn-default" onclick="query_by_id()" style="background: transparent;">Query by ID</button>
+</form>
 </div>
+
+
 <script>
     var query_by_id=function()
     {

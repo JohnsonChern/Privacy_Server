@@ -13,16 +13,22 @@
     <h2 style="color:#e5f2db;text-align:center;">User Center</h2>
 </div>
 
-<div style="text-align:center;margin-top: 3em">
-    <form action="" method="post" name="login">
-      {{ form.hidden_tag() }}
-      <p>
-          {{ form.user_id }}
-      </p>
-      <p>{{ form.password }} </p>
-      <p><input class="btn" type="submit" value="Sign In" style="width:13%;background:#806F63;color:#ffffff"></p>
-  </form>
-</div>
+
+
+ <div class="container" >
+
+
+<form  action="" method="post" name="login" style="max-width: 400px;margin:auto;padding-top: 10px">
+    {{ form.hidden_tag() }}
+    {{ form.user_id(class="form-control",placeholder="User ID") }}
+    {{ form.password(class="form-control",placeholder="Password") }}
+
+
+  <button class="btn btn-lg btn-primary btn-block" type="submit" value="Sign In" style="background:#806f63">Sign in</button>
+</form>
+
+
+    </div>
 
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/js/bootstrap.min.js') }}"></script>

@@ -4,7 +4,12 @@
 <head>
 
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <style type="text/css">
+        .row{border-top:1px solid #eeeeee}
+        .row:first-child{border-top: None}
+        p{margin:10px 0 10px 0}
 
+    </style>
 
     {% if title %}
     <title>{{ title }} - demo</title>
@@ -19,7 +24,7 @@
 <hr>
 
 <form name = "form" action="" method="post" name="private">
-    <div class="card">
+    <div class="card" style = "margin-left: 10%;margin-right: 10%">
                 <div class="card-content">
 
     {{ form.hidden_tag() }}
@@ -27,33 +32,48 @@
     {% for i in range(length) %}
 
 
-        {% if  class_list[i].get_level()>class_list[i].get_pred() %}
-            <div class="panel panel-default" id ="{{'panel'+str(i-1)}}" >
-                <div class="panel-body">
-                    <p>  <input id="{{ getattr(form,fieldname+str(i)).id }}" name="{{ getattr(form,fieldname+str(i)).name }}" type="checkbox" value="y" onchange="change_status(this)">    <label for= "{{ fieldname+str(i) }}" >Hide </label>  </p>
-                    {% if not class_list[i].get_key()[:word_len]==reserved_word %}
-                    <p> {{ class_list[i].get_key()}}  </p>
-                    {% endif %}
 
+                    {% if i==0  %}
+                        <!-- when i=0 class_list[i-1] get the last element in class_list -->
+                        <div class="panel panel-default " name="panel" id ="panel_basic" >
+                        <div class="panel-body">
 
-                    {% elif class_list[i].get_level()==class_list[i].get_pred() %}
-                    <p>  <input id="{{ getattr(form,fieldname+str(i)).id }}" name="{{ getattr(form,fieldname+str(i)).name }}" type="checkbox" value="y" onchange="change_status(this)">     <label for= "{{ fieldname+str(i) }}" >Hide </label>  </p>
-                    {% if not class_list[i].get_key()[:word_len]==reserved_word %}
-                    <p> {{ class_list[i].get_key()}}  </p>
-                    {% endif %}
+                    {% elif  class_list[i].get_level()>class_list[i].get_pred() %}
+                        <div class="panel panel-default " name="panel" id ="{{'panel'+str(class_list[i-1].get_seq())}}" >
+                        <div class="panel-body">
 
 
                     {% elif class_list[i].get_level()< class_list[i].get_pred() %}
-                     {% for i in range(class_list[i].get_pred()-class_list[i].get_level())%}
+                        {% for i in range(class_list[i].get_pred()-class_list[i].get_level())%}
+                            </div>
                         </div>
-                    </div>
-                    {% endfor %}
+                        {% endfor %}
 
-                    <p>  <input id="{{ getattr(form,fieldname+str(i)).id }}" name="{{ getattr(form,fieldname+str(i)).name }}" type="checkbox" value="y" onchange="change_status(this)">     <label for= "{{ fieldname+str(i) }}" >Hide </label>  </p>
-                    {% if not class_list[i].get_key()[:word_len]==reserved_word %}
-                    <p> {{ class_list[i].get_key()}}  </p>
+
                     {% endif %}
-                    {% endif %}
+
+                    <div class="row {% if class_list[i].get_attr()=='fold' %} fold {% else %} norm {% endif %}">
+                        {% if not class_list[i].get_type()=="value" %}
+                        <p  class="col-sm-3"  >  <input id="{{ getattr(form,fieldname+str(class_list[i].get_seq())).id }}" name="{{ getattr(form,fieldname+str(class_list[i].get_seq())).name }}" type="checkbox" value="y" onchange="change_status(this)">
+                        {% endif %}
+                        {% if not class_list[i].get_key()[:word_len]==reserved_word %}
+                        {{ class_list[i].get_key()}}
+                        {% endif %}
+
+
+                        </p>
+                        {%  if class_list[i].get_attr()=='key_of_value' %}
+
+                            <div class="col-sm-9">
+                                {% for j in range(len(class_list[i].data)) %}
+                                     <div class="row"><p class="col-sm-12">{{  class_list[i].data[j]}}</p></div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        </div>
+
+
+
 
     {% endfor %}
      {% for _ in range(class_list[-1].get_level()+1) %}
@@ -62,7 +82,9 @@
 
     {% endfor %}
 
-     <p><input type="submit" value="Submit"></p>
+
+        <input class="btn btn-default" type="submit" value="Submit">
+
     </div>
     </div>
 
@@ -82,15 +104,29 @@ var change_status = function(obj){
 
 
     var target = document.getElementById(id)
-    if (target!=null){
-        if(obj.checked){
-            target.style.display = "none"
-        }else{
-            target.style.display = ""
+        if (target!=null){
+            if(obj.checked){
+                target.style.display = "none"
+            }else {
+                target.style.display = ""
+            }
         }
 
 
+
+    var boxes = document.getElementById(id).getElementsByTagName("input")
+    for (var i = 0;i<boxes.length;i++)
+    {
+        if(boxes[i].type=='checkbox')
+        {
+            boxes[i].checked = obj.checked
+            change_status(boxes[i])
+
+        }
     }
+
+
+
 
 }
 </script>
