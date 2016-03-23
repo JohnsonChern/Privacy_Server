@@ -10,6 +10,7 @@ import transfer as tr
 from forms import SubmitForm, AuthenticationForm, SubmitDictForm,UserLoginForm
 from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI, PRIVACY_BASE
 import set_private as sp
+from filter import TextFilter
 
 STATUS_OK = "OK"
 STATUS_ERROR = "ERROR"
@@ -236,6 +237,7 @@ def forward_api(forwarded_url):
     forward_args = request.args.to_dict(flat=False)
     forward_args['_format'] = 'json'
     api_url = '/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
+    print api_url
     api_resp = api_call(api_url)
     '''
 	The best way to add privacy policy on json data is to decorate it at serverside,
@@ -245,6 +247,7 @@ def forward_api(forwarded_url):
         the apps will do some processing issues (e.g. encoding,extracting,rendering)
 	We extend the original example to claim how this works
     '''
+    print api_resp.headers
     bundle = api_resp.json()
     # Here we install the privacy policy for patient
     # There is a sudden change in server so this is modified to avoid throw TypeError
@@ -318,6 +321,31 @@ def set(patient_id):
     return render_template('bt.html',class_list=class_list,form =form,length = length,len = len,
                            str = str,getattr= getattr,fieldname = fieldname,word_len=len(reserved_word),reserved_word = reserved_word)
 
+@app.route('/test/<path:patient_id>',methods=['GET','POST'])
+@require_oauth
+def test(patient_id):
+    cross_loc = TextFilter(patient_id,'Lung cancer')
+
+    # First scan the observation data to locate specific observation result
+    cross_loc.get_observation_list()
+
+    #Then to locate the genetic info(i.e. Sequence Resource) in the data base
+    cross_loc.observation_prune()
+    cross_loc.get_genetic_info()
+    bundle = {
+            'resourceType': 'searchset',
+            'entry': [],
+            'is_single_resource': False
+    }
+    for v in cross_loc.filtered_Observation:
+        bundle['entry'].append({'resource':v})
+    print cross_loc.seq_id
+    for v in cross_loc.correlated_genetic:
+        bundle['entry'].append({'resource':v})
+    #print cross_loc.correlated_genetic
+
+
+    return json.dumps(bundle,indent =4 )
 
 @app.route('/user_login',methods=['GET','POST'])
 def user_login():
