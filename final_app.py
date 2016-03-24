@@ -34,12 +34,20 @@ app = Flask(__name__)
 class OAuthError(Exception):
     pass
 
-def get_resource_identifier(url,bundle):
-    #get unique identifier from url
-    # Transferred data might not have key identifier, although this is quite strange
-    pattern = re.compile(r'(?<=\/)[0-9A-Za-z-]*(?=\?)')
-    identifier = pattern.search(url+'?').group()
-    return identifier
+def get_resource_id(dict_resource):
+
+    if 'id' in dict_resource:
+        id_ = dict_resource['id']
+    elif 'Identifier' in dict_resource:
+        id_ = dict_resource['Identifier']['value']
+    elif 'variationID' in dict_resource:
+        try:
+            id_ = dict_resource['variationID']['coding'][0]['code']
+        except:
+            id_ = dict_resource['variationID']['coding']['code']
+    else:
+        id_ = 'x'
+    return id_
 
 def get_access_token(auth_code):
     '''
@@ -292,12 +300,15 @@ def set(patient_id):
     length = len(class_list)
     if form.validate_on_submit():
         result = sp.set_mask(form,e,reserved_word,fieldname)
+
         #tag = db.insert_record(patient_id, result, datetime.now())
         #print result
         for key, value in result.items():
+            resource_id =get_resource_id(key)
             resource = {
              'Policy': value,
              'Identifier': patient_id,
+             'resourceID' : resource_id,
              'resourceType': key,
              'Scope' : 'All'
             }
