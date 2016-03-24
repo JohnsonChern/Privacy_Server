@@ -1,26 +1,63 @@
-<html>
-<title>Submit</title>
-<body>
-<h1>Submit</h1>
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<!--
+<script type="text/javascript">
+function set_openid(openid, pr)
+{
+    u = openid.search('<username>')
+    if (u != -1) {
+        // openid requires username
+        user = prompt('Enter your ' + pr + ' username:')
+        openid = openid.substr(0, u) + user
+    }
+    form = document.forms['login'];
+    form.elements['openid'].value = openid
+}
+</script>
+-->
+
+
+    <div class="panel panel-default" style="max-width: 300px;margin:0 auto;box-shadow:inset 0px 0px 10px rgba(255, 255, 255, 0.5), 0px 0px 15px rgba(75, 75, 75, 0.3);">
+    <div class="panel-heading">
+        <h1>Submit</h1>
+    </div>
+    <div class="panel-body">
 <form action="" method="post" name="login">
     {{ form.hidden_tag() }}
     <p>
-          Please enter patient's ID:
-          <br>
-          {{ form.identifier }}
+
+          {{ form.identifier(class="form-control",placeholder="Please enter patient's ID") }}
           {% for error in form.identifier.errors %}
-            <span style="color: red;">{{ error }}</span>
-          {% endfor %}
-          <br>
-    </p>
+              <div class="alert alert-danger" role="alert">
+                 <a href="#" class="alert-link">{{ error }}</a>
+                </div>
+
+            {% endfor %}<br>
+      </p>
     <p> Select the item you want to know </p>
+    <div class="list-group">
     {% for item in form %}
       {% if item.type == "BooleanField" %}
-      <p>{{ item }} {{item.label}}</p>
+      <a href="#" class="list-group-item" name={{item.name}} onclick="change_status(this)">{{item.label}}{{ item(style="float:right") }} </a>
+
       {% endif %}
     {% endfor %}
-    <p><input type="submit" value="Submit"></p>
+    </div>
+    <p><input class='btn btn-primary btn-block' type="submit" value="Submit"></p>
 
 </form>
-</body>
-</html>
+    </div>
+    </div>
+
+    <script>
+        var change_status=function(obj){
+
+            var name = obj.name
+            var box = document.getElementById(name)
+            box.checked = !box.checked
+        }
+
+    </script>
+{% endblock %}

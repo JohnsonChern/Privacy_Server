@@ -7,8 +7,8 @@ import json
 import cgi
 import copy
 import transfer as tr
-from forms import SubmitForm, AuthenticationForm, SubmitDictForm,UserLoginForm
 from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI, PRIVACY_BASE
+from forms import SubmitForm, AuthenticationForm, SubmitDictForm,UserLoginForm,set_query_form,set_patient_from_and_class
 import set_private as sp
 
 STATUS_OK = "OK"
@@ -176,6 +176,31 @@ def recv_code():
     resp.set_cookie('access_token', access_token)
     return resp
 
+"""
+@app.route('/doctor',methods=['GET', 'POST'])
+@require_oauth
+def doctor():
+    form = set_query_form()
+    if form.validate_on_submit():
+        keys = pe.extend_option(form)
+        #get the keys the doctor selected
+
+        json = retrive_patient_info(keys,private_profile,raw_json_file)
+        #get the masked user info
+
+
+        #token needed, but now I don't konw how to get it
+        #user's id still in form.identifier.data
+
+        return render_template('query_result.html',
+                          token= token,
+                          json = json.dumps(query_dict,indent=4))
+
+    return render_template('submit.html',
+                           form=form)
+
+"""
+
 
 @app.route('/doctor',methods=['GET', 'POST'])
 @require_oauth
@@ -313,6 +338,26 @@ def set(patient_id):
         #return render_template('temp.html',result = result)
     return render_template('bt.html',class_list=class_list,form =form,length = length,len = len,
                            str = str,getattr= getattr,fieldname = fieldname,word_len=len(reserved_word),reserved_word = reserved_word)
+
+"""
+@app.route('/patient_test',methods=['GET','POST'])
+def set_form():
+    json_file = ...
+    #json_file is the user info we get from the server
+
+    patient_info_form,patient_info_class = set_patient_from_and_class(json_file)
+    #with the json file we now get from and class
+
+    if patient_info_form.validate_on_submit():
+
+        private_profile =  pe.get_private_profile(patient_info_form,patient_info_class,json_file)
+        # now we get the private profile
+
+        return render_template('temp.html',result = private_profile)
+    return render_template('private_set.html',form = patient_info_form,patient_info = patient_info_class)
+
+
+"""
 
 
 @app.route('/user_login',methods=['GET','POST'])
