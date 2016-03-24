@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/tabber.css') }}">
+    <style text="text/css">
+        .title_row{
+            padding-bottom: 0.5rem;
+            border-bottom: 0.125rem solid #f2f0ef;
+            height:52px;
+        }
+        period{
+            font-size: 14px;
+            color:darkgrey;
+
+
+        }
+        a.fake-button{
+            float:right;
+            height:40px;
+        }
+        ol.hashTabber-data.hashTabber-sandstone>li h3{
+            border-bottom: none;
+        }
+        .title_row{
+            margin-top: 10px;
+        }
+        .setting-btn{
+            float:right
+        }
+        comments{
+            font-style:italic;
+            font-size:18px;
+            color:dimgrey;
+        }
+        .submit-btn{
+            width:100%;
+        }
+        .simple_domain:not(:first-child){
+            margin-top: 1rem;
+        }
+
+    </style>
+    <title>Title</title>
+</head>
+<body>
+
+<div class="content">
+
+
+	<section class="example"><section class="hashTabber-sandstone-wrapper">
+    <ol class="hashTabber-nav hashTabber-sandstone" data-hashtabber-id="dinosaurs" data-hashtabber-default="pterosaur">
+      <h2>
+          <form action="" method="post" name="submit">
+            <input class="btn btn-primary submit-btn" type="submit" value="Submit">
+            <div class="form_field" style="display:none">
+                {% for field in form %}
+                    <p>{{ field }}</p>
+                {% endfor %}
+            </div>
+          </form>
+
+      </h2>
+       {% for domain in patient_info.sub_domains %}
+            {% if domain.attrs=='complex_domain' %}
+
+            <li data-hashtabber-pair="{{domain.key}}">
+                <a>{{domain.key}}</a>
+            </li>
+           {% endif %}
+
+
+       {% endfor %}
+        {% if patient_info.has_simple_domain() %}
+            <li data-hashtabber-pair="Others">
+                <a>Others</a>
+            </li>
+        {% endif %}
+
+
+    </ol><!--
+ --><ol class="hashTabber-data hashTabber-sandstone" data-hashtabber-id="dinosaurs">
+
+        {% for domain in patient_info.sub_domains %}
+            {% if domain.attrs=='complex_domain' %}
+            <li data-hashtabber-pair="{{ domain.key }}">
+                <articla>
+
+                  {{ domain.class2html()|safe }}
+
+                </articla>
+            </li>
+            {% endif %}
+
+        {% endfor %}
+        {% if patient_info.has_simple_domain() %}
+            <li data-hashtabber-pair="Others">
+                <article>
+                    {% for domain in patient_info.sub_domains %}
+                        {% if domain.attrs=='simple_domain' %}
+                            {{ domain.class2html()|safe }}
+                        {% endif %}
+                    {% endfor %}
+                </article>
+            </li>
+        {% endif %}
+
+
+
+    </ol>
+</section></section>
+
+
+</div>
+
+
+
+<script type="text/javascript">
+
+    var botton_toggle = function(obj){
+        var text = obj.innerHTML;
+        var seq = obj.id.substring(7);
+        var basic_layer_id = 'basic_layer_'+seq;
+        var boolean_field_id = 'boolean_field_'+seq;
+        var fhir_value_id = 'fhir_value_'+seq;
+        var basic_layer = document.getElementById(basic_layer_id);
+        var boolean_field = document.getElementById(boolean_field_id);
+        var fhir_value = document.getElementById(fhir_value_id);
+        if (boolean_field.checked) {
+            boolean_field.checked = !boolean_field.checked
+
+            if(basic_layer){ basic_layer.style.display = "" }
+            if(fhir_value) {fhir_value.style.color="black"}
+
+
+            obj.innerHTML = 'Hide'
+            obj.className = 'btn btn-success setting-btn'
+
+        }else{
+            boolean_field.checked = !boolean_field.checked
+
+            if(basic_layer){ basic_layer.style.display = "none" }
+            if(fhir_value) {fhir_value.style.color="lightgrey"}
+
+            obj.innerHTML = 'Show'
+            obj.className = 'btn btn-warning setting-btn'
+        }
+
+
+    }
+
+</script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/hashTabber.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+</html>
