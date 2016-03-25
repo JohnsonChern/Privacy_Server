@@ -594,16 +594,18 @@ def get_private_profile(patient_form,patient_class,patient_json):
 
     new_dict = {}
     if 'id' in patient_json :
-        new_dict['id'] = patient_json['id']
+        new_dict['Identifier'] = patient_json['id']
 
     if 'resourceType' in patient_json:
         new_dict['resourceType'] = patient_json['resourceType']
 
-    if 'resourceID' in patient_json:
-        new_dict['resourceID'] = patient_json['resourceID']
+    #if 'resourceID' in patient_json:
+    #s    new_dict['resourceID'] = patient_json['resourceID']
 
     new_dict['Policy'] = masked_part
 
+    new_dict['resourceID'] = new_dict['Identifier']
+    new_dict['Scope']= 'All'
     #print json.dumps(new_dict,indent=4)
 
     #retrive_patient_info(simple_key+complex_key,json.dumps(new_dict),json.dumps(jp.w))
