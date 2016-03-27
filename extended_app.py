@@ -167,7 +167,8 @@ def require_oauth(view):
 @app.route('/')
 @require_oauth
 def index():
-    return redirect('/resources/Patient')
+    #return redirect('/resources/Patient')
+    return redirect('/patient_test/f002')
 
 
 @app.route('/recv_redirect')
@@ -188,15 +189,26 @@ def doctor():
         keys = pe.extend_option(form)
         #get the keys the doctor selected
 
-        json = pe.retrive_patient_info(keys,private_profile,raw_json_file)
+        forward_args = request.args.to_dict(flat=False)
+        forward_args['_format'] = 'json'
+        forwarded_url =  'Patient' + '/' + form.identifier.data
+        api_url = '/neprivacy/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
+        api_resp = api_call(api_url)
+        raw_json_file = json.dumps(api_resp.json())
+        resp = requests.get('%s/%s' %(PRIVACY_BASE,form.identifier.data), headers={'Content-Type': 'application/json'})
+        private_profile = json.loads(json.dumps(resp.json()))
+        if resp.status_code == 404:
+            return STATUS_ERROR
+        #print private_profile
+        json_data = pe.retrive_patient_info(keys,private_profile,raw_json_file)
         #get the masked user info
-        query_dict  = json.loads(json)
+        query_dict  = json.loads(json_data)
 
         #token needed, but now I don't konw how to get it
         #user's id still in form.identifier.data
 
         return render_template('query_result.html',
-                          token= token,
+                          token= 'Found',
                           json = json.dumps(query_dict,indent=4))
     return render_template('submit.html',
                            form=form)
@@ -326,7 +338,8 @@ def set(patient_id):
         if resp.status_code == 404:
             return STATUS_ERROR
         else:
-            return render_template('temp.html',result = result)
+            #return render_template('temp.html',result = result)
+            return redirect('/doctor')
         #if tag == 1:
         #    return STATUS_OK
         #elif tag == 0:
@@ -408,7 +421,8 @@ def set_form(patient_id):
         if resp.status_code == 404:
             return STATUS_ERROR
         else:
-            return render_template('temp.html',result = private_profile)
+            #return render_template('temp.html',result = private_profile)
+            return redirect('/doctor')
     return render_template('private_set.html',form = patient_info_form,patient_info = patient_info_class)
 
 

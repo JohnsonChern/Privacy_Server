@@ -623,10 +623,15 @@ def retrive_patient_info(selected_keys,private_profile,raw_json):
                 the value of it will be 'mask'
     """
     patient = patient_info(json.loads(raw_json))
-    profile = json.loads(private_profile)['Policy']
+    #print private_profile
+    resource = private_profile['Resource']
+    #print resource
+    for v in resource.values():
+        #print v
+        profile = v['Policy']
     json_file = patient.retrive_json(profile,selected_keys)
-    print json_file
-    print json.dumps(json.loads(json_file),indent=4)
+    #print json_file
+    #print json.dumps(json.loads(json_file),indent=4)
 
     return json_file
 
