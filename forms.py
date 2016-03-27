@@ -69,15 +69,23 @@ class LoginForm(Form):
     #remember_me = BooleanField('address', default=False)
 
 
-def set_patient_from_and_class(json_file):
-    patient_info_class = pe.patient_info(json_file)
+def set_relative_info(patient,observation,sequences):
+    patient_info = pe.patient_info(patient)
 
-    for i in range(patient_info_class.field_num):
+    observation = pe.ob_info(observation)
+    for se in sequences:
+        observation.add_sequence(se)
+
+    num = patient_info.field_num
+
+    observation.init_seq(num)
+
+    for i in range(observation.field_num):
         fieldkey=  "boolean_field_"+str(i)
         setattr(Patient_from,fieldkey,BooleanField(fieldkey,default=False))
 
-    form = Patient_from(csrf_enabled=False)
-    return form,patient_info_class
+    form = Patient_from()
+    return form,patient_info,observation
 
 def set_query_form():
     patient_info_key = pe.get_option()

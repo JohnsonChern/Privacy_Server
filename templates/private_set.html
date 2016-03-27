@@ -13,8 +13,6 @@
         period{
             font-size: 14px;
             color:darkgrey;
-
-
         }
         a.fake-button{
             float:right;
@@ -25,6 +23,9 @@
         }
         .title_row{
             margin-top: 10px;
+        }
+        .row{
+            margin-top: 30px;
         }
         .setting-btn{
             float:right
@@ -78,6 +79,15 @@
             </li>
         {% endif %}
 
+        <li data-hashtabber-pair="Observation">
+            <a>Observation</a>
+        </li>
+
+        <li data-hashtabber-pair="Sequence">
+            <a>Sequence</a>
+        </li>
+
+
 
     </ol><!--
  --><ol class="hashTabber-data hashTabber-sandstone" data-hashtabber-id="dinosaurs">
@@ -105,6 +115,23 @@
                 </article>
             </li>
         {% endif %}
+
+        <li data-hashtabber-pair="Observation">
+            <article>
+                {% for domain in observation.sub_domains %}
+                    <p>{{ domain.class2html()|safe }}</p>
+                {% endfor %}
+            </article>
+        </li>
+
+        <li data-hashtabber-pair="Sequence">
+            <article>
+                {% for domain in observation.sequences %}
+                    <p>{{ domain.class2html()|safe }}</p>
+                {% endfor %}
+            </article>
+        </li>
+
 
 
 

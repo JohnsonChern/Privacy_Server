@@ -201,6 +201,7 @@ def doctor():
             return STATUS_ERROR
         #print private_profile
         json_data = pe.retrive_patient_info(keys,private_profile,raw_json_file)
+        #patient, observation, [sequence] = retrive_patient_info(selected_keys, private_profile, raw_json_patient,raw_ob,raw_seq)
         #get the masked user info
         query_dict  = json.loads(json_data)
 
@@ -210,8 +211,14 @@ def doctor():
         return render_template('query_result.html',
                           token= 'Found',
                           json = json.dumps(query_dict,indent=4))
+        '''
+        return render_template('query_enhance.html',token = 'Found',dumps = json.dumps,patient = patient,ob = observation,se = sequence)
+        '''
     return render_template('submit.html',
                            form=form)
+
+
+
 
 
 
@@ -383,7 +390,7 @@ def set_form():
     json_file = ...
     #json_file is the user info we get from the server
 
-    patient_info_form,patient_info_class = set_patient_from_and_class(json_file)
+    patient_info_form,patient_info_class = set_relative_info(patient_json_file,observation_json_file,list of sequences_json_file)
     #with the json file we now get from and class
 
     if patient_info_form.validate_on_submit():

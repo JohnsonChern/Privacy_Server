@@ -1,0 +1,32 @@
+<html>
+    <title>Result</title>
+    <body>
+        <h1>Query Result</h1>
+        <div>
+
+        {% if token=='Not_Found' %}
+        <h1>Invalid patient id</h1>
+        {% else %}
+            <h1>Patient</h1>
+            <pre><code>
+        {{dumps(patient,indent = 4)}}
+            </code></pre>
+        {% endif %}
+        </div>
+        <div>
+             <h1>Observation</h1>
+            <pre><code>
+            {{ dumps(observation, indent = 4) }}
+            </code></pre>
+        </div>
+    <div>
+        <h1>Sequence</h1>
+        {%  for s in sequence %}
+            <pre>
+                <code>
+                {{ dumps(s,indent = 4) }}
+                </code>
+            </pre>
+    </div>
+    </body>
+</html>
