@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c65ba513-3ffd-4842-b023-62ee32694356" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/forms.py" afterPath="$PROJECT_DIR$/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/private_extrace.py" afterPath="$PROJECT_DIR$/private_extrace.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/submit.html" afterPath="$PROJECT_DIR$/templates/submit.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/query_enhance.html" afterPath="$PROJECT_DIR$/templates/query_enhance.html" />
     </list>
     <ignored path="Privacy_Server.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,8 +28,8 @@
       <file leaf-file-name="extended_app.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/extended_app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="214" column="73" selection-start-line="214" selection-start-column="68" selection-end-line="214" selection-end-column="73" />
+            <state vertical-scroll-proportion="-5.111111">
+              <caret line="50" column="11" selection-start-line="50" selection-start-column="11" selection-end-line="50" selection-end-column="11" />
               <folding>
                 <element signature="e#0#78#0" expanded="true" />
               </folding>
@@ -39,10 +37,20 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="query_enhance.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/query_enhance.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.68938196">
+              <caret line="29" column="17" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="private_extrace.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/private_extrace.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-19.925926">
+            <state vertical-scroll-proportion="0.0">
               <caret line="1466" column="0" selection-start-line="1466" selection-start-column="0" selection-end-line="1466" selection-end-column="0" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
@@ -96,8 +104,8 @@
       <file leaf-file-name="submit.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/submit.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.541667">
-              <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="37" column="10" selection-start-line="37" selection-start-column="10" selection-end-line="37" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -113,11 +121,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2786624">
-              <caret line="67" column="36" selection-start-line="67" selection-start-column="36" selection-end-line="67" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="75" column="41" selection-start-line="75" selection-start-column="41" selection-end-line="75" selection-end-column="41" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -142,10 +150,10 @@
       <list>
         <option value="$PROJECT_DIR$/templates/private_set.html" />
         <option value="$PROJECT_DIR$/extended_app.py" />
-        <option value="$PROJECT_DIR$/templates/query_enhance.html" />
         <option value="$PROJECT_DIR$/forms.py" />
         <option value="$PROJECT_DIR$/private_extrace.py" />
         <option value="$PROJECT_DIR$/templates/submit.html" />
+        <option value="$PROJECT_DIR$/templates/query_enhance.html" />
       </list>
     </option>
   </component>
@@ -184,6 +192,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -219,7 +228,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -439,7 +447,7 @@
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25605816" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20759289" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -498,86 +506,6 @@
     <entry file="file://$PROJECT_DIR$/extended_app.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="214" column="73" selection-start-line="214" selection-start-column="68" selection-end-line="214" selection-end-column="73" />
-          <folding>
-            <element signature="e#0#78#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/private_extrace.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1399" column="88" selection-start-line="1399" selection-start-column="25" selection-end-line="1399" selection-end-column="88" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-            <element signature="e#10993#11161#0" expanded="false" />
-            <element signature="e#11217#11531#0" expanded="false" />
-            <element signature="e#11619#11813#0" expanded="false" />
-            <element signature="e#11857#12120#0" expanded="false" />
-            <element signature="e#12170#12453#0" expanded="false" />
-            <element signature="e#12490#12525#0" expanded="false" />
-            <element signature="e#12566#12670#0" expanded="false" />
-            <element signature="e#12719#13010#0" expanded="false" />
-            <element signature="e#13043#13205#0" expanded="false" />
-            <element signature="e#13241#14393#0" expanded="false" />
-            <element signature="e#14426#14588#0" expanded="false" />
-            <element signature="e#14621#14871#0" expanded="false" />
-            <element signature="e#20260#20428#0" expanded="false" />
-            <element signature="e#20483#20797#0" expanded="false" />
-            <element signature="e#20840#21034#0" expanded="false" />
-            <element signature="e#21078#21341#0" expanded="false" />
-            <element signature="e#21391#21674#0" expanded="false" />
-            <element signature="e#21724#22015#0" expanded="false" />
-            <element signature="e#22048#22210#0" expanded="false" />
-            <element signature="e#22246#23398#0" expanded="false" />
-            <element signature="e#23431#23593#0" expanded="false" />
-            <element signature="e#23626#23876#0" expanded="false" />
-            <element signature="e#23913#25824#0" expanded="false" />
-            <element signature="e#25939#28843#0" expanded="false" />
-            <element signature="e#28894#29057#0" expanded="false" />
-            <element signature="e#29111#29299#0" expanded="false" />
-            <element signature="e#29334#29502#0" expanded="false" />
-            <element signature="e#29535#29697#0" expanded="false" />
-            <element signature="e#29733#30791#0" expanded="false" />
-            <element signature="e#30827#32682#0" expanded="false" />
-            <element signature="e#32715#32965#0" expanded="false" />
-            <element signature="e#33004#33282#0" expanded="false" />
-            <element signature="e#33319#33737#0" expanded="false" />
-            <element signature="e#33773#35202#0" expanded="false" />
-            <element signature="e#38227#38534#0" expanded="false" />
-            <element signature="e#39044#39998#0" expanded="false" />
-            <element signature="e#39557#39615#0" expanded="false" />
-            <element signature="e#40061#40638#0" expanded="false" />
-            <element signature="e#40681#40807#0" expanded="false" />
-            <element signature="e#40841#40951#0" expanded="false" />
-            <element signature="e#40981#41039#0" expanded="false" />
-            <element signature="e#41075#41382#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/private_set.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="185" column="7" selection-start-line="185" selection-start-column="7" selection-end-line="185" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/extended_app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#78#0" expanded="true" />
@@ -588,250 +516,6 @@
     <entry file="file://$PROJECT_DIR$/private_extrace.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="1399" column="88" selection-start-line="1399" selection-start-column="25" selection-end-line="1399" selection-end-column="88" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-            <element signature="e#10993#11161#0" expanded="false" />
-            <element signature="e#11217#11531#0" expanded="false" />
-            <element signature="e#11619#11813#0" expanded="false" />
-            <element signature="e#11857#12120#0" expanded="false" />
-            <element signature="e#12170#12453#0" expanded="false" />
-            <element signature="e#12490#12525#0" expanded="false" />
-            <element signature="e#12566#12670#0" expanded="false" />
-            <element signature="e#12719#13010#0" expanded="false" />
-            <element signature="e#13043#13205#0" expanded="false" />
-            <element signature="e#13241#14393#0" expanded="false" />
-            <element signature="e#14426#14588#0" expanded="false" />
-            <element signature="e#14621#14871#0" expanded="false" />
-            <element signature="e#20260#20428#0" expanded="false" />
-            <element signature="e#20483#20797#0" expanded="false" />
-            <element signature="e#20840#21034#0" expanded="false" />
-            <element signature="e#21078#21341#0" expanded="false" />
-            <element signature="e#21391#21674#0" expanded="false" />
-            <element signature="e#21724#22015#0" expanded="false" />
-            <element signature="e#22048#22210#0" expanded="false" />
-            <element signature="e#22246#23398#0" expanded="false" />
-            <element signature="e#23431#23593#0" expanded="false" />
-            <element signature="e#23626#23876#0" expanded="false" />
-            <element signature="e#23913#25824#0" expanded="false" />
-            <element signature="e#25939#28843#0" expanded="false" />
-            <element signature="e#28894#29057#0" expanded="false" />
-            <element signature="e#29111#29299#0" expanded="false" />
-            <element signature="e#29334#29502#0" expanded="false" />
-            <element signature="e#29535#29697#0" expanded="false" />
-            <element signature="e#29733#30791#0" expanded="false" />
-            <element signature="e#30827#32682#0" expanded="false" />
-            <element signature="e#32715#32965#0" expanded="false" />
-            <element signature="e#33004#33282#0" expanded="false" />
-            <element signature="e#33319#33737#0" expanded="false" />
-            <element signature="e#33773#35202#0" expanded="false" />
-            <element signature="e#38227#38534#0" expanded="false" />
-            <element signature="e#39044#39998#0" expanded="false" />
-            <element signature="e#39557#39615#0" expanded="false" />
-            <element signature="e#40061#40638#0" expanded="false" />
-            <element signature="e#40681#40807#0" expanded="false" />
-            <element signature="e#40841#40951#0" expanded="false" />
-            <element signature="e#40981#41039#0" expanded="false" />
-            <element signature="e#41075#41382#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/extended_app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#78#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/private_extrace.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1450" column="0" selection-start-line="1450" selection-start-column="0" selection-end-line="1450" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-            <element signature="e#10993#11161#0" expanded="false" />
-            <element signature="e#11217#11531#0" expanded="false" />
-            <element signature="e#11619#11813#0" expanded="false" />
-            <element signature="e#11857#12120#0" expanded="false" />
-            <element signature="e#12170#12453#0" expanded="false" />
-            <element signature="e#12490#12525#0" expanded="false" />
-            <element signature="e#12566#12670#0" expanded="false" />
-            <element signature="e#12719#13010#0" expanded="false" />
-            <element signature="e#13043#13205#0" expanded="false" />
-            <element signature="e#13241#14393#0" expanded="false" />
-            <element signature="e#14426#14588#0" expanded="false" />
-            <element signature="e#14621#14871#0" expanded="false" />
-            <element signature="e#20260#20428#0" expanded="false" />
-            <element signature="e#20483#20797#0" expanded="false" />
-            <element signature="e#20840#21034#0" expanded="false" />
-            <element signature="e#21078#21341#0" expanded="false" />
-            <element signature="e#21391#21674#0" expanded="false" />
-            <element signature="e#21724#22015#0" expanded="false" />
-            <element signature="e#22048#22210#0" expanded="false" />
-            <element signature="e#22246#23398#0" expanded="false" />
-            <element signature="e#23431#23593#0" expanded="false" />
-            <element signature="e#23626#23876#0" expanded="false" />
-            <element signature="e#23913#25824#0" expanded="false" />
-            <element signature="e#25939#28843#0" expanded="false" />
-            <element signature="e#28894#29057#0" expanded="false" />
-            <element signature="e#29111#29299#0" expanded="false" />
-            <element signature="e#29334#29502#0" expanded="false" />
-            <element signature="e#29535#29697#0" expanded="false" />
-            <element signature="e#29733#30791#0" expanded="false" />
-            <element signature="e#30827#32682#0" expanded="false" />
-            <element signature="e#32715#32965#0" expanded="false" />
-            <element signature="e#33004#33282#0" expanded="false" />
-            <element signature="e#33319#33737#0" expanded="false" />
-            <element signature="e#33773#35202#0" expanded="false" />
-            <element signature="e#38227#38534#0" expanded="false" />
-            <element signature="e#39044#39998#0" expanded="false" />
-            <element signature="e#39557#39615#0" expanded="false" />
-            <element signature="e#40061#40638#0" expanded="false" />
-            <element signature="e#40681#40807#0" expanded="false" />
-            <element signature="e#40841#40951#0" expanded="false" />
-            <element signature="e#40981#41039#0" expanded="false" />
-            <element signature="e#41075#41382#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/private_set.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="185" column="7" selection-start-line="185" selection-start-column="7" selection-end-line="185" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/extended_app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#78#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/private_extrace.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1450" column="0" selection-start-line="1450" selection-start-column="0" selection-end-line="1450" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-            <element signature="e#10993#11161#0" expanded="false" />
-            <element signature="e#11217#11531#0" expanded="false" />
-            <element signature="e#11619#11813#0" expanded="false" />
-            <element signature="e#11857#12120#0" expanded="false" />
-            <element signature="e#12170#12453#0" expanded="false" />
-            <element signature="e#12490#12525#0" expanded="false" />
-            <element signature="e#12566#12670#0" expanded="false" />
-            <element signature="e#12719#13010#0" expanded="false" />
-            <element signature="e#13043#13205#0" expanded="false" />
-            <element signature="e#13241#14393#0" expanded="false" />
-            <element signature="e#14426#14588#0" expanded="false" />
-            <element signature="e#14621#14871#0" expanded="false" />
-            <element signature="e#20260#20428#0" expanded="false" />
-            <element signature="e#20483#20797#0" expanded="false" />
-            <element signature="e#20840#21034#0" expanded="false" />
-            <element signature="e#21078#21341#0" expanded="false" />
-            <element signature="e#21391#21674#0" expanded="false" />
-            <element signature="e#21724#22015#0" expanded="false" />
-            <element signature="e#22048#22210#0" expanded="false" />
-            <element signature="e#22246#23398#0" expanded="false" />
-            <element signature="e#23431#23593#0" expanded="false" />
-            <element signature="e#23626#23876#0" expanded="false" />
-            <element signature="e#23913#25824#0" expanded="false" />
-            <element signature="e#25939#28843#0" expanded="false" />
-            <element signature="e#28894#29057#0" expanded="false" />
-            <element signature="e#29111#29299#0" expanded="false" />
-            <element signature="e#29334#29502#0" expanded="false" />
-            <element signature="e#29535#29697#0" expanded="false" />
-            <element signature="e#29733#30791#0" expanded="false" />
-            <element signature="e#30827#32682#0" expanded="false" />
-            <element signature="e#32715#32965#0" expanded="false" />
-            <element signature="e#33004#33282#0" expanded="false" />
-            <element signature="e#33319#33737#0" expanded="false" />
-            <element signature="e#33773#35202#0" expanded="false" />
-            <element signature="e#38227#38534#0" expanded="false" />
-            <element signature="e#39044#39998#0" expanded="false" />
-            <element signature="e#39557#39615#0" expanded="false" />
-            <element signature="e#40061#40638#0" expanded="false" />
-            <element signature="e#40681#40807#0" expanded="false" />
-            <element signature="e#40841#40951#0" expanded="false" />
-            <element signature="e#40981#41039#0" expanded="false" />
-            <element signature="e#41075#41382#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/private_set.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="185" column="7" selection-start-line="185" selection-start-column="7" selection-end-line="185" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/extended_app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="214" column="73" selection-start-line="214" selection-start-column="68" selection-end-line="214" selection-end-column="73" />
-          <folding>
-            <element signature="e#0#78#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/query_enhance.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7606973">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/query_result.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40412045">
-          <caret line="17" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/private_set.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="185" column="7" selection-start-line="185" selection-start-column="7" selection-end-line="185" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/private_extrace.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.925926">
           <caret line="1466" column="0" selection-start-line="1466" selection-start-column="0" selection-end-line="1466" selection-end-column="0" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
@@ -883,19 +567,520 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/submit.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.541667">
-          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="37" column="10" selection-start-line="37" selection-start-column="10" selection-end-line="37" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/private_set.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="185" column="7" selection-start-line="185" selection-start-column="7" selection-end-line="185" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2786624">
-          <caret line="67" column="36" selection-start-line="67" selection-start-column="36" selection-end-line="67" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="75" column="41" selection-start-line="75" selection-start-column="41" selection-end-line="75" selection-end-column="41" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extended_app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="214" column="73" selection-start-line="214" selection-start-column="68" selection-end-line="214" selection-end-column="73" />
+          <folding>
+            <element signature="e#0#78#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/private_extrace.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1466" column="0" selection-start-line="1466" selection-start-column="0" selection-end-line="1466" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#10993#11161#0" expanded="false" />
+            <element signature="e#11217#11531#0" expanded="false" />
+            <element signature="e#11619#11813#0" expanded="false" />
+            <element signature="e#11857#12120#0" expanded="false" />
+            <element signature="e#12170#12453#0" expanded="false" />
+            <element signature="e#12490#12525#0" expanded="false" />
+            <element signature="e#12566#12670#0" expanded="false" />
+            <element signature="e#12719#13010#0" expanded="false" />
+            <element signature="e#13043#13205#0" expanded="false" />
+            <element signature="e#13241#14393#0" expanded="false" />
+            <element signature="e#14426#14588#0" expanded="false" />
+            <element signature="e#14621#14871#0" expanded="false" />
+            <element signature="e#20260#20428#0" expanded="false" />
+            <element signature="e#20483#20797#0" expanded="false" />
+            <element signature="e#20840#21034#0" expanded="false" />
+            <element signature="e#21078#21341#0" expanded="false" />
+            <element signature="e#21391#21674#0" expanded="false" />
+            <element signature="e#21724#22015#0" expanded="false" />
+            <element signature="e#22048#22210#0" expanded="false" />
+            <element signature="e#22246#23398#0" expanded="false" />
+            <element signature="e#23431#23593#0" expanded="false" />
+            <element signature="e#23626#23876#0" expanded="false" />
+            <element signature="e#23913#25824#0" expanded="false" />
+            <element signature="e#25939#28843#0" expanded="false" />
+            <element signature="e#28894#29057#0" expanded="false" />
+            <element signature="e#29111#29299#0" expanded="false" />
+            <element signature="e#29334#29502#0" expanded="false" />
+            <element signature="e#29535#29697#0" expanded="false" />
+            <element signature="e#29733#30791#0" expanded="false" />
+            <element signature="e#30827#32682#0" expanded="false" />
+            <element signature="e#32715#32965#0" expanded="false" />
+            <element signature="e#33004#33282#0" expanded="false" />
+            <element signature="e#33319#33737#0" expanded="false" />
+            <element signature="e#33773#35202#0" expanded="false" />
+            <element signature="e#38227#38534#0" expanded="false" />
+            <element signature="e#39044#39998#0" expanded="false" />
+            <element signature="e#39557#39615#0" expanded="false" />
+            <element signature="e#40061#40638#0" expanded="false" />
+            <element signature="e#40681#40807#0" expanded="false" />
+            <element signature="e#40841#40951#0" expanded="false" />
+            <element signature="e#40981#41039#0" expanded="false" />
+            <element signature="e#41075#41382#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/submit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/private_set.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="185" column="7" selection-start-line="185" selection-start-column="7" selection-end-line="185" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extended_app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="214" column="73" selection-start-line="214" selection-start-column="68" selection-end-line="214" selection-end-column="73" />
+          <folding>
+            <element signature="e#0#78#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/private_extrace.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1399" column="88" selection-start-line="1399" selection-start-column="25" selection-end-line="1399" selection-end-column="88" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#10993#11161#0" expanded="false" />
+            <element signature="e#11217#11531#0" expanded="false" />
+            <element signature="e#11619#11813#0" expanded="false" />
+            <element signature="e#11857#12120#0" expanded="false" />
+            <element signature="e#12170#12453#0" expanded="false" />
+            <element signature="e#12490#12525#0" expanded="false" />
+            <element signature="e#12566#12670#0" expanded="false" />
+            <element signature="e#12719#13010#0" expanded="false" />
+            <element signature="e#13043#13205#0" expanded="false" />
+            <element signature="e#13241#14393#0" expanded="false" />
+            <element signature="e#14426#14588#0" expanded="false" />
+            <element signature="e#14621#14871#0" expanded="false" />
+            <element signature="e#20260#20428#0" expanded="false" />
+            <element signature="e#20483#20797#0" expanded="false" />
+            <element signature="e#20840#21034#0" expanded="false" />
+            <element signature="e#21078#21341#0" expanded="false" />
+            <element signature="e#21391#21674#0" expanded="false" />
+            <element signature="e#21724#22015#0" expanded="false" />
+            <element signature="e#22048#22210#0" expanded="false" />
+            <element signature="e#22246#23398#0" expanded="false" />
+            <element signature="e#23431#23593#0" expanded="false" />
+            <element signature="e#23626#23876#0" expanded="false" />
+            <element signature="e#23913#25824#0" expanded="false" />
+            <element signature="e#25939#28843#0" expanded="false" />
+            <element signature="e#28894#29057#0" expanded="false" />
+            <element signature="e#29111#29299#0" expanded="false" />
+            <element signature="e#29334#29502#0" expanded="false" />
+            <element signature="e#29535#29697#0" expanded="false" />
+            <element signature="e#29733#30791#0" expanded="false" />
+            <element signature="e#30827#32682#0" expanded="false" />
+            <element signature="e#32715#32965#0" expanded="false" />
+            <element signature="e#33004#33282#0" expanded="false" />
+            <element signature="e#33319#33737#0" expanded="false" />
+            <element signature="e#33773#35202#0" expanded="false" />
+            <element signature="e#38227#38534#0" expanded="false" />
+            <element signature="e#39044#39998#0" expanded="false" />
+            <element signature="e#39557#39615#0" expanded="false" />
+            <element signature="e#40061#40638#0" expanded="false" />
+            <element signature="e#40681#40807#0" expanded="false" />
+            <element signature="e#40841#40951#0" expanded="false" />
+            <element signature="e#40981#41039#0" expanded="false" />
+            <element signature="e#41075#41382#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/private_set.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="185" column="7" selection-start-line="185" selection-start-column="7" selection-end-line="185" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extended_app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#78#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/private_extrace.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1399" column="88" selection-start-line="1399" selection-start-column="25" selection-end-line="1399" selection-end-column="88" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#10993#11161#0" expanded="false" />
+            <element signature="e#11217#11531#0" expanded="false" />
+            <element signature="e#11619#11813#0" expanded="false" />
+            <element signature="e#11857#12120#0" expanded="false" />
+            <element signature="e#12170#12453#0" expanded="false" />
+            <element signature="e#12490#12525#0" expanded="false" />
+            <element signature="e#12566#12670#0" expanded="false" />
+            <element signature="e#12719#13010#0" expanded="false" />
+            <element signature="e#13043#13205#0" expanded="false" />
+            <element signature="e#13241#14393#0" expanded="false" />
+            <element signature="e#14426#14588#0" expanded="false" />
+            <element signature="e#14621#14871#0" expanded="false" />
+            <element signature="e#20260#20428#0" expanded="false" />
+            <element signature="e#20483#20797#0" expanded="false" />
+            <element signature="e#20840#21034#0" expanded="false" />
+            <element signature="e#21078#21341#0" expanded="false" />
+            <element signature="e#21391#21674#0" expanded="false" />
+            <element signature="e#21724#22015#0" expanded="false" />
+            <element signature="e#22048#22210#0" expanded="false" />
+            <element signature="e#22246#23398#0" expanded="false" />
+            <element signature="e#23431#23593#0" expanded="false" />
+            <element signature="e#23626#23876#0" expanded="false" />
+            <element signature="e#23913#25824#0" expanded="false" />
+            <element signature="e#25939#28843#0" expanded="false" />
+            <element signature="e#28894#29057#0" expanded="false" />
+            <element signature="e#29111#29299#0" expanded="false" />
+            <element signature="e#29334#29502#0" expanded="false" />
+            <element signature="e#29535#29697#0" expanded="false" />
+            <element signature="e#29733#30791#0" expanded="false" />
+            <element signature="e#30827#32682#0" expanded="false" />
+            <element signature="e#32715#32965#0" expanded="false" />
+            <element signature="e#33004#33282#0" expanded="false" />
+            <element signature="e#33319#33737#0" expanded="false" />
+            <element signature="e#33773#35202#0" expanded="false" />
+            <element signature="e#38227#38534#0" expanded="false" />
+            <element signature="e#39044#39998#0" expanded="false" />
+            <element signature="e#39557#39615#0" expanded="false" />
+            <element signature="e#40061#40638#0" expanded="false" />
+            <element signature="e#40681#40807#0" expanded="false" />
+            <element signature="e#40841#40951#0" expanded="false" />
+            <element signature="e#40981#41039#0" expanded="false" />
+            <element signature="e#41075#41382#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extended_app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#78#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/private_extrace.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1450" column="0" selection-start-line="1450" selection-start-column="0" selection-end-line="1450" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#10993#11161#0" expanded="false" />
+            <element signature="e#11217#11531#0" expanded="false" />
+            <element signature="e#11619#11813#0" expanded="false" />
+            <element signature="e#11857#12120#0" expanded="false" />
+            <element signature="e#12170#12453#0" expanded="false" />
+            <element signature="e#12490#12525#0" expanded="false" />
+            <element signature="e#12566#12670#0" expanded="false" />
+            <element signature="e#12719#13010#0" expanded="false" />
+            <element signature="e#13043#13205#0" expanded="false" />
+            <element signature="e#13241#14393#0" expanded="false" />
+            <element signature="e#14426#14588#0" expanded="false" />
+            <element signature="e#14621#14871#0" expanded="false" />
+            <element signature="e#20260#20428#0" expanded="false" />
+            <element signature="e#20483#20797#0" expanded="false" />
+            <element signature="e#20840#21034#0" expanded="false" />
+            <element signature="e#21078#21341#0" expanded="false" />
+            <element signature="e#21391#21674#0" expanded="false" />
+            <element signature="e#21724#22015#0" expanded="false" />
+            <element signature="e#22048#22210#0" expanded="false" />
+            <element signature="e#22246#23398#0" expanded="false" />
+            <element signature="e#23431#23593#0" expanded="false" />
+            <element signature="e#23626#23876#0" expanded="false" />
+            <element signature="e#23913#25824#0" expanded="false" />
+            <element signature="e#25939#28843#0" expanded="false" />
+            <element signature="e#28894#29057#0" expanded="false" />
+            <element signature="e#29111#29299#0" expanded="false" />
+            <element signature="e#29334#29502#0" expanded="false" />
+            <element signature="e#29535#29697#0" expanded="false" />
+            <element signature="e#29733#30791#0" expanded="false" />
+            <element signature="e#30827#32682#0" expanded="false" />
+            <element signature="e#32715#32965#0" expanded="false" />
+            <element signature="e#33004#33282#0" expanded="false" />
+            <element signature="e#33319#33737#0" expanded="false" />
+            <element signature="e#33773#35202#0" expanded="false" />
+            <element signature="e#38227#38534#0" expanded="false" />
+            <element signature="e#39044#39998#0" expanded="false" />
+            <element signature="e#39557#39615#0" expanded="false" />
+            <element signature="e#40061#40638#0" expanded="false" />
+            <element signature="e#40681#40807#0" expanded="false" />
+            <element signature="e#40841#40951#0" expanded="false" />
+            <element signature="e#40981#41039#0" expanded="false" />
+            <element signature="e#41075#41382#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/private_set.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="185" column="7" selection-start-line="185" selection-start-column="7" selection-end-line="185" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extended_app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#78#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/private_extrace.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1450" column="0" selection-start-line="1450" selection-start-column="0" selection-end-line="1450" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#10993#11161#0" expanded="false" />
+            <element signature="e#11217#11531#0" expanded="false" />
+            <element signature="e#11619#11813#0" expanded="false" />
+            <element signature="e#11857#12120#0" expanded="false" />
+            <element signature="e#12170#12453#0" expanded="false" />
+            <element signature="e#12490#12525#0" expanded="false" />
+            <element signature="e#12566#12670#0" expanded="false" />
+            <element signature="e#12719#13010#0" expanded="false" />
+            <element signature="e#13043#13205#0" expanded="false" />
+            <element signature="e#13241#14393#0" expanded="false" />
+            <element signature="e#14426#14588#0" expanded="false" />
+            <element signature="e#14621#14871#0" expanded="false" />
+            <element signature="e#20260#20428#0" expanded="false" />
+            <element signature="e#20483#20797#0" expanded="false" />
+            <element signature="e#20840#21034#0" expanded="false" />
+            <element signature="e#21078#21341#0" expanded="false" />
+            <element signature="e#21391#21674#0" expanded="false" />
+            <element signature="e#21724#22015#0" expanded="false" />
+            <element signature="e#22048#22210#0" expanded="false" />
+            <element signature="e#22246#23398#0" expanded="false" />
+            <element signature="e#23431#23593#0" expanded="false" />
+            <element signature="e#23626#23876#0" expanded="false" />
+            <element signature="e#23913#25824#0" expanded="false" />
+            <element signature="e#25939#28843#0" expanded="false" />
+            <element signature="e#28894#29057#0" expanded="false" />
+            <element signature="e#29111#29299#0" expanded="false" />
+            <element signature="e#29334#29502#0" expanded="false" />
+            <element signature="e#29535#29697#0" expanded="false" />
+            <element signature="e#29733#30791#0" expanded="false" />
+            <element signature="e#30827#32682#0" expanded="false" />
+            <element signature="e#32715#32965#0" expanded="false" />
+            <element signature="e#33004#33282#0" expanded="false" />
+            <element signature="e#33319#33737#0" expanded="false" />
+            <element signature="e#33773#35202#0" expanded="false" />
+            <element signature="e#38227#38534#0" expanded="false" />
+            <element signature="e#39044#39998#0" expanded="false" />
+            <element signature="e#39557#39615#0" expanded="false" />
+            <element signature="e#40061#40638#0" expanded="false" />
+            <element signature="e#40681#40807#0" expanded="false" />
+            <element signature="e#40841#40951#0" expanded="false" />
+            <element signature="e#40981#41039#0" expanded="false" />
+            <element signature="e#41075#41382#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/private_set.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="185" column="7" selection-start-line="185" selection-start-column="7" selection-end-line="185" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/query_result.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.40412045">
+          <caret line="17" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/private_set.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="185" column="7" selection-start-line="185" selection-start-column="7" selection-end-line="185" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="75" column="41" selection-start-line="75" selection-start-column="41" selection-end-line="75" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/submit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="37" column="10" selection-start-line="37" selection-start-column="10" selection-end-line="37" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/private_extrace.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1466" column="0" selection-start-line="1466" selection-start-column="0" selection-end-line="1466" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#10993#11161#0" expanded="false" />
+            <element signature="e#11217#11531#0" expanded="false" />
+            <element signature="e#11619#11813#0" expanded="false" />
+            <element signature="e#11857#12120#0" expanded="false" />
+            <element signature="e#12170#12453#0" expanded="false" />
+            <element signature="e#12490#12525#0" expanded="false" />
+            <element signature="e#12566#12670#0" expanded="false" />
+            <element signature="e#12719#13010#0" expanded="false" />
+            <element signature="e#13043#13205#0" expanded="false" />
+            <element signature="e#13241#14393#0" expanded="false" />
+            <element signature="e#14426#14588#0" expanded="false" />
+            <element signature="e#14621#14871#0" expanded="false" />
+            <element signature="e#20260#20428#0" expanded="false" />
+            <element signature="e#20483#20797#0" expanded="false" />
+            <element signature="e#20840#21034#0" expanded="false" />
+            <element signature="e#21078#21341#0" expanded="false" />
+            <element signature="e#21391#21674#0" expanded="false" />
+            <element signature="e#21724#22015#0" expanded="false" />
+            <element signature="e#22048#22210#0" expanded="false" />
+            <element signature="e#22246#23398#0" expanded="false" />
+            <element signature="e#23431#23593#0" expanded="false" />
+            <element signature="e#23626#23876#0" expanded="false" />
+            <element signature="e#23913#25824#0" expanded="false" />
+            <element signature="e#25939#28843#0" expanded="false" />
+            <element signature="e#28894#29057#0" expanded="false" />
+            <element signature="e#29111#29299#0" expanded="false" />
+            <element signature="e#29334#29502#0" expanded="false" />
+            <element signature="e#29535#29697#0" expanded="false" />
+            <element signature="e#29733#30791#0" expanded="false" />
+            <element signature="e#30827#32682#0" expanded="false" />
+            <element signature="e#32715#32965#0" expanded="false" />
+            <element signature="e#33004#33282#0" expanded="false" />
+            <element signature="e#33319#33737#0" expanded="false" />
+            <element signature="e#33773#35202#0" expanded="false" />
+            <element signature="e#38227#38534#0" expanded="false" />
+            <element signature="e#39044#39998#0" expanded="false" />
+            <element signature="e#39557#39615#0" expanded="false" />
+            <element signature="e#40061#40638#0" expanded="false" />
+            <element signature="e#40681#40807#0" expanded="false" />
+            <element signature="e#40841#40951#0" expanded="false" />
+            <element signature="e#40981#41039#0" expanded="false" />
+            <element signature="e#41075#41382#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extended_app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.111111">
+          <caret line="50" column="11" selection-start-line="50" selection-start-column="11" selection-end-line="50" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#78#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/query_enhance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.68938196">
+          <caret line="29" column="17" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
