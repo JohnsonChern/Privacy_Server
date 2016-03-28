@@ -8,7 +8,7 @@ import cgi
 import copy
 import transfer as tr
 from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI, PRIVACY_BASE
-from forms import SubmitForm, AuthenticationForm, SubmitDictForm,UserLoginForm,set_query_form,set_patient_from_and_class
+from forms import SubmitForm, AuthenticationForm, SubmitDictForm,UserLoginForm,set_query_form,set_relative_info
 import set_private as sp
 from filter import TextFilter
 import private_extrace as pe
@@ -168,7 +168,7 @@ def require_oauth(view):
 @require_oauth
 def index():
     #return redirect('/resources/Patient')
-    return redirect('/patient_test/f002')
+    return redirect('/doctor')
 
 
 @app.route('/recv_redirect')
@@ -200,20 +200,21 @@ def doctor():
         if resp.status_code == 404:
             return STATUS_ERROR
         #print private_profile
-        json_data = pe.retrive_patient_info(keys,private_profile,raw_json_file)
-        #patient, observation, [sequence] = retrive_patient_info(selected_keys, private_profile, raw_json_patient,raw_ob,raw_seq)
+        #json_data = pe.retrive_patient_info(keys,private_profile,raw_json_file)
+        patient, observation, [sequence] = pe.retrive_patient_info(keys, private_profile, raw_json_file, json.dumps({}),json.dumps({}))
         #get the masked user info
-        query_dict  = json.loads(json_data)
+        #query_dict  = json.loads(json_data)
 
         #token needed, but now I don't konw how to get it
         #user's id still in form.identifier.data
 
+        '''
         return render_template('query_result.html',
                           token= 'Found',
                           json = json.dumps(query_dict,indent=4))
         '''
         return render_template('query_enhance.html',token = 'Found',dumps = json.dumps,patient = patient,ob = observation,se = sequence)
-        '''
+
     return render_template('submit.html',
                            form=form)
 
@@ -412,7 +413,7 @@ def set_form(patient_id):
     json_file = api_resp.json()
     #json_file is the user info we get from the server
 
-    patient_info_form,patient_info_class = set_patient_from_and_class(json_file)
+    patient_info_form,patient_info_class = set_relative_info(json_file,{},{})
     #with the json file we now get from and class
 
     if patient_info_form.validate_on_submit():

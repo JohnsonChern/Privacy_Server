@@ -1414,10 +1414,11 @@ def retrive_patient_info(selected_keys, private_profile, raw_json_patient,raw_ob
                 the value of it will be 'mask'
     """
     patient = patient_info(json.loads(raw_json_patient))
-    profile = json.loads(private_profile)['Policy']
-    patient_json_file = patient.retrive_json(profile['Patient'],selected_keys)
-    print patient_json_file
-    print json.dumps(json.loads(patient_json_file),indent=4)
+    try:
+        profile = json.loads(private_profile)['Policy']
+        patient_json_file = patient.retrive_json(profile['Patient'],selected_keys)
+    except:
+        patient_json_file = patient.retrive_json({},selected_keys)
 
     ob = json.loads(raw_ob)
     ob_profile = json.loads(profile['Observation'])
@@ -1426,7 +1427,7 @@ def retrive_patient_info(selected_keys, private_profile, raw_json_patient,raw_ob
         for key in ob.keys():
             if key in keys:
                 del ob[key]
-    observation = json.dups(ob)
+    observation = json.dumps(ob)
 
     print json.dumps(json.loads(ob),indent=4)
 
