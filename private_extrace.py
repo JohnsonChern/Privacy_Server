@@ -1146,20 +1146,23 @@ class patient_info_domain:
 class ob_info:
 
     def __init__(self,file):
-        if file.has_key('id'):
-            self.id = file['id']
+        if file:
+            if file.has_key('id'):
+                self.id = file['id']
+            else:
+                print 'has no id'
+            self.sub_domains = []
+            self.sequences = []
+            for key in observation_template.keys():
+                if key in file.keys():
+                    new_domain = observation_domain(file = file[key],template= observation_template[key],key=key,types='basic_layer')
+                    self.sub_domains.append(new_domain)
+            #self.init_seq()
         else:
-            print 'has no id'
-        self.sub_domains = []
-        self.sequences = []
-        for key in observation_template.keys():
-            if key in file.keys():
-                new_domain = observation_domain(file = file[key],template= observation_template[key],key=key,types='basic_layer')
-                self.sub_domains.append(new_domain)
-        #self.init_seq()
+            self.sub_domains = []
+            self.sequences = []
 
     def add_sequence(self,file):
-
         seq_seq = len(self.sequences)
         new_domain = observation_domain(file=file, template = sequence_template,key = 'sequence_'+str(seq_seq),attrs = 'sequence')
         if file.has_key('id'):
@@ -1176,10 +1179,12 @@ class ob_info:
 
 
     def init_seq(self,num):
-        for domain in self.sub_domains:
-            num = domain.dfs(num)
-        for domain in self.sequences:
-            num = domain.set_seq(num)
+        if self.sub_domains:
+            for domain in self.sub_domains:
+                num = domain.dfs(num)
+        if self.sequences:
+            for domain in self.sequences:
+                num = domain.set_seq(num)
         self.field_num = num
 
     def dump(self):
@@ -1391,6 +1396,8 @@ def get_private_profile(patient_form,patient_class,observation,patient_json):
 
     #retrive_patient_info(simple_key+complex_key,json.dumps(new_dict),json.dumps(jp.w))
 
+    print json.dumps(new_dict)
+
     return json.dumps(new_dict)
 
 
@@ -1442,9 +1449,8 @@ def ob_test():
     e = jp.seq_ep
     o = jp.ob_ep
     print e
-    ob = ob_info(o)
+    ob = ob_info([])
     ob.add_sequence(e)
-    print ob.id
     for domain in ob.sequences:
         print domain.id
         print domain.class2html()

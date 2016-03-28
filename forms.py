@@ -65,6 +65,7 @@ class LoginForm(Form):
     Field will be initialize by func set_query_form
     """
     identifier= StringField('identifier', validators=[DataRequired(message=u'You must input patient\'s ID')])
+    disease = StringField('disease')
 
     #remember_me = BooleanField('address', default=False)
 
