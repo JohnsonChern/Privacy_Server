@@ -1416,33 +1416,56 @@ def retrive_patient_info(selected_keys, private_profile, raw_json_patient,raw_ob
     patient = patient_info(json.loads(raw_json_patient))
     try:
         profile = json.loads(private_profile)['Policy']
+    except:
+        #No policy can be detected
+        pass
+    try:
         patient_json_file = patient.retrive_json(profile['Patient'],selected_keys)
     except:
         patient_json_file = patient.retrive_json({},selected_keys)
 
-    ob = json.loads(raw_ob)
-    ob_profile = json.loads(profile['Observation'])
-    if ob_profile.has_key(ob['id']):
+    '''ob = ob_info(json.loads(raw_ob))
+    try:
+        profile = json.loads(private_profile)['Policy']
+        ob_json_file = ob.retrive_json(profile['Observation'],selected_keys)
+    except:
+        ob_json_file = ob.retrive_json({},selected_keys)
+    '''
+
+
+    ob = raw_ob
+    try:
+        ob_profile = json.loads(profile['Observation'])
+    except:
+        ob_profile={}
+
+    '''if 'id' in ob and ob_profile.has_key(ob['id']):
         keys = ob_profile[ob['id']]
         for key in ob.keys():
             if key in keys:
-                del ob[key]
+                del ob[key]'''
     observation = json.dumps(ob)
 
-    print json.dumps(json.loads(ob),indent=4)
+    #print json.dumps(ob,indent=4)
 
-    se_profile = json.loads(profile['Sequence'])
-    se = map(lambda x:json.loads(x),raw_seq)
-    tmp = list(sequence for sequence in se if not sequence['id'] in se_profile )
-    sequences = map(lambda x:json.dumps(x),list)
+    try:
+        se_profile = json.loads(profile['Sequence'])
+    except:
+        se_profile={}
+    print raw_seq
+    se = []
+    for raw in raw_seq:
+        se.append(raw)
+    print se
+    sequences = []
+    for sequence in se:
+        #if 'id' in sequence  and  sequence['id'] in se_profile:
+        sequences.append(json.dumps(sequence))
 
     for s in sequences:
-        print json.dumps(json.loads(s),indent=4)
+        print json.dumps(s,indent=4)
 
-
-
-
-    return patient_json_file,ob,sequences
+    return patient_json_file,observation,sequences
 
 
 

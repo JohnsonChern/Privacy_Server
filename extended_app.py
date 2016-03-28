@@ -194,14 +194,43 @@ def doctor():
         forwarded_url =  'Patient' + '/' + form.identifier.data
         api_url = '/neprivacy/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
         api_resp = api_call(api_url)
-        raw_json_file = json.dumps(api_resp.json())
+        print api_resp._content
+        raw_patient_file = json.dumps(api_resp.json())
         resp = requests.get('%s/%s' %(PRIVACY_BASE,form.identifier.data), headers={'Content-Type': 'application/json'})
         private_profile = json.loads(json.dumps(resp.json()))
-        if resp.status_code == 404:
-            return STATUS_ERROR
+        try:
+            private_profile['Policy']
+        except:
+            #No policy can be detected
+            private_profile['Policy']={}
+
+        cross_loc = TextFilter(form.identifier.data, form.disease.data)
+
+        # First scan the observation data to locate specific observation result
+        cross_loc.get_observation_list()
+
+        #Then to locate the genetic info(i.e. Sequence Resource) in the data base
+        cross_loc.observation_prune()
+        cross_loc.get_genetic_info()
+        '''bundle = {
+                'resourceType': 'searchset',
+               'entry': [],
+               'is_single_resource': False
+        }
+        for v in cross_loc.filtered_Observation:
+            bundle['entry'].append({'resource':v})
+        print cross_loc.seq_id
+        for v in cross_loc.correlated_genetic:
+            bundle['entry'].append({'resource':v})'''
+
+        #if resp.status_code == 404:
+        #    return STATUS_ERROR
         #print private_profile
         #json_data = pe.retrive_patient_info(keys,private_profile,raw_json_file)
-        patient, observation, [sequence] = pe.retrive_patient_info(keys, private_profile, raw_json_file, json.dumps({}),json.dumps({}))
+        try:
+            patient, observation, sequence = pe.retrive_patient_info(keys, private_profile, raw_patient_file, cross_loc.filtered_Observation[0] ,cross_loc.correlated_genetic)
+        except:
+            patient, observation, sequence = pe.retrive_patient_info(keys, private_profile, raw_patient_file, {}, cross_loc.correlated_genetic)
         #get the masked user info
         #query_dict  = json.loads(json_data)
 
@@ -213,37 +242,11 @@ def doctor():
                           token= 'Found',
                           json = json.dumps(query_dict,indent=4))
         '''
-        return render_template('query_enhance.html',token = 'Found',dumps = json.dumps,patient = patient,ob = observation,se = sequence)
+        #return render_template('query_enhance.html',token = 'Found',dumps = json.dumps,patient = patient,ob = observation,se = sequence)
+        return redirect('/patient_test/%s' % (form.identifier.data))
 
     return render_template('submit.html',
                            form=form)
-
-
-
-
-
-
-'''
-@app.route('/doctor',methods=['GET', 'POST'])
-@require_oauth
-def doctor():
-    form = SubmitForm(csrf_enabled=False)
-    if form.validate_on_submit():
-        rawlist = []
-        for item in form:
-            if item.type == "BooleanField" and item.data == True:
-                rawlist.append(item.name)
-
-        token,query_dict = tr.query_info(rawlist,form.identifier.data)
-
-        return render_template('query_result.html',
-                          token= token,
-                          json = json.dumps(query_dict,indent=4))
-
-    return render_template('submit.html',
-                           form=form)
-
-'''
 
 @app.route('/patient/', methods=['GET', 'POST'])
 @require_oauth
@@ -298,7 +301,7 @@ def forward_api(forwarded_url):
 
     if ('type' in bundle and bundle['type'] != 'searchset') or ('resourceType' in bundle and bundle['resourceType']!='Bundle'):
         resource = bundle
-        patient_id = resource['id']
+        #patient_id = resource['id']
         #modified_resource = tr.check_private_policy(resource,patient_id,CLIENT_ID)
         #code_snippet = get_code_snippet(modified_resource)
         code_snippet = get_code_snippet(resource)
@@ -413,12 +416,21 @@ def set_form(patient_id):
     json_file = api_resp.json()
     #json_file is the user info we get from the server
 
-    patient_info_form,patient_info_class = set_relative_info(json_file,{},{})
+    cross_loc = TextFilter(patient_id,'Lung cancer')
+
+    # First scan the observation data to locate specific observation result
+    cross_loc.get_observation_list()
+
+    #Then to locate the genetic info(i.e. Sequence Resource) in the data base
+    cross_loc.observation_prune()
+    cross_loc.get_genetic_info()
+
+    patient_info_form,patient_info_class,observed = set_relative_info(json_file,cross_loc.filtered_Observation[0],cross_loc.correlated_genetic)
     #with the json file we now get from and class
 
     if patient_info_form.validate_on_submit():
 
-        private_profile =  pe.get_private_profile(patient_info_form,patient_info_class,json_file)
+        private_profile =  pe.get_private_profile(patient_info_form,patient_info_class,observed,json_file)
         # now we get the private profile
         #print type(private_profile)
         #if 'id' in private_profile:
@@ -429,9 +441,9 @@ def set_form(patient_id):
         if resp.status_code == 404:
             return STATUS_ERROR
         else:
-            #return render_template('temp.html',result = private_profile)
-            return redirect('/doctor')
-    return render_template('private_set.html',form = patient_info_form,patient_info = patient_info_class)
+            return render_template('temp.html',result = private_profile)
+            #return redirect('/doctor')
+    return render_template('private_set.html',form = patient_info_form,patient_info = patient_info_class,observation=observed)
 
 
 

@@ -113,7 +113,7 @@ class TextFilter(object):
                     flag= False;
                     for list in list_resource:
                         try:
-                            if(list[-2]=='text' and list[-1]==self.search_text):
+                            if(list[-2]=='text'and (list[-1]==self.search_text or self.search_text in list[-1])):
                                 flag= True;
                                 break;
                         except:
@@ -139,7 +139,7 @@ class TextFilter(object):
             if isinstance(v,dict):
                 if 'coding' in v and 'text' in v:
                     text_ = v['text']
-                    if text_== self.search_text or self.search_text=='*':
+                    if text_== self.search_text or self.search_text in text_ or self.search_text=='*':
                         self.seq_id.append(v)
             elif isinstance(v,list):
                 vs =v
