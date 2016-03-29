@@ -76,7 +76,7 @@ class TextFilter(object):
         forward_args = request.args.to_dict(flat=False)
         forward_args['_format'] = 'json'
         forwarded_url =  resource_type
-        api_url = '/neprivacy/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
+        api_url = '/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
         print api_url
         resp = api_call(api_url)
         bundle =resp.json();
@@ -113,12 +113,15 @@ class TextFilter(object):
                     flag= False;
                     for list in list_resource:
                         try:
+                            #print list
                             if(list[-2]=='text'and (list[-1]==self.search_text or self.search_text in list[-1])):
                                 flag= True;
                                 break;
                         except:
                             pass
                     if(flag):
+                        #print type(resource)
+                        #print "here\n\n\n"
                         self.filtered_Observation.append(resource)
                         self.add_locale_info(resource)
                         k+=1
@@ -135,7 +138,7 @@ class TextFilter(object):
 
     def add_locale_info(self,resource):
         for k, v in resource.iteritems():
-            print k,v
+            #print k,v
             if isinstance(v,dict):
                 if 'coding' in v and 'text' in v:
                     text_ = v['text']
@@ -155,7 +158,7 @@ class TextFilter(object):
         forward_args = request.args.to_dict(flat=False)
         forward_args['_format'] = 'json'
         forwarded_url =  resource_type
-        api_url = '/neprivacy/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
+        api_url = '/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
         print api_url
         resp = api_call(api_url)
         bundle =resp.json();
@@ -174,6 +177,16 @@ class TextFilter(object):
 
         self.correlated_genetic=[]
 
+        seq_id_new =[]
+        for seq in self.seq_id:
+            flag= False
+            for res in seq_id_new:
+                if res['coding'][0]['code']==seq['coding'][0]['code'] and res['coding'][0]['system']==seq['coding'][0]['system']:
+                        flag= True
+            if not flag:
+                seq_id_new.append(seq)
+        self.seq_id=seq_id_new
+        #print self.seq_id
         for seq in bundle['entry']:
             resource = seq ['resource']
             if('variationID' in resource):
@@ -190,6 +203,7 @@ class TextFilter(object):
                     else:
                         y=v['coding']
                     if x['code']==y['code'] and x['system']==y['system']:
+                        #print "here\n\n\n\n"
                         self.correlated_genetic.append(resource)
 
 

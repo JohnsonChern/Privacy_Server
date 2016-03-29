@@ -9,14 +9,14 @@
         {% else %}
             <h1>Patient</h1>
             <pre><code>
-        {{dumps(patient,indent = 4)}}
+        {{patient}}
             </code></pre>
         {% endif %}
         </div>
         <div>
              <h1>Observation</h1>
             <pre><code>
-            {{ dumps(observation, indent = 4) }}
+            {{observation}}
             </code></pre>
         </div>
     <div>
@@ -24,7 +24,7 @@
         {%  for s in sequence %}
             <pre>
                 <code>
-                {{ dumps(s,indent = 4) }}
+                {{s}}
                 </code>
             </pre>
         {% endfor %}

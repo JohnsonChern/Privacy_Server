@@ -569,7 +569,7 @@ class observation_domain:
                 html_file = html_file+ domain.class2html()
 
         else:
-            print self.attrs
+            #print self.attrs
             html_file = ''
             print 'unexcepted condition'
 
@@ -649,7 +649,7 @@ class sequence_domain:
                 self.is_value = True
                 self.types = type(file[0])
                 print 'wanted '+template+' but get an list :',
-                print file
+                #print file
 
             elif template == 'CodeableConcept':
                 self.set_CodeableConcept(file)
@@ -735,22 +735,28 @@ class sequence_domain:
         else:
             #print '\t'*level+self.key+'\t attr \t'+self.attrs
             if not self.is_value and  not self.attrs == 'Reference' and not self.attrs == 'CodeableConcept' and not self.attrs == 'Period' and not self.attrs=='norm':
-                print '\t'*level+'!!!!!!!!'+self.attrs
+                #print '\t'*level+'!!!!!!!!'+self.attrs
+                pass
             if self.has_comments:
-                print '\t'*level+'comments: ',
-                print self.comments
+                #print '\t'*level+'comments: ',
+                #print self.comments
+                pass
 
             if self.is_value:
                 if self.types==list:
-                    print '\t'*level+self.key+'\tlist\t',
-                    print self.value
+                    #print '\t'*level+self.key+'\tlist\t',
+                    #print self.value
+                    pass
                 elif self.types==dict:
-                    print '\t'*level+self.key+'\tdict\t',
-                    print self.value
+                    #print '\t'*level+self.key+'\tdict\t',
+                    #print self.value
+                    pass
                 else:
-                    print '\t'*level+self.key + '\t' + self.value
+                    #print '\t'*level+self.key + '\t' + self.value
+                    pass
             else:
-                print '\t'*level+self.key+'\t'+ self.attrs+'\t'+self.types
+                #print '\t'*level+self.key+'\t'+ self.attrs+'\t'+self.types
+                pass
             if self.sub_domain:
                 for domain in self.sub_domain:
                     domain.dump(level+1)
@@ -810,7 +816,7 @@ class sequence_domain:
                 html_file = html_file+ domain.class2html()
 
         else:
-            print self.attrs
+            #print self.attrs
             html_file = ''
             print 'unexcepted condition'
 
@@ -883,15 +889,15 @@ class patient_info_domain:
                 print 'multi fault'
 
         elif type(template) == dict:
-            print template
+            #print template
             self.type=dict
             tmp = file.keys()
             tmp = self.set_period(file,tmp)
             tmp = self.set_comments(file, tmp)
             for key in tmp:
-                print key
+                #print key
                 if key in template.keys():
-                    print key
+                    #print key
                     new_domain = patient_info_domain(file[key],template[key],key)
                     self.sub_domain.append(new_domain)
 
@@ -902,7 +908,7 @@ class patient_info_domain:
                 self.is_value = True
                 self.type = type(file[0])
                 print 'wanted '+template+' but get an list :',
-                print file
+                #print file
                 #print file[0]
             else:
                 self.value = file
@@ -1116,8 +1122,8 @@ class patient_info_domain:
 
     def mask_by_seq(self,seq):
         if self.seq == seq:
-            print self.key
-            print self.seq
+            #print self.key
+            #print self.seq
             self.masked = True
         elif self.sub_domain:
             for domain in self.sub_domain:
@@ -1343,7 +1349,7 @@ class patient_info:
 
         return masked
 
-def get_private_profile(patient_form,patient_class,observation,patient_json):
+def get_private_profile(patient_form,patient_class,observation,patient_json,observation_json,sequence_json):
     """
     based on the patient's info and patient's private setting get the private profile
 
@@ -1352,6 +1358,23 @@ def get_private_profile(patient_form,patient_class,observation,patient_json):
     :param patient_json: str type json file get from server
     :return: str type json file to be seved in our private server
     """
+
+    '''
+    This function wraps a wrong format of privacy policy:
+    it should like ,e.g.:
+
+    {
+    'Policy': {'gender': 'Protected', 'name': {'text': 'You cannot see it'}},
+    'Identifier': 'f01f00a3-a38a-4401-a3e4-53c4239badb4',
+    'resourceType': "Patient",
+    'Scope': 'Clinician',
+    'resourceID': 'f01f00a3-a38a-4401-a3e4-53c4239badb4',
+    }
+    all except 'Scope' must have
+    So please do change the form if some extention must be placed here
+    '''
+
+    Hide_Info= ["observedAllele","text","species","coordinate","type","referenceAllele"]
 
     for field in patient_form:
         if field.type == 'BooleanField' and field.data == True:
@@ -1369,36 +1392,62 @@ def get_private_profile(patient_form,patient_class,observation,patient_json):
 
     new_dict = {}
     if 'id' in patient_json :
-        new_dict['id'] = patient_json['id']
+        new_dict['Identifier'] = new_dict['resourceID'] = patient_json['id']
 
     if 'resourceType' in patient_json:
         new_dict['resourceType'] = patient_json['resourceType']
 
-    if 'resourceID' in patient_json:
-        new_dict['resourceID'] = patient_json['resourceID']
+    #if 'resourceID' in patient_json:
+    #   new_dict['resourceID'] = patient_json['resourceID']
 
     new_dict['Policy'] = {}
     if masked_patient:
-        new_dict['Policy']['Patient'] = masked_patient
+        new_dict['Policy'] = masked_patient
     else:
-        new_dict['Policy']['Patient'] = {}
+        new_dict['Policy'] = {}
+
+
+    new_dict_ob = {}
+    # Point to patient
+    new_dict_ob['Identifier'] = new_dict['Identifier']
+
+    new_dict_ob['resourceType'] = 'Observation'
+
+    if 'id' in observation_json :
+        new_dict_ob['resourceID'] = observation_json['id']
+
     if masked_ob:
-        new_dict['Policy']['Observation'] = masked_ob
+        new_dict_ob['Policy'] = masked_ob
     else:
-        new_dict['Policy']['Observation'] = {}
-    if masked_se:
-        new_dict['Policy']['Sequence'] = masked_se
-    else:
-        new_dict['Policy']['Sequence'] = {}
+        new_dict_ob['Policy'] = {}
+
+    new_dict_seq= []
+
+    for seq in sequence_json:
+        for id in masked_se:
+            if 'id' in seq and seq['id']==id:
+                new_subdict= {}
+                new_subdict['Identifier']= new_dict['Identifier']
+                new_subdict['resourceType'] = 'Sequence'
+
+                if 'id' in seq :
+                    new_subdict['resourceID'] = seq['id']
+
+                new_subdict['Policy']={}
+                for k in seq.keys():
+                    if k in Hide_Info:
+                        new_subdict['Policy'][k]= 'Cannot see'
+                new_dict_seq.append(new_subdict)
+
 
 
     #print json.dumps(new_dict,indent=4)
 
     #retrive_patient_info(simple_key+complex_key,json.dumps(new_dict),json.dumps(jp.w))
 
-    print json.dumps(new_dict)
+    print json.dumps(new_dict_seq)
 
-    return json.dumps(new_dict)
+    return new_dict,new_dict_ob,new_dict_seq
 
 
 
@@ -1432,8 +1481,8 @@ def retrive_patient_info(selected_keys, private_profile, raw_json_patient,raw_ob
         ob_json_file = ob.retrive_json({},selected_keys)
     '''
 
-
-    ob = raw_ob
+    #print type(raw_ob)
+    #ob = raw_ob
     try:
         ob_profile = json.loads(profile['Observation'])
     except:
@@ -1444,7 +1493,7 @@ def retrive_patient_info(selected_keys, private_profile, raw_json_patient,raw_ob
         for key in ob.keys():
             if key in keys:
                 del ob[key]'''
-    observation = json.dumps(ob)
+    observation = raw_ob
 
     #print json.dumps(ob,indent=4)
 
@@ -1452,18 +1501,27 @@ def retrive_patient_info(selected_keys, private_profile, raw_json_patient,raw_ob
         se_profile = json.loads(profile['Sequence'])
     except:
         se_profile={}
-    print raw_seq
+    #print raw_seq
+
+    '''
+    I think the logic is:
+        Display all resources including this diesease
+        And all the privacy cover process will be done in
+        Proxy Server
+        not here
+    '''
     se = []
     for raw in raw_seq:
         se.append(raw)
-    print se
+    #print se
     sequences = []
     for sequence in se:
         #if 'id' in sequence  and  sequence['id'] in se_profile:
-        sequences.append(json.dumps(sequence))
+        sequences.append(sequence)
 
-    for s in sequences:
-        print json.dumps(s,indent=4)
+    #print sequences
+    #for s in sequences:
+    #    print json.dumps(s,indent=4)
 
     return patient_json_file,observation,sequences
 

@@ -168,7 +168,8 @@ def require_oauth(view):
 @require_oauth
 def index():
     #return redirect('/resources/Patient')
-    return redirect('/doctor')
+    return redirect('/search')
+    #return redirect('/patient_test/f002/Lung cancer')
 
 
 @app.route('/recv_redirect')
@@ -179,7 +180,18 @@ def recv_code():
     resp.set_cookie('access_token', access_token)
     return resp
 
+@app.route('/search',methods=['GET', 'POST'])
+#@require_oauth
+def search():
+    form = set_query_form()
+    if form.validate_on_submit():
+        keys = pe.extend_option(form)
+        #get the keys the doctor selected
 
+        return redirect('/patient_test/%s/%s' % (form.identifier.data,form.disease.data))
+
+    return render_template('submit.html',
+                           form=form)
 
 @app.route('/doctor',methods=['GET', 'POST'])
 #@require_oauth
@@ -192,7 +204,7 @@ def doctor():
         forward_args = request.args.to_dict(flat=False)
         forward_args['_format'] = 'json'
         forwarded_url =  'Patient' + '/' + form.identifier.data
-        api_url = '/neprivacy/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
+        api_url = '/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
         api_resp = api_call(api_url)
         print api_resp._content
         raw_patient_file = json.dumps(api_resp.json())
@@ -242,8 +254,17 @@ def doctor():
                           token= 'Found',
                           json = json.dumps(query_dict,indent=4))
         '''
-        #return render_template('query_enhance.html',token = 'Found',dumps = json.dumps,patient = patient,ob = observation,se = sequence)
-        return redirect('/patient_test/%s' % (form.identifier.data))
+        patient = json.loads(patient)
+        #print json.dumps(patient)
+        #print json.dumps(observation,indent= 4)
+        #print json.dumps(sequence,indent= 4)
+
+        new_sequence= []
+        for s in sequence:
+            new_sequence.append(json.dumps(s,indent=4))
+        return render_template('query_enhance.html',token = 'Found',patient = json.dumps(patient,indent=4),
+                               observation = json.dumps(observation,indent=4 ),sequence = new_sequence)
+        #return redirect('/patient_test/%s' % (form.identifier.data))
 
     return render_template('submit.html',
                            form=form)
@@ -406,8 +427,8 @@ def set_form():
     return render_template('private_set.html',form = patient_info_form,patient_info = patient_info_class)
 '''
 
-@app.route('/patient_test/<path:patient_id>',methods=['GET','POST'])
-def set_form(patient_id):
+@app.route('/patient_test/<path:patient_id>/<path:search_text>',methods=['GET','POST'])
+def set_form(patient_id,search_text):
     forward_args = request.args.to_dict(flat=False)
     forward_args['_format'] = 'json'
     forwarded_url =  'Patient' + '/' + patient_id
@@ -416,7 +437,7 @@ def set_form(patient_id):
     json_file = api_resp.json()
     #json_file is the user info we get from the server
 
-    cross_loc = TextFilter(patient_id,'Lung cancer')
+    cross_loc = TextFilter(patient_id,search_text)
 
     # First scan the observation data to locate specific observation result
     cross_loc.get_observation_list()
@@ -430,19 +451,22 @@ def set_form(patient_id):
 
     if patient_info_form.validate_on_submit():
 
-        private_profile =  pe.get_private_profile(patient_info_form,patient_info_class,observed,json_file)
+        patient_private,ob_private,seq_private =  pe.get_private_profile(patient_info_form,patient_info_class,observed,json_file,cross_loc.filtered_Observation[0],cross_loc.correlated_genetic)
         # now we get the private profile
         #print type(private_profile)
         #if 'id' in private_profile:
         #    private_profile['resourceID'] = private_profile['id']
         #    del private_profile['id']
 
-        resp = requests.put('%s/%s' %(PRIVACY_BASE,patient_id), data=private_profile, headers={'Content-Type': 'application/json'})
-        if resp.status_code == 404:
+        resp = requests.put('%s/%s' %(PRIVACY_BASE,patient_private['resourceID']), data=json.dumps(patient_private), headers={'Content-Type': 'application/json'})
+        resp_ob = requests.put('%s/%s' %(PRIVACY_BASE,ob_private['resourceID']), data=json.dumps(ob_private), headers={'Content-Type': 'application/json'})
+        for seq in seq_private:
+            resp_seq = requests.put('%s/%s' %(PRIVACY_BASE,seq['resourceID']), data=json.dumps(seq), headers={'Content-Type': 'application/json'})
+        if resp.status_code == 404 or resp_ob.status_code == 404 or resp_seq.status_code == 404:
             return STATUS_ERROR
         else:
-            return render_template('temp.html',result = private_profile)
-            #return redirect('/doctor')
+            #return render_template('temp.html',result = {"Patient":resp.json(), "Observation": resp_ob.json(), "Sequence": resp_seq.json()})
+            return redirect('/doctor')
     return render_template('private_set.html',form = patient_info_form,patient_info = patient_info_class,observation=observed)
 
 
