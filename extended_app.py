@@ -206,15 +206,13 @@ def doctor():
         forwarded_url =  'Patient' + '/' + form.identifier.data
         api_url = '/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
         api_resp = api_call(api_url)
-        print api_resp._content
+        #print api_resp._content
         raw_patient_file = json.dumps(api_resp.json())
         resp = requests.get('%s/%s' %(PRIVACY_BASE,form.identifier.data), headers={'Content-Type': 'application/json'})
         private_profile = json.loads(json.dumps(resp.json()))
-        try:
-            private_profile['Policy']
-        except:
-            #No policy can be detected
-            private_profile['Policy']={}
+        private_policy={"Nope":"Nope"}
+        for k,v in private_profile['Resource'].items():
+            private_policy = v
 
         cross_loc = TextFilter(form.identifier.data, form.disease.data)
 
@@ -224,25 +222,20 @@ def doctor():
         #Then to locate the genetic info(i.e. Sequence Resource) in the data base
         cross_loc.observation_prune()
         cross_loc.get_genetic_info()
-        '''bundle = {
-                'resourceType': 'searchset',
-               'entry': [],
-               'is_single_resource': False
-        }
-        for v in cross_loc.filtered_Observation:
-            bundle['entry'].append({'resource':v})
-        print cross_loc.seq_id
-        for v in cross_loc.correlated_genetic:
-            bundle['entry'].append({'resource':v})'''
 
+        #print raw_patient_file
+        #print cross_loc.filtered_Observation
+        #print cross_loc.correlated_genetic
+        #print private_profile
         #if resp.status_code == 404:
         #    return STATUS_ERROR
         #print private_profile
-        #json_data = pe.retrive_patient_info(keys,private_profile,raw_json_file)
+        #json_data = pe.retrive_patient_info(keys,private_profile,raw_json_file);
+        #print cross_loc.filtered_Observation[0]
         try:
-            patient, observation, sequence = pe.retrive_patient_info(keys, private_profile, raw_patient_file, cross_loc.filtered_Observation[0] ,cross_loc.correlated_genetic)
+            patient, observation, sequence = pe.retrive_patient_info(keys, private_policy, raw_patient_file, cross_loc.filtered_Observation[0] ,cross_loc.correlated_genetic)
         except:
-            patient, observation, sequence = pe.retrive_patient_info(keys, private_profile, raw_patient_file, {}, cross_loc.correlated_genetic)
+            patient, observation, sequence = pe.retrive_patient_info(keys, private_policy, raw_patient_file, {"message": "No result"}, cross_loc.correlated_genetic)
         #get the masked user info
         #query_dict  = json.loads(json_data)
 
@@ -254,7 +247,7 @@ def doctor():
                           token= 'Found',
                           json = json.dumps(query_dict,indent=4))
         '''
-        patient = json.loads(patient)
+        #patient = json.loads(patient)
         #print json.dumps(patient)
         #print json.dumps(observation,indent= 4)
         #print json.dumps(sequence,indent= 4)
@@ -459,10 +452,18 @@ def set_form(patient_id,search_text):
         #    del private_profile['id']
 
         resp = requests.put('%s/%s' %(PRIVACY_BASE,patient_private['resourceID']), data=json.dumps(patient_private), headers={'Content-Type': 'application/json'})
+        for ob in cross_loc.filtered_Observation:
+            ob_private['resourceID']=ob['id']
+            resp_ob = requests.put('%s/%s' %(PRIVACY_BASE,ob_private['resourceID']), data=json.dumps(ob_private), headers={'Content-Type': 'application/json'})
+            if resp_ob.status_code == 404:
+                return STATUS_ERROR
         resp_ob = requests.put('%s/%s' %(PRIVACY_BASE,ob_private['resourceID']), data=json.dumps(ob_private), headers={'Content-Type': 'application/json'})
+
         for seq in seq_private:
             resp_seq = requests.put('%s/%s' %(PRIVACY_BASE,seq['resourceID']), data=json.dumps(seq), headers={'Content-Type': 'application/json'})
-        if resp.status_code == 404 or resp_ob.status_code == 404 or resp_seq.status_code == 404:
+            if resp_seq.status_code ==404:
+                return STATUS_ERROR
+        if resp.status_code == 404 :
             return STATUS_ERROR
         else:
             #return render_template('temp.html',result = {"Patient":resp.json(), "Observation": resp_ob.json(), "Sequence": resp_seq.json()})

@@ -100,7 +100,11 @@ class TextFilter(object):
         for i in range(len(bundle['entry'])):
             resource = bundle['entry'][i]['resource']
             #print resource
-            resource_subject = resource['subject']['reference'].split('/')[-1]
+            try:
+                resource_subject = resource['subject']['reference'].split('/')[-1]
+            except:
+                resource_subject = "Not want to be seen"
+            #print json.dumps(resource , indent= 2)
             #print resource_subject
             if resource_subject == self.patient_id:
                 if(self.search_text=='*'):
@@ -113,15 +117,15 @@ class TextFilter(object):
                     flag= False;
                     for list in list_resource:
                         try:
-                            #print list
-                            if(list[-2]=='text'and (list[-1]==self.search_text or self.search_text in list[-1])):
+                            print list
+                            if((list[-3]=='text' or list[-2]=='text') and (list[-1]==self.search_text or self.search_text in list[-1])):
                                 flag= True;
                                 break;
                         except:
                             pass
                     if(flag):
-                        #print type(resource)
-                        #print "here\n\n\n"
+                        print type(resource)
+                        print "here\n\n\n"
                         self.filtered_Observation.append(resource)
                         self.add_locale_info(resource)
                         k+=1
@@ -137,20 +141,62 @@ class TextFilter(object):
         self.filtered_Observation = new_Observation
 
     def add_locale_info(self,resource):
+        #print resource
         for k, v in resource.iteritems():
             #print k,v
             if isinstance(v,dict):
+                #print v
                 if 'coding' in v and 'text' in v:
-                    text_ = v['text']
-                    if text_== self.search_text or self.search_text in text_ or self.search_text=='*':
+                    if isinstance(v['text'],list):
+                        text_ = v['text'][0]
+                    else:
+                        text_ = v['text']
+                    #print text_
+                    #print '1'
+                    if text_== self.search_text or self.search_text=='*':
                         self.seq_id.append(v)
+                    else:
+                        self.add_locale_info(v)
+
             elif isinstance(v,list):
                 vs =v
+                #print v
                 for v in vs:
+                    print v
                     if isinstance(v,dict):
-                        self.add_locale_info(v)
+                        if 'coding' in v and 'text' in v:
+                            if isinstance(v['text'],list):
+                                text_ = v['text'][0]
+                            else:
+                                text_ = v['text']
+                            #print type(text_)
+                            #print self.search_text
+                            if text_== self.search_text or self.search_text=='*':
+                                print '3'
+                                self.seq_id.append(v)
+                        else:
+                            self.add_locale_info(v)
             else:
                 pass
+
+    def get_code(self,res):
+        code = res['coding']
+        if isinstance(code,list):
+            code = code[0]
+        code = code['code']
+        if isinstance(code,list):
+            code = code[0]
+        return code
+
+
+    def get_system(self,res):
+        code = res['coding']
+        if isinstance(code,list):
+            code = code[0]
+        code = code['system']
+        if isinstance(code,list):
+            code = code[0]
+        return code
 
     @require_oauth
     def get_genetic_info(self):
@@ -175,18 +221,21 @@ class TextFilter(object):
         elif len(bundle.get('entry', [])) > 0:
             bundle['resourceType'] = bundle['entry'][0]['resource']['resourceType']
 
+        #print json.dumps(bundle,indent=4)
         self.correlated_genetic=[]
 
         seq_id_new =[]
         for seq in self.seq_id:
             flag= False
+            print seq
             for res in seq_id_new:
-                if res['coding'][0]['code']==seq['coding'][0]['code'] and res['coding'][0]['system']==seq['coding'][0]['system']:
+                if self.get_code(res)==self.get_code(seq) and self.get_system(res)==self.get_system(seq):
                         flag= True
             if not flag:
                 seq_id_new.append(seq)
         self.seq_id=seq_id_new
-        #print self.seq_id
+        print self.seq_id
+
         for seq in bundle['entry']:
             resource = seq ['resource']
             if('variationID' in resource):
@@ -194,6 +243,7 @@ class TextFilter(object):
                 if isinstance(identifier,list):
                     identifier = identifier[0]
                 for v in self.seq_id:
+                    '''
                     if isinstance(identifier['coding'],list):
                         x=identifier['coding'][0]
                     else:
@@ -202,7 +252,8 @@ class TextFilter(object):
                         y=v['coding'][0]
                     else:
                         y=v['coding']
-                    if x['code']==y['code'] and x['system']==y['system']:
+                    '''
+                    if self.get_code(v)==self.get_code(identifier) and self.get_system(v)==self.get_system(identifier):
                         #print "here\n\n\n\n"
                         self.correlated_genetic.append(resource)
 

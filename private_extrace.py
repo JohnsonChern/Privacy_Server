@@ -1064,7 +1064,7 @@ class patient_info_domain:
             flag = True
             json_file = '{'
             if self.inner_key():
-                json_file = json_file + ' "use": ' +'"' + self.key + '"'
+                json_file = json_file + ' "use": ' +'\"' + self.key + '\"'
                 flag = False
             for domain in self.sub_domain:
                 if flag:
@@ -1329,7 +1329,7 @@ class patient_info:
 
                 if key in profile.keys():
                     if profile[key] == 'fhir_mask':
-                        json_file = json_file + '"'+domain.key+'":"mask"'
+                        json_file = json_file + '\"'+domain.key+'\":\"mask\"'
                     else:
                         json_file = json_file + domain.retrive_json(profile[key])
                 else:
@@ -1416,8 +1416,16 @@ def get_private_profile(patient_form,patient_class,observation,patient_json,obse
     if 'id' in observation_json :
         new_dict_ob['resourceID'] = observation_json['id']
 
+    print masked_ob
+    print '\n'
+    print masked_se
+    print '\n'
+
     if masked_ob:
-        new_dict_ob['Policy'] = masked_ob
+        new_dict_ob['Policy'] = {}
+        for k,v in masked_ob.items():
+            for key in v:
+                new_dict_ob['Policy'][key] = 'fhir_mask'
     else:
         new_dict_ob['Policy'] = {}
 
@@ -1464,15 +1472,27 @@ def retrive_patient_info(selected_keys, private_profile, raw_json_patient,raw_ob
     """
     patient = patient_info(json.loads(raw_json_patient))
     try:
-        profile = json.loads(private_profile)['Policy']
+        profile = private_profile['Policy']
+        print profile
     except:
         #No policy can be detected
+        profile =json.dumps( {"message": "Not found"})
         pass
-    try:
-        patient_json_file = patient.retrive_json(profile['Patient'],selected_keys)
-    except:
-        patient_json_file = patient.retrive_json({},selected_keys)
 
+    #print selected_keys
+    load_patient = json.loads(raw_json_patient)
+    patient_json_file ={}
+    for k,v in load_patient.items():
+        if k in selected_keys or k == 'id':
+            patient_json_file[k]= v
+
+    '''
+    I don't know why this line bugged.
+    input: profile = {u'contact': u'fhir_mask'}
+    '''
+    #patient_json_file = patient.retrive_json(profile,selected_keys)
+
+    #print selected_keys
     '''ob = ob_info(json.loads(raw_ob))
     try:
         profile = json.loads(private_profile)['Policy']
@@ -1482,11 +1502,6 @@ def retrive_patient_info(selected_keys, private_profile, raw_json_patient,raw_ob
     '''
 
     #print type(raw_ob)
-    #ob = raw_ob
-    try:
-        ob_profile = json.loads(profile['Observation'])
-    except:
-        ob_profile={}
 
     '''if 'id' in ob and ob_profile.has_key(ob['id']):
         keys = ob_profile[ob['id']]
@@ -1496,12 +1511,6 @@ def retrive_patient_info(selected_keys, private_profile, raw_json_patient,raw_ob
     observation = raw_ob
 
     #print json.dumps(ob,indent=4)
-
-    try:
-        se_profile = json.loads(profile['Sequence'])
-    except:
-        se_profile={}
-    #print raw_seq
 
     '''
     I think the logic is:
