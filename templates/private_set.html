@@ -10,6 +10,9 @@
             border-bottom: 0.125rem solid #f2f0ef;
             height:52px;
         }
+        .title_row:not(first-child){
+            margin-top: 1rem;
+        }
         period{
             font-size: 14px;
             color:darkgrey;
@@ -25,21 +28,32 @@
             margin-top: 10px;
         }
         .row{
-            margin-top: 30px;
+            margin-top: 0px;
         }
         .setting-btn{
             float:right
         }
+        .complex_layer:not(first-child){
+            margin-top: 1rem;
+        }
         comments{
             font-style:italic;
-            font-size:18px;
-            color:dimgrey;
+            font-size:15px;
+            color:lightgrey;
+            margin-bottom: 0.5rem;
         }
         .submit-btn{
             width:100%;
         }
         .simple_domain:not(:first-child){
             margin-top: 1rem;
+        }
+
+        ol.hashTabber-data.hashTabber-sandstone{
+            min-height:30rem;
+        }
+        p:not(:first-child){
+            margin-top: 0;
         }
 
     </style>
@@ -51,7 +65,7 @@
 
 
 	<section class="example"><section class="hashTabber-sandstone-wrapper">
-    <ol class="hashTabber-nav hashTabber-sandstone" data-hashtabber-id="dinosaurs" data-hashtabber-default="pterosaur">
+    <ol class="hashTabber-nav hashTabber-sandstone" data-hashtabber-id="fhir" data-hashtabber-default="pterosaur">
       <h2>
           <form action="" method="post" name="submit">
             <input class="btn btn-primary submit-btn" type="submit" value="Submit">
@@ -90,7 +104,7 @@
 
 
     </ol><!--
- --><ol class="hashTabber-data hashTabber-sandstone" data-hashtabber-id="dinosaurs">
+ --><ol class="hashTabber-data hashTabber-sandstone" data-hashtabber-id="fhir">
 
         {% for domain in patient_info.sub_domains %}
             {% if domain.attrs=='complex_domain' %}
