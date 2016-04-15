@@ -982,8 +982,8 @@ class patient_info_domain:
 
     def class2html(self):
         if self.attrs=='simple_domain':
-            html_file = '<div class="row simple_domain" id="fhir_value_'+str(self.seq)+'"> <p class="col-sm-4"> '+self.key+'</p>'
-            html_file = html_file + '<div class="col-sm-5"">'+'<p>'+str(self.value)+'</p></div>'
+            html_file = '<div class="row simple_domain" id="fhir_value_'+str(self.seq)+'"> <p class="col-sm-3"> '+self.key+'</p>'
+            html_file = html_file + '<div class="col-sm-6"">'+'<p>'+str(self.value)+'</p></div>'
             html_file = html_file + '<div class="col-sm-3">'+self.buttom()+'</div></div>'
 
 
