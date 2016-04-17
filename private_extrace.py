@@ -1375,8 +1375,8 @@ class ob_info:
 
     def mask_broadcast_seq(self,mask):
         for seq in self.sequences:
-            if mask.has_key(seq.key):
-                seq.diaplsy_mask = True
+            if seq.key in mask:
+                seq.display_mask = True
 
 class seq_info:
 
@@ -1573,20 +1573,23 @@ def get_private_profile(patient_form,patient_class,observation,patient_json):
 def profile_find(name,profiles,id=None):
     if name == 'Patient':
         for item in profiles:
-            if item['resourceType'] == 'Patient':
-                return item
+            print type(item)
+            if item['Policy_ResourceType'] == 'Patient':
+                return item['Policy']
         return None
     elif name == 'Observation':
         for item in profiles:
-            if item['resourceType'] == 'Observation' and item['resourceID'] == id:
-                return item
+            if item['Policy_ResourceType'] == 'Observation' and item['resourceID'] == id:
+                return item['Policy']
         return None
-    else:
+    elif name == 'Sequence':
         ids = []
-        for itme in profiles:
-            if item['resourceType'] == 'Sequcnce':
+        for item in profiles:
+            if item['Policy_ResourceType'] == 'Sequcnce':
                 ids.append(item['resourceID'])
         return ids
+    else:
+        return None
 
 
 def display(selected_keys,private_profile,raw_json_patient,raw_ob,raw_seq):
@@ -1601,23 +1604,37 @@ def display(selected_keys,private_profile,raw_json_patient,raw_ob,raw_seq):
     :return:
     '''
     patient = patient_info(json.loads(raw_json_patient))
-    #profile = json.loads(private_profile)['Policy']
     patient_profile = profile_find('Patient',private_profile)
+    #profile = json.loads(private_profile)['Policy']
+    print patient_profile
+    print patient
     patient.set_select_keys(selected_keys)
-    patient.mask_broadcast(patient_profile)
+    if patient_profile is not None:
+        patient.mask_broadcast(patient_profile)
 
-
-    ob = json.loads(raw_ob)
+    #print raw_ob
+    if isinstance(raw_ob, str):
+        ob = json.loads(raw_ob)
+    else:
+        ob = raw_ob
     observation = ob_info(ob)
-    ob_profile = profile_find('Observation',private_profile,ob['id'])
-    if ob_profile:
+    if 'id' in ob:
+        ob_profile = profile_find('Observation',private_profile,ob['id'])
+    else:
+        ob_profile = None
+
+    if ob_profile is not None:
         observation.mask_broadcast_ob(ob_profile)
 
     seq_profile = profile_find('Sequence',private_profile)
     for s in raw_seq:
-        observation.add_sequence(json.loads(s))
+        if isinstance(s, str):
+            observation.add_sequence(json.loads(s))
+        else:
+            observation.add_sequence(s)
 
-    observation.mask_broadcast_seq(seq_profile)
+    if seq_profile is not None:
+        observation.mask_broadcast_seq(seq_profile)
 
     return patient,observation
 

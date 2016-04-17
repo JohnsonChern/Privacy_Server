@@ -196,10 +196,11 @@ def doctor():
         resp = requests.get('%s/%s' %(PRIVACY_BASE,form.identifier.data), headers={'Content-Type': 'application/json'})
         private_profile = json.loads(json.dumps(resp.json()))
         try:
+            private_policy=[]
             for k,v in private_profile['Resource'].items():
-                private_policy = v
+                private_policy.append(v)
         except:
-            private_policy={"Policy":"Nope"}
+            private_policy=[{"Policy":"Nope","Policy_ResourceType":"NULL"}]
 
 
         cross_loc = TextFilter(form.identifier.data, form.disease.data)
@@ -221,12 +222,13 @@ def doctor():
         #json_data = pe.retrive_patient_info(keys,private_profile,raw_json_file);
         #print cross_loc.filtered_Observation[0]
 
-        private_policy = json.dumps(private_policy)
-
+        #private_policy = json.dumps(private_policy)
+        '''
         try:
             patient, observation, sequence = pe.retrive_patient_info(keys, private_policy, raw_patient_file, cross_loc.filtered_Observation[0] ,cross_loc.correlated_genetic)
         except:
             patient, observation, sequence = pe.retrive_patient_info(keys, private_policy, raw_patient_file, json.dumps({"message": "No result"}), cross_loc.correlated_genetic)
+        '''
         #get the masked user info
         #query_dict  = json.loads(json_data)
 
@@ -242,7 +244,7 @@ def doctor():
         #print json.dumps(patient)
         #print json.dumps(observation,indent= 4)
         #print json.dumps(sequence,indent= 4)
-
+        print json.dumps(private_policy, indent= 4)
         try:
             patient, observation = pe.display(keys, private_policy, raw_patient_file, cross_loc.filtered_Observation[0] ,cross_loc.correlated_genetic)
         except:
