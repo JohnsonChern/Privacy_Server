@@ -483,6 +483,10 @@ def orientation():
         pass
     return render_template('orientation.html',form=form)
 
+@app.route('/masked_content')
+def masked_content_info():
+    return render_template('masked_content.html')
+
 @app.route('/user_login',methods=['GET','POST'])
 def user_login():
     form = UserLoginForm(csrf_enabled=False)

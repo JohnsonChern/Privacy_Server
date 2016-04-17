@@ -585,7 +585,7 @@ class observation_domain:
             if self.display_mask:
                 html_file = '<div class="title_row"><h3>'+self.key+'</h3></div>'
                 html_file = html_file + '<div class = "basic_layer" id = "basic_layer_'+str(self.seq)+'">'
-                html_file = html_file + '<p class="fhir_masked">'+'<span class="label label-default">'+masked_info+'</span>'+'</p>'
+                html_file = html_file + '<p class="fhir_masked">'+'<a href="/masked_content">'+'<span class="label label-default">'+masked_info+'</span>'+'</a>'+'</p>'
                 html_file = html_file + '</div>'
             else:
                 html_file = '<div class="title_row"><h3>'+self.key+'</h3></div>'
@@ -600,7 +600,7 @@ class observation_domain:
         if self.display_mask:
             html_file = '<div class="title_row"><h3>'+self.key+'</h3></div>'
             html_file = html_file +'<div class = "basic_layer" id = "basic_layer_'+str(self.seq)+'">'
-            html_file = html_file + '<p class="fhir_masked">'+'<span class="label label-default">'+masked_info+'</span>'+'</p>'
+            html_file = html_file + '<p class="fhir_masked">'+'<a href="/masked_content">'+'<span class="label label-default">'+masked_info+'</span>'+'</a>'+'</p>'
             html_file = html_file + '</div>'
             return html_file
 
@@ -1099,7 +1099,7 @@ class patient_info_domain:
         if self.attrs=='simple_domain':
             if self.display_mask:
                 html_file = '<div class="row simple_domain" id="fhir_value_'+str(self.seq)+'"> <p class="col-sm-3"> '+self.key+'</p>'
-                html_file = html_file + '<div class="col-sm-9"">'+'<p class="fhir_masked">'+'<span class="label label-default">'+masked_info+'</span>'+'</p></div></div>'
+                html_file = html_file + '<div class="col-sm-9"">'+'<p class="fhir_masked">'+'<a href="/masked_content">'+'<span class="label label-default">'+masked_info+'</span>'+'</a>'+'</p></div></div>'
             else:
                 html_file = '<div class="row simple_domain" id="fhir_value_'+str(self.seq)+'"> <p class="col-sm-3"> '+self.key+'</p>'
                 html_file = html_file + '<div class="col-sm-9"">'+'<p>'+str(self.value)+'</p></div></div>'
@@ -1109,7 +1109,7 @@ class patient_info_domain:
 
         elif self.is_value:
             if self.display_mask:
-                html_file = '<div class="row"><p  class="col-sm-3"  >'+self.key+'</p>'+'<div class="col-sm-9">'+'<p class="fhir_masked">'+'<span class="label label-default">'+masked_info+'</span>'+'</p>'+'</div></div>'
+                html_file = '<div class="row"><p  class="col-sm-3"  >'+self.key+'</p>'+'<div class="col-sm-9">'+'<p class="fhir_masked">'+'<a href="/masked_content">'+'<span class="label label-default">'+masked_info+'</span>'+'</a>'+'</p>'+'</div></div>'
 
             elif self.type==list:
                 html_file = '<div class="row"> <p  class="col-sm-3"  >'+self.key+'</p>'
@@ -1140,7 +1140,7 @@ class patient_info_domain:
             html_file = html_file + '<div class = "basic_layer" id = "basic_layer_'+ str(self.seq)+'">'
 
             if self.display_mask:
-                html_file = html_file + '<p class="fhir_masked">'+'<span class="label label-default">'+masked_info+'</span>'+'</p>'
+                html_file = html_file + '<p class="fhir_masked">'+'<a href="/masked_content">'+'<span class="label label-default">'+masked_info+'</span>'+'</a>'+'</p>'
 
             else:
                 html_file = html_file + self.comments2html()
