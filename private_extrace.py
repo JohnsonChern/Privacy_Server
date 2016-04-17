@@ -1376,7 +1376,7 @@ class ob_info:
     def mask_broadcast_seq(self,mask):
         for seq in self.sequences:
             #print seq.key
-            if seq.id in mask:
+            if seq.id in mask or seq.key in mask:
                 seq.display_mask = True
 
 class seq_info:
