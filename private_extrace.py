@@ -1551,6 +1551,7 @@ def display(selected_keys,private_profile,raw_json_patient,raw_ob,raw_seq):
 
     return patient,observation
 
+
 def ob_test():
     e = jp.seq_ep
     o = jp.ob_ep
