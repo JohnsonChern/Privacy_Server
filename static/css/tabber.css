@@ -127,7 +127,7 @@ p,h2,h3,h4,h5,h6 {
 	widows:3
 }
 }html {
-	font:400 20px/1.5 "Source Sans Pro",serif;
+	font:400 18px/1.5 Arial, Helvetica, sans-serif;
 	color:#0c0a09
 }
 @media screen and (min-width:1281px) {
@@ -427,7 +427,7 @@ ol.hashTabber-nav.hashTabber-sandstone>li>a {
 	
 	padding:0.5rem 0.75rem;
 	text-decoration:none;
-	color:#333333;
+	color:#66757f;
 	background-color:#ffffff;
 	border-top:0.0125rem solid #dddddd;
     border-left: 0.0125rem solid #dddddd;
@@ -449,15 +449,7 @@ ol.hashTabber-nav.hashTabber-sandstone>li>a:hover {
 	background-color:#f5f5f5;
 	border-color:#dddddd
 }
-@media screen and (max-width:641px) {
-	ol.hashTabber-nav.hashTabber-sandstone>li>a {
-	-webkit-border-radius:0.25rem;
-	-moz-border-radius:0.25rem;
-	-ms-border-radius:0.25rem;
-	-o-border-radius:0.25rem;
-	border-radius:0.25rem
-}
-}ol.hashTabber-data.hashTabber-sandstone {
+ol.hashTabber-data.hashTabber-sandstone {
 	-webkit-box-sizing:border-box;
 	-moz-box-sizing:border-box;
 	box-sizing:border-box;
@@ -470,10 +462,10 @@ ol.hashTabber-nav.hashTabber-sandstone>li>a:hover {
 	-ms-border-radius:0.25rem;
 	-o-border-radius:0.25rem;
 	border-radius:0.25rem;
-	border: 0.01rem solid #dddddd;
-	background-color:#ffffff;
+	color:#292f33;
+	background-color:#f9f9f9;
 	padding:1rem 1.5rem 1.5rem 1rem;
-	
+	font-size: 16px;
 	min-height:20rem
 }
 @media screen and (max-width:641px) {
@@ -486,7 +478,8 @@ ol.hashTabber-nav.hashTabber-sandstone>li>a:hover {
 	vertical-align:top
 }
 }ol.hashTabber-data.hashTabber-sandstone>li h3 {
-	padding-bottom:0.5rem;
+	padding-top: 0.5rem;
+    padding-bottom:0.5rem;
 	border-bottom:0.125rem solid #f2f0ef
 }
 .submit-btn{
@@ -500,17 +493,45 @@ ol.hashTabber-nav.hashTabber-sandstone>li>a:hover {
     text-align:left
 }
 .submit-btn:hover{
-    
+    background:#
 }
 p.col-sm-3{
     text-align: right
 }
 @media screen and (max-width:765px) {
 	p.col-sm-3{
-    text-align: left
+        text-align: left
     }
-    p.col-sm-3:after
-{ 
-content:" :";
+    p.col-sm-3:after{ 
+        content:" :";
+    }
 }
+article > h2 {
+    text-align: right
+}
+.title_row{        
+    border-bottom: 0.125rem solid #f2f0ef;
+    height:46px;
+}
+
+p.fhir_masked{
+
+}
+body { padding-top: 70px; }
+
+nav{ 
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2); 
+    border-bottom: none;
+}
+.simple_domain>p{
+    padding-top: 5px;
+}
+.simple_domain>div>p{
+    padding-top: 5px;
+}
+.title_row{
+    margin-bottom: 10px;
+}
+comments>p{
+    margin-bottom: 10px;
 }

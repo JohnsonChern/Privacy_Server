@@ -252,6 +252,14 @@ def doctor():
         #print json.dumps(observation,indent= 4)
         #print json.dumps(sequence,indent= 4)
 
+        '''
+
+        patient,observation = pe.display(selected_keys, private_profile, raw_json_patient,raw_ob,raw_seq)
+        return render_template('display_result.html',patient_info = patient,observation = observation)
+
+
+        '''
+
         new_sequence= []
         for s in sequence:
             new_sequence.append(json.dumps(s,indent=4))

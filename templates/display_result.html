@@ -65,7 +65,7 @@
 
     <div class="navbar-header">
       <a class="navbar-brand" href="#">
-        Set private profile
+        Info after masked
       </a>
     </div>
 
@@ -77,19 +77,8 @@
 
 	<section class="hashTabber-sandstone-wrapper">
     <ol class="hashTabber-nav hashTabber-sandstone" data-hashtabber-id="fhir" data-hashtabber-default="pterosaur">
-      <h2>
-          <form action="" method="post" name="submit">
-            <input class="btn btn-primary submit-btn" type="submit" value="Submit">
-            <div class="form_field" style="display:none">
-                {% for field in form %}
-                    <p>{{ field }}</p>
-                {% endfor %}
-            </div>
-          </form>
-
-      </h2>
        {% for domain in patient_info.sub_domains %}
-            {% if domain.attrs=='complex_domain' %}
+            {% if domain.attrs=='complex_domain' and domain.key in patient_info.select_keys %}
 
             <li data-hashtabber-pair="{{domain.key}}">
                 <a>{{domain.key}}</a>
@@ -98,7 +87,7 @@
 
 
        {% endfor %}
-        {% if patient_info.has_simple_domain() %}
+        {% if patient_info.display_has_simple_domain() %}
             <li data-hashtabber-pair="Others">
                 <a>Others</a>
             </li>
@@ -118,23 +107,26 @@
  --><ol class="hashTabber-data hashTabber-sandstone" data-hashtabber-id="fhir">
 
         {% for domain in patient_info.sub_domains %}
-            {% if domain.attrs=='complex_domain' %}
+            {% if domain.attrs=='complex_domain' and domain.key in patient_info.select_keys%}
             <li data-hashtabber-pair="{{ domain.key }}">
-                <articla>
 
-                  {{ domain.class2html()|safe }}
+                <article>
+                    <h2>{{ domain.key }}</h2>
 
-                </articla>
+                  {{ domain.display_class2html()|safe }}
+
+                </article>
             </li>
             {% endif %}
 
         {% endfor %}
-        {% if patient_info.has_simple_domain() %}
+        {% if patient_info.display_has_simple_domain() %}
             <li data-hashtabber-pair="Others">
                 <article>
+                <h2>Others</h2>
                     {% for domain in patient_info.sub_domains %}
                         {% if domain.attrs=='simple_domain' %}
-                            {{ domain.class2html()|safe }}
+                            {{ domain.display_class2html()|safe }}
                         {% endif %}
                     {% endfor %}
                 </article>
@@ -143,16 +135,18 @@
 
         <li data-hashtabber-pair="Observation">
             <article>
+                <h2>Observation</h2>
                 {% for domain in observation.sub_domains %}
-                    <p>{{ domain.class2html()|safe }}</p>
+                    <p>{{ domain.display_class2html()|safe }}</p>
                 {% endfor %}
             </article>
         </li>
 
         <li data-hashtabber-pair="Sequence">
             <article>
+                <h2>Sequence</h2>
                 {% for domain in observation.sequences %}
-                    <p>{{ domain.class2html()|safe }}</p>
+                    <p>{{ domain.display_class2html()|safe }}</p>
                 {% endfor %}
             </article>
         </li>

@@ -1,8 +1,10 @@
 # replace this with your stuff
 
-API_BASE = 'http://localhost:9090/api'
-AUTH_BASE = 'http://localhost:9090/auth'
+#API_BASE = 'http://localhost:9090/api'
+#AUTH_BASE = 'http://localhost:9090/auth# '
 
+API_BASE = 'http://genomics-advisor.smartplatforms.org:2048/api'
+AUTH_BASE = 'http://genomics-advisor.smartplatforms.org:2048/auth'
 
 PRIVACY_BASE = 'http://localhost:5000/Privacy'
 #AUTH_BASE = 'http://localhost:5000/auth'
