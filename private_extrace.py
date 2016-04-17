@@ -1457,10 +1457,6 @@ def get_private_profile(patient_form,patient_class,observation,patient_json,obse
 
     return new_dict,new_dict_ob,new_dict_seq
 
-
-
-
-
 def retrive_patient_info(selected_keys, private_profile, raw_json_patient,raw_ob,raw_seq):
     """
 
@@ -1534,7 +1530,26 @@ def retrive_patient_info(selected_keys, private_profile, raw_json_patient,raw_ob
 
     return patient_json_file,observation,sequences
 
+def display(selected_keys,private_profile,raw_json_patient,raw_ob,raw_seq):
+    patient = patient_info(json.loads(raw_json_patient))
+    profile = json.loads(private_profile)['Policy']
+    patient.set_select_keys(selected_keys)
+    patient.mask_broadcast(profile['Patient'])
 
+
+    ob = json.loads(raw_ob)
+    observation = ob_info(ob)
+    ob_profile = profile['Observation']
+    if ob_profile.has_key(ob['id']):
+        observation.mask_broadcast_ob(ob_profile[ob['id']])
+
+    seq_profile = profile['Sequence']
+    for s in raw_seq:
+        observation.add_sequence(json.loads(s))
+
+    observation.mask_broadcast_seq(seq_profile)
+
+    return patient,observation
 
 def ob_test():
     e = jp.seq_ep

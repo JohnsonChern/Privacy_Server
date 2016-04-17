@@ -193,6 +193,8 @@ def search():
     return render_template('submit.html',
                            form=form)
 
+@app.route('retrive_patient_info')
+
 @app.route('/doctor',methods=['GET', 'POST'])
 #@require_oauth
 def doctor():

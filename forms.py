@@ -96,3 +96,5 @@ def set_query_form():
     form = LoginForm(csrf_enabled=False)
     return form
 
+
+
