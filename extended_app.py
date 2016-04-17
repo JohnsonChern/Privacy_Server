@@ -6,7 +6,6 @@ import requests
 import json
 import cgi
 import copy
-import transfer as tr
 from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI, PRIVACY_BASE
 from forms import SubmitForm, AuthenticationForm, SubmitDictForm,UserLoginForm,set_query_form,set_relative_info
 import set_private as sp
@@ -103,21 +102,6 @@ def render_fhir(resource):
 
     return render_template('bundle_view.html', **resource)
 
-def render_fhir_extended(resource):
-
-    #Here we implement privacy policy issue before we render a FHIR bundle
-    #We call function to check each type resource and cover those
-    #protected data
-    
-    for i in range(len(resource['entry'])):
-        #print resource['entry'][i]
-        resource_id = resource['entry'][i]['resource']['id']
-        resource['entry'][i]['resource'] = tr.check_private_policy(resource['entry'][i]['resource'],resource_id,CLIENT_ID)
-        resource['entry'][i]['resource']['id'] = to_internal_id(resource['resourceType']+'/'+resource['entry'][i]['resource'].get('id', ''))
-    
-    return render_template('bundle_view.html', **resource)
-
-
 def make_links(resource):
     '''
     scans a resource and replace internal resource references with anchor tags pointing to them
@@ -193,7 +177,6 @@ def search():
     return render_template('submit.html',
                            form=form)
 
-@app.route('retrive_patient_info')
 
 @app.route('/doctor',methods=['GET', 'POST'])
 #@require_oauth
@@ -212,9 +195,12 @@ def doctor():
         raw_patient_file = json.dumps(api_resp.json())
         resp = requests.get('%s/%s' %(PRIVACY_BASE,form.identifier.data), headers={'Content-Type': 'application/json'})
         private_profile = json.loads(json.dumps(resp.json()))
-        private_policy={"Nope":"Nope"}
-        for k,v in private_profile['Resource'].items():
-            private_policy = v
+        try:
+            for k,v in private_profile['Resource'].items():
+                private_policy = v
+        except:
+            private_policy={"Policy":"Nope"}
+
 
         cross_loc = TextFilter(form.identifier.data, form.disease.data)
 
@@ -234,10 +220,13 @@ def doctor():
         #print private_profile
         #json_data = pe.retrive_patient_info(keys,private_profile,raw_json_file);
         #print cross_loc.filtered_Observation[0]
+
+        private_policy = json.dumps(private_policy)
+
         try:
             patient, observation, sequence = pe.retrive_patient_info(keys, private_policy, raw_patient_file, cross_loc.filtered_Observation[0] ,cross_loc.correlated_genetic)
         except:
-            patient, observation, sequence = pe.retrive_patient_info(keys, private_policy, raw_patient_file, {"message": "No result"}, cross_loc.correlated_genetic)
+            patient, observation, sequence = pe.retrive_patient_info(keys, private_policy, raw_patient_file, json.dumps({"message": "No result"}), cross_loc.correlated_genetic)
         #get the masked user info
         #query_dict  = json.loads(json_data)
 
@@ -254,19 +243,23 @@ def doctor():
         #print json.dumps(observation,indent= 4)
         #print json.dumps(sequence,indent= 4)
 
-        '''
+        try:
+            patient, observation = pe.display(keys, private_policy, raw_patient_file, cross_loc.filtered_Observation[0] ,cross_loc.correlated_genetic)
+        except:
+            patient, observation =  pe.display(keys, private_policy, raw_patient_file, {"message": "No result"}, cross_loc.correlated_genetic)
 
-        patient,observation = pe.display(selected_keys, private_profile, raw_json_patient,raw_ob,raw_seq)
+
+        #patient,observation = pe.display(selected_keys, private_profile, raw_json_patient,raw_ob,raw_seq)
         return render_template('display_result.html',patient_info = patient,observation = observation)
 
 
-        '''
 
-        new_sequence= []
+        '''new_sequence= []
         for s in sequence:
             new_sequence.append(json.dumps(s,indent=4))
         return render_template('query_enhance.html',token = 'Found',patient = json.dumps(patient,indent=4),
-                               observation = json.dumps(observation,indent=4 ),sequence = new_sequence)
+                               observation = json.dumps(observation,indent=4 ),sequence = new_sequence
+        '''
         #return redirect('/patient_test/%s' % (form.identifier.data))
 
     return render_template('submit.html',
