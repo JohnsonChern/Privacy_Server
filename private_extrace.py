@@ -1375,7 +1375,8 @@ class ob_info:
 
     def mask_broadcast_seq(self,mask):
         for seq in self.sequences:
-            if seq.key in mask:
+            #print seq.key
+            if seq.id in mask:
                 seq.display_mask = True
 
 class seq_info:
@@ -1579,14 +1580,14 @@ def profile_find(name,profiles,id=None):
         return None
     elif name == 'Observation':
         for item in profiles:
-            if item['Policy_ResourceType'] == 'Observation' and item['resourceID'] == id:
+            if item['Policy_ResourceType'] == 'Observation' and item['ResourceIdentifier'] == id:
                 return item['Policy']
         return None
     elif name == 'Sequence':
         ids = []
         for item in profiles:
-            if item['Policy_ResourceType'] == 'Sequcnce':
-                ids.append(item['resourceID'])
+            if item['Policy_ResourceType'] == 'Sequence':
+                ids.append(item['ResourceIdentifier'])
         return ids
     else:
         return None
@@ -1627,6 +1628,7 @@ def display(selected_keys,private_profile,raw_json_patient,raw_ob,raw_seq):
         observation.mask_broadcast_ob(ob_profile)
 
     seq_profile = profile_find('Sequence',private_profile)
+    print raw_seq
     for s in raw_seq:
         if isinstance(s, str):
             observation.add_sequence(json.loads(s))
