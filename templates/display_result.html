@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap.min.css') }}">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/tabber.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <style text="text/css">
         .title_row{
             padding-bottom: 0.5rem;
@@ -161,8 +163,13 @@
 </div>
 
 
-
+<script>$(function ()
+  { $("[data-toggle='popover']").popover();
+  });
+</script>
 <script type="text/javascript">
+
+
 
     var botton_toggle = function(obj){
         var text = obj.innerHTML;
@@ -197,9 +204,10 @@
     }
 
 </script>
+
+
 <script type="text/javascript" src="{{ url_for('static', filename='js/hashTabber.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
 </body>
 </html>

@@ -535,3 +535,6 @@ nav{
 comments>p{
     margin-bottom: 10px;
 }
+h3.popover-title{
+    margin-top: 0;
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap.min.css') }}">
+
+
+    <title>Title</title>
+</head>
+<body>
+
+
+
+
+	<div class="jumbotron">
+        <div class="container">
+  <h1>The field are not accessiable</h1>
+  <p>Why I see this page</p>
+  <p><a class="btn btn-primary btn-lg" href="#" role="button">Blah blah blah</a></p>
+            </div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+
+    var botton_toggle = function(obj){
+        var text = obj.innerHTML;
+        var seq = obj.id.substring(7);
+        var basic_layer_id = 'basic_layer_'+seq;
+        var boolean_field_id = 'boolean_field_'+seq;
+        var fhir_value_id = 'fhir_value_'+seq;
+        var basic_layer = document.getElementById(basic_layer_id);
+        var boolean_field = document.getElementById(boolean_field_id);
+        var fhir_value = document.getElementById(fhir_value_id);
+        if (boolean_field.checked) {
+            boolean_field.checked = !boolean_field.checked
+
+            if(basic_layer){ basic_layer.style.display = "" }
+            if(fhir_value) {fhir_value.style.color="black"}
+
+
+            obj.innerHTML = 'Hide'
+            obj.className = 'btn btn-success setting-btn'
+
+        }else{
+            boolean_field.checked = !boolean_field.checked
+
+            if(basic_layer){ basic_layer.style.display = "none" }
+            if(fhir_value) {fhir_value.style.color="lightgrey"}
+
+            obj.innerHTML = 'Show'
+            obj.className = 'btn btn-warning setting-btn'
+        }
+
+
+    }
+
+</script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/hashTabber.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+</html>
