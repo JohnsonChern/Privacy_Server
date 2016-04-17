@@ -1570,20 +1570,50 @@ def get_private_profile(patient_form,patient_class,observation,patient_json):
 
     return json.dumps(new_dict)
 
+def profile_find(name,profiles,id=None):
+    if name == 'Patient':
+        for item in profiles:
+            if item['resourceType'] == 'Patient':
+                return item
+        return None
+    elif name == 'Observation':
+        for item in profiles:
+            if item['resourceType'] == 'Observation' and item['resourceID'] == id:
+                return item
+        return None
+    else:
+        ids = []
+        for itme in profiles:
+            if item['resourceType'] == 'Sequcnce':
+                ids.append(item['resourceID'])
+        return ids
+
+
 def display(selected_keys,private_profile,raw_json_patient,raw_ob,raw_seq):
+    '''
+
+    private_profile:= list
+    :param selected_keys:
+    :param private_profile:
+    :param raw_json_patient:
+    :param raw_ob:
+    :param raw_seq:
+    :return:
+    '''
     patient = patient_info(json.loads(raw_json_patient))
-    profile = json.loads(private_profile)['Policy']
+    #profile = json.loads(private_profile)['Policy']
+    patient_profile = profile_find('Patient',private_profile)
     patient.set_select_keys(selected_keys)
-    patient.mask_broadcast(profile['Patient'])
+    patient.mask_broadcast(patient_profile)
 
 
     ob = json.loads(raw_ob)
     observation = ob_info(ob)
-    ob_profile = profile['Observation']
-    if ob_profile.has_key(ob['id']):
-        observation.mask_broadcast_ob(ob_profile[ob['id']])
+    ob_profile = profile_find('Observation',private_profile,ob['id'])
+    if ob_profile:
+        observation.mask_broadcast_ob(ob_profile)
 
-    seq_profile = profile['Sequence']
+    seq_profile = profile_find('Sequence',private_profile)
     for s in raw_seq:
         observation.add_sequence(json.loads(s))
 
@@ -1610,7 +1640,7 @@ def get_private_profile(patient_form,patient_class,observation,patient_json,obse
     {
     'Policy': {'gender': 'Protected', 'name': {'text': 'You cannot see it'}},
     'Identifier': 'f01f00a3-a38a-4401-a3e4-53c4239badb4',
-    'resourceType': "Patient",
+    'resourceType': "Patient",|'Observation'|'Sequence'
     'Scope': 'Clinician',
     'resourceID': 'f01f00a3-a38a-4401-a3e4-53c4239badb4',
     }
