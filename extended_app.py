@@ -7,7 +7,7 @@ import json
 import cgi
 import copy
 from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI, PRIVACY_BASE
-from forms import SubmitForm, AuthenticationForm, SubmitDictForm,UserLoginForm,set_query_form,set_relative_info
+from forms import SubmitForm, AuthenticationForm, SubmitDictForm,UserLoginForm,LoginForm,set_query_form,set_relative_info
 import set_private as sp
 from filter import TextFilter
 import private_extrace as pe
@@ -476,7 +476,12 @@ def set_form(patient_id,search_text):
     return render_template('private_set.html',form = patient_info_form,patient_info = patient_info_class,observation=observed)
 
 
-
+@app.route('/orientation',methods=['GET','POST'])
+def orientation():
+    form = LoginForm()
+    if form.validate_on_submit():
+        pass
+    return render_template('orientation.html',form=form)
 
 @app.route('/user_login',methods=['GET','POST'])
 def user_login():
