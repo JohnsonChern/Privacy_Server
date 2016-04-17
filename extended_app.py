@@ -174,8 +174,14 @@ def search():
 
         return redirect('/patient_test/%s/%s' % (form.identifier.data,form.disease.data))
 
-    return render_template('submit.html',
-                           form=form)
+    return render_template('orientation.html', form=form)
+
+@app.route('/orientation',methods=['GET','POST'])
+def orientation():
+    form = LoginForm()
+    if form.validate_on_submit():
+        pass
+    return render_template('orientation.html',form=form)
 
 
 @app.route('/doctor',methods=['GET', 'POST'])
@@ -218,7 +224,6 @@ def doctor():
         #print private_profile
         #if resp.status_code == 404:
         #    return STATUS_ERROR
-        #print private_profile
         #json_data = pe.retrive_patient_info(keys,private_profile,raw_json_file);
         #print cross_loc.filtered_Observation[0]
 
@@ -245,9 +250,20 @@ def doctor():
         #print json.dumps(observation,indent= 4)
         #print json.dumps(sequence,indent= 4)
         print json.dumps(private_policy, indent= 4)
-        try:
+        if(len(cross_loc.filtered_Observation)>0):
+            for observation in cross_loc.filtered_Observation:
+                resp = requests.get('%s/%s' %(PRIVACY_BASE,observation['id']), headers={'Content-Type': 'application/json'})
+                private_profile = json.loads(json.dumps(resp.json()))
+                for k,v in private_profile['Resource'].items():
+                    private_policy.append(v)
+            for seq in cross_loc.correlated_genetic:
+                resp = requests.get('%s/%s' %(PRIVACY_BASE,seq['id']), headers={'Content-Type': 'application/json'})
+                private_profile = json.loads(json.dumps(resp.json()))
+                for k,v in private_profile['Resource'].items():
+                    private_policy.append(v)
             patient, observation = pe.display(keys, private_policy, raw_patient_file, cross_loc.filtered_Observation[0] ,cross_loc.correlated_genetic)
-        except:
+
+        else:
             patient, observation =  pe.display(keys, private_policy, raw_patient_file, {"message": "No result"}, cross_loc.correlated_genetic)
 
 
@@ -266,21 +282,6 @@ def doctor():
 
     return render_template('submit.html',
                            form=form)
-
-@app.route('/patient/', methods=['GET', 'POST'])
-@require_oauth
-def submit_policy_authentication():
-    form = AuthenticationForm(csrf_enabled=False)
-    
-    if form.validate_on_submit():
-        patient_id = form.identifier.data
-        redirected_url = '/patient/' + patient_id
-
-        return redirect(redirected_url)
-    
-    return render_template('authentication.html',form=form)
-
-
 
 
 @app.route('/submit_policy/<path:patient_id>', methods=['GET', 'POST'])
@@ -340,97 +341,13 @@ def forward_api(forwarded_url):
     #return render_fhir_extended(bundle)
     return render_fhir(bundle)
 
-
-@app.route('/patient/<path:patient_id>',methods=['GET','POST'])
-def set(patient_id):
-    e = {}
-    for resource_type in ['Patient', 'Sequence', 'Condition', 'Observation']:
-        forward_args = request.args.to_dict(flat=False)
-        forward_args['_format'] = 'json'
-        forwarded_url =  resource_type + '/' + patient_id
-        api_url = '/neprivacy/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
-        api_resp = api_call(api_url)
-        if api_resp.status_code not in [403, 404]:
-            e[resource_type] = api_resp.json()
-    reserved_word = 'test'
-    fieldname = 'fieldname'
-    class_list,class_dict,form = sp.strcture_json(e,reserved_word,fieldname)
-    length = len(class_list)
-    if form.validate_on_submit():
-        result = sp.set_mask(form,e,reserved_word,fieldname)
-        #tag = db.insert_record(patient_id, result, datetime.now())
-        resource = {
-             'Policy': result,
-             'Identifier': patient_id,
-             'resourceType': "Patient"
-        }
-        resp = requests.post('%s/%s' %(PRIVACY_BASE,patient_id), data=json.dumps(resource), headers={'Content-Type': 'application/json'})
-        if resp.status_code == 404:
-            return STATUS_ERROR
-        else:
-            #return render_template('temp.html',result = result)
-            return redirect('/doctor')
-        #if tag == 1:
-        #    return STATUS_OK
-        #elif tag == 0:
-        #    tag2 = db.add_policy(patient_id, result, datetime.now())
-        #    if tag2 == -1:
-        #        return STATUS_ERROR
-        #    else:
-        #        return STATUS_OK
-        #else:
-        #    return STATUS_ERROR
-        #return render_template('temp.html',result = result)
-    return render_template('bt.html',class_list=class_list,form =form,length = length,len = len,
-                           str = str,getattr= getattr,fieldname = fieldname,word_len=len(reserved_word),reserved_word = reserved_word)
-
-@app.route('/test/<path:patient_id>',methods=['GET','POST'])
-@require_oauth
-def test(patient_id):
-    cross_loc = TextFilter(patient_id,'Lung cancer')
-
-    # First scan the observation data to locate specific observation result
-    cross_loc.get_observation_list()
-
-    #Then to locate the genetic info(i.e. Sequence Resource) in the data base
-    cross_loc.observation_prune()
-    cross_loc.get_genetic_info()
-    bundle = {
-            'resourceType': 'searchset',
-            'entry': [],
-            'is_single_resource': False
-    }
-    for v in cross_loc.filtered_Observation:
-        bundle['entry'].append({'resource':v})
-    print cross_loc.seq_id
-    for v in cross_loc.correlated_genetic:
-        bundle['entry'].append({'resource':v})
-    #print cross_loc.correlated_genetic
-
-'''
-@app.route('/patient_test',methods=['GET','POST'])
-def set_form():
-    json_file = ...
-    #json_file is the user info we get from the server
-
-    patient_info_form,patient_info_class = set_relative_info(patient_json_file,observation_json_file,list of sequences_json_file)
-    #with the json file we now get from and class
-
-    if patient_info_form.validate_on_submit():
-
-        private_profile =  pe.get_private_profile(patient_info_form,patient_info_class,json_file)
-        # now we get the private profile
-
-        return render_template('temp.html',result = private_profile)
-    return render_template('private_set.html',form = patient_info_form,patient_info = patient_info_class)
-'''
-
 @app.route('/patient_test/<path:patient_id>/<path:search_text>',methods=['GET','POST'])
 def set_form(patient_id,search_text):
     forward_args = request.args.to_dict(flat=False)
     forward_args['_format'] = 'json'
     forwarded_url =  'Patient' + '/' + patient_id
-    api_url = '/neprivacy/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
+    #api_url = '/neprivacy/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
+    api_url='/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
     api_resp = api_call(api_url)
     json_file = api_resp.json()
     #json_file is the user info we get from the server
@@ -476,12 +393,7 @@ def set_form(patient_id,search_text):
     return render_template('private_set.html',form = patient_info_form,patient_info = patient_info_class,observation=observed)
 
 
-@app.route('/orientation',methods=['GET','POST'])
-def orientation():
-    form = LoginForm()
-    if form.validate_on_submit():
-        pass
-    return render_template('orientation.html',form=form)
+
 
 @app.route('/user_login',methods=['GET','POST'])
 def user_login():
