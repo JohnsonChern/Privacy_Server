@@ -3,3 +3,17 @@
     margin:0 auto;
     box-shadow:inset 0px 0px 10px rgba(255, 255, 255, 0.5), 0px 0px 15px rgba(75, 75, 75, 0.3);
 }
+.first-form-item{
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.last-form-item{
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.middle-form-item{
+    margin-bottom: -1px;
+    border-radius: 0 0 0 0;
+}
