@@ -2,6 +2,7 @@ from flask.ext.wtf import Form
 from wtforms import StringField, BooleanField,PasswordField
 from wtforms.validators import DataRequired
 import private_extrace as pe
+import parser as pr
 
 class SubmitForm(Form):
     identifier              = StringField('identifier', validators=[DataRequired(message=u'You must input patient\'s ID')])
@@ -69,6 +70,29 @@ class LoginForm(Form):
 
     #remember_me = BooleanField('address', default=False)
 
+
+def init_setting(patient,observation,sequences):
+    p = pr.patient()
+    p.load(patient)
+
+    ob = pr.observation()
+    ob.load(observation)
+
+    seq = pr.sequences()
+    seq.load(sequences)
+
+    sn = 0
+    sn = p.init_seq(sn)
+    sn = ob.init_seq(sn)
+    sn = seq.init_seq(sn)
+
+    for i in range(sn):
+        fieldkey = "boolean_field_"+str(i)
+        setattr(Patient_from,fieldkey,BooleanField(fieldkey,default=False))
+
+    form = Patient_from()
+
+    return form,p,ob,seq
 
 def set_relative_info(patient,observation,sequences):
     patient_info = pe.patient_info(patient)
