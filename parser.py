@@ -25,11 +25,13 @@ class domain:
         self.domain_layer = domain_layer
         self.domain_type = 'key'
         self.masked = False
+        self.display_mask = False
         self.seq = None
         self.primary_key = None
         self.primary_value = None
         #set key for the domain
         self.key = key
+
 
 
 
@@ -90,8 +92,7 @@ class domain:
             self.value.append(str(file))
         elif template in fhir_template:
             self.domain_type='complex'
-            print file
-            print template
+
             # one complex domain defined in fhir_template
             temp = fhir_template[template]
             for k in temp:
@@ -101,13 +102,11 @@ class domain:
         else:
 
             print "unexception occurace"
-            print type(template)
-            print type(file)
-            print file
+
 
 
     def dump(self,indent):
-        print indent*'\t'+self.key+'\t'+self.domain_layer+'\t'+self.domain_type+'\t'+str(self.primary_key)
+        print indent*'\t'+self.key+'\t'+str(self.display_mask)+'\t'+str(self.primary_value)
         if self.value:
             for v in self.value:
                 print (indent+1)*'\t'+v
@@ -115,18 +114,24 @@ class domain:
             for domain in self.sub_domains:
                 domain.dump(indent+1)
 
+    def set_primary_key(self):
+        if self.key == 'extension':
+            self.primary_key = 'url'
+            self.primary_value = self.extra_extension_pv()
+        elif self.key in primary_key:
+            print 'set'
+            print self.key
+            self.primary_key = primary_key[self.key]
+            self.primary_value = self.extra_value(self.primary_key)
+
+
     def init_seq(self,seq):
         if self.domain_layer=='multi':
             for domain in self.sub_domains:
                 seq = domain.init_seq(seq)
             return seq
         else:
-            if self.key == 'extension':
-                self.primary_key = 'url'
-                self.primary_value = self.extra_extension_pv()
-            elif self.key in primary_key:
-                self.primary_key = primary_key[self.key]
-                self.primary_value = self.extra_value(self.primary_key)
+            self.set_primary_key()
             self.seq = seq
             return seq + 1
 
@@ -218,13 +223,10 @@ class domain:
                 html_file += '</div>'
             else:
                 html_file = ''
-                print self.key
-                print self.domain_layer
-                print self.domain_type
+
                 print 'unexpected occurance kind surface'
         elif kind=='sequence':
-            print 'sequence'
-            print self.key
+
             html_file = '<div class="fhir-title"><h3>'+ self.key + self.button() + '</h3></div>'
             html_file += '<div class="fhir-block" id="block_' + str(self.seq)+'">'
 
@@ -281,9 +283,9 @@ class domain:
         if kind == 'surface':
 
             if self.domain_type=='value':
-                if self.masked:
+                if self.display_mask:
                     html_file = '<div class="fhir-single-item">'
-                    html_file += 'div class=fhir-key col-sm-3"><p>' + self.key + '</p></div>'
+                    html_file += '<div class="fhir-key col-sm-3"><p>' + self.key + '</p></div>'
                     html_file += '<dv class="fhir-value col-sm-9>' + self.masked_indicate() + '</div></div>'
                 else:
 
@@ -291,12 +293,12 @@ class domain:
                     # key column
                     html_file += '<div class="fhir-key col-sm-3"><p>' + self.key +'</p></div>'
                     # vlaue column
-                    html_file += '<div class="fhir-value col-sm-6">'
+                    html_file += '<div class="fhir-value col-sm-9">'
                     for v in self.value:
                         html_file += '<p>' + str(v) + '</p>'
                     html_file += '</div>'
                     #button column
-                    html_file += '<div class="fhir-button col-sm-3">'+ self.button()+'</div>'
+
 
                     html_file += '</div>'
 
@@ -304,7 +306,7 @@ class domain:
             elif self.domain_layer=='multi':
                 html_file = '<h2>'+ self.key + '</h2>'
                 for domain in self.sub_domains:
-                    html_file += domain.class2html(kind='surface')
+                    html_file += domain.display_class2html(kind='surface')
             elif self.domain_layer == 'sub_multi':
 
                 if self.primary_key:
@@ -314,32 +316,32 @@ class domain:
                     html_key = ''
 
 
-                if self.masked:
+                if self.display_mask:
                     html_file = '<div class="fhir-title"><h3>'+html_key+'</h3></div>'
                     html_file +=  '<div class="fhir-block">'+self.masked_indicate() + '</div>'
 
                 else:
-                    html_file = '<div class="fhir-title"><h3>'+html_key+self.button()+'</h3></div>'
+                    html_file = '<div class="fhir-title"><h3>'+html_key+'</h3></div>'
                     html_file +=  '<div class="fhir-block" id="block_'+str(self.seq)+'">'
 
                     for domain in self.sub_domains:
                         if not domain.key==html_key:
-                            html_file += '<div class="fhir-item">' + domain.class2html() + '</div>'
+                            html_file += '<div class="fhir-item">' + domain.display_class2html() + '</div>'
 
                     html_file += '</div>'
             elif self.domain_type == 'complex':
                 html_file = '<h2>' + self.key + '</h2>'
 
-                if self.masked:
+                if self.display_mask:
                     html_file +=  '<div class="fhir-title"><h3>'+self.key+'</h3></div>'
                     html_file +=  '<div class="fhir-block" >'+self.masked_indicate()+'</div>'
                 else:
 
-                    html_file +=  '<div class="fhir-title"><h3>'+self.key+self.button()+'</h3></div>'
+                    html_file +=  '<div class="fhir-title"><h3>'+self.key+'</h3></div>'
                     html_file +=  '<div class="fhir-block" id="block_'+str(self.seq)+'">'
 
                     for domain in self.sub_domains:
-                        html_file += '<div class="fhir-item">' + domain.class2html() + '</div>'
+                        html_file += '<div class="fhir-item">' + domain.display_class2html() + '</div>'
 
                     html_file += '</div>'
 
@@ -349,34 +351,32 @@ class domain:
                 else:
                     html_key = ''
 
-                if self.masked:
+                if self.display_mask:
                     html_file =  '<div class="fhir-title"><h3>'+self.key+'</h3></div>'
                     html_file +=  '<div class="fhir-block" >'+self.masked_indicate()+'</div>'
                 else:
-                    html_file = '<div class="fhir-title"><h3>'+ html_key + self.button() + '</h3></div>'
+                    html_file = '<div class="fhir-title"><h3>'+ html_key + '</h3></div>'
                     html_file += '<div class="fhir-block" id="block_' + str(self.seq)+'">'
 
                     for domain in self.sub_domains:
                         if not domain.key == self.primary_key:
-                            html_file += '<div class="fhir-item">' + domain.class2html() + '</div>'
+                            html_file += '<div class="fhir-item">' + domain.display_class2html() + '</div>'
 
                     html_file += '</div>'
             else:
                 html_file = ''
-                print self.key
-                print self.domain_layer
-                print self.domain_type
+
                 print 'unexpected occurance kind surface'
         elif kind=='sequence':
-            if self.masked:
+            if self.display_mask:
                 html_file =  '<div class="fhir-title"><h3>'+self.key+'</h3></div>'
                 html_file +=  '<div class="fhir-block" >'+self.masked_indicate()+'</div>'
             else:
-                html_file = '<div class="fhir-title"><h3>'+ self.key + self.button() + '</h3></div>'
+                html_file = '<div class="fhir-title"><h3>'+ self.key  + '</h3></div>'
                 html_file += '<div class="fhir-block" id="block_' + str(self.seq)+'">'
 
                 for domain in self.sub_domains:
-                    html_file += '<div class="fhir-item">' + domain.class2html() + '</div>'
+                    html_file += '<div class="fhir-item">' + domain.display_class2html() + '</div>'
 
                 html_file += '</div>'
 
@@ -396,23 +396,23 @@ class domain:
                 html_file =  '<div class="fhir-block" >'
 
                 for domain in self.sub_domains:
-                    html_file += '<div class="fhir-item">' + domain.class2html() + '</div>'
+                    html_file += '<div class="fhir-item">' + domain.display_class2html() + '</div>'
 
                 html_file += '</div>'
             elif self.domain_layer == 'sub_multi':
                 html_file = ''
                 for domain in self.sub_domains:
-                    html_file += '<div class="fhir-item">' + domain.class2html() + '</div>'
+                    html_file += '<div class="fhir-item">' + domain.display_class2html() + '</div>'
             elif self.domain_type == 'complex':
                 html_file = ''
                 for domain in self.sub_domains:
-                    html_file += '<div class="fhir-item">' + domain.class2html() + '</div>'
+                    html_file += '<div class="fhir-item">' + domain.display_class2html() + '</div>'
             elif self.domain_type == 'key':
                 #html_file = '<div class="fhir-title"><h3>'+self.key+'</h3></div>'
                 html_file =  '<div class="fhir-block" >'
 
                 for domain in self.sub_domains:
-                    html_file += '<div class="fhir-item">' + domain.class2html() + '</div>'
+                    html_file += '<div class="fhir-item">' + domain.display_class2html() + '</div>'
 
                 html_file += '</div>'
 
@@ -463,20 +463,27 @@ class domain:
                 return self.key,None
 
     def mask_broadcast(self,mask):
-            if type(mask) == dict:
-                for domain in self.sub_domain:
-                    if mask.has_key(domain.key):
-                        domain.mask_braodcast(mask[domain.key])
-            elif mask == 'fhir_mask':
-                if self.domain_type=='value':
-                    self.display_mask = True
-                else:
-                    for domain in self.sub_domain:
-                        domain.display_mask = True
+        print "mask broadcast first"
+        if type(mask) == dict:
+            for domain in self.sub_domains:
+                if mask.has_key(domain.key):
+                    domain.mask_braodcast(mask[domain.key])
+        elif mask == 'fhir_mask':
+            if self.domain_type=='value':
+                self.display_mask = True
             else:
-                for domain in self.sub_domain:
-                    if domain.primary_key and domain.primary_value in mask:
-                        domain.display_mask = True
+                for domain in self.sub_domains:
+                    domain.display_mask = True
+        else:
+            print "mask broadcast"
+            print mask
+            for domain in self.sub_domains:
+                print 'domain key\t'+str(domain.key)
+                print self.primary_value
+                if domain.primary_key and domain.primary_value in mask:
+                    domain.display_mask = True
+
+
 
 class patient:
     def __init__(self):
@@ -521,11 +528,17 @@ class patient:
         maksed = map(lambda domain:domain.get_masked(),self.sub_domains)
         masked = dict((key,value) for key,value in maksed if value)
 
-
         return masked
 
     def set_select_keys(self,select_keys):
         self.select_keys = select_keys
+
+    def display_has_simple_domain(self):
+        for domain in self.sub_domains:
+            if domain.domain_type=='value' and domain.key in self.select_keys:
+                return True
+        return False
+
 
 class observation:
     def __init__(self):
@@ -564,8 +577,7 @@ class observation:
         for d in self.sub_domains:
 
             ob_maksed_raw = map(lambda domain:domain.get_masked(),d.sub_domains)
-            print 'ob_masked_raw'
-            print ob_maksed_raw
+
             ob_masked_filter = {}
             for k,v in ob_maksed_raw:
                 if v:
@@ -586,10 +598,15 @@ class sequences:
 
     def load(self,file):
         temp = fhir_template['Sequence']
-        for f in file:
-            new_domain = domain(f,temp,f['id'])
+        if type(file)==list:
+            for f in file:
+                new_domain = domain(f,temp,f['id'])
+                self.sub_domains.append(new_domain)
+        elif type(file) == dict:
+            new_domain = domain(file,temp,file['id'])
             self.sub_domains.append(new_domain)
-
+        else:
+            print 'wrong sequence format'
 
     def dump(self):
         for domain in self.sub_domains:
@@ -711,10 +728,10 @@ def display(selected_keys,private_profile,raw_json_patient,raw_ob,raw_seq):
     :param raw_seq:
     :return:
     '''
-
+    num = 0
     p_inst = patient()
     p_inst.load(json.loads(raw_json_patient))
-
+    num = p_inst.init_seq(num)
 
 
     patient_profile = profile_find('Patient',private_profile)
@@ -732,6 +749,7 @@ def display(selected_keys,private_profile,raw_json_patient,raw_ob,raw_seq):
         ob = raw_ob
     ob_inst = observation()
     ob_inst.load([ob])
+    num = ob_inst.init_seq(num)
     if 'id' in ob:
         ob_profile = profile_find('Observation',private_profile,ob['id'])
     else:
@@ -748,6 +766,8 @@ def display(selected_keys,private_profile,raw_json_patient,raw_ob,raw_seq):
             seq_inst.load(json.loads(s))
         else:
             seq_inst.load(s)
+
+    num = seq_inst.init_seq(num)
 
     if seq_profile is not None:
         seq_inst.mask_broadcast(seq_profile)
