@@ -59,7 +59,7 @@ a:visited {
 	color:#00b464
 }
 a:hover {
-	color:#4cca92
+	color:transparent
 }
 p a:hover,ol a:hover,ul a:hover,blockquote a:hover {
 	border-color:transparent
@@ -82,11 +82,11 @@ img,embed,object,video {
 }
 ::selection {
 	color:#fff;
-	background-color:#00b464
+	background-color:#777777
 }
 ::-moz-selection {
 	color:#fff;
-	background-color:#00b464
+	background-color:#777777
 }
 @media print {
 	.noprint {
@@ -406,7 +406,7 @@ ol.hashTabber-nav.hashTabber-sandstone>li {
 	display:inline-block;
 	width:100%;
 	vertical-align:top
-    
+
 }
 ol.hashTabber-nav.hashTabber-sandstone>li:not(:first-child) {
 	margin-top:0rem
@@ -424,7 +424,7 @@ ol.hashTabber-nav.hashTabber-sandstone>li.active a:hover {
 }
 ol.hashTabber-nav.hashTabber-sandstone>li>a {
 	display:block;
-	
+
 	padding:0.5rem 0.75rem;
 	text-decoration:none;
 	color:#66757f;
@@ -433,9 +433,9 @@ ol.hashTabber-nav.hashTabber-sandstone>li>a {
     border-left: 0.0125rem solid #dddddd;
     border-right: 0.0125rem solid #dddddd;
 	font-size:0.875rem;
-    text-overflow:ellipsis; 
-    white-space:nowrap; 
-    overflow:hidden; 
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
 }
 ol.hashTabber-nav.hashTabber-sandstone>li:last-child>a{
     -webkit-border-radius:0 0 0.25rem 0.25rem;
@@ -478,9 +478,13 @@ ol.hashTabber-data.hashTabber-sandstone {
 	vertical-align:top
 }
 }ol.hashTabber-data.hashTabber-sandstone>li h3 {
+    color:#2d3e4f;
 	padding-top: 0.5rem;
     padding-bottom:0.5rem;
 	border-bottom:0.125rem solid #f2f0ef
+}
+ol.hashTabber-data.hashTabber-sandstone>li h2{
+    color:#66757f;
 }
 .submit-btn{
     color:#ffffff;
@@ -502,20 +506,56 @@ p.col-sm-3{
 	p.col-sm-3{
         text-align: left
     }
-    p.col-sm-3:after{ 
+    p.col-sm-3:after{
         content:" :";
     }
 }
 article > h2 {
     text-align: right
 }
-.title_row{        
+.title_row{
     border-bottom: 0.125rem solid #f2f0ef;
     height:46px;
 }
 
-p.fhir_masked{
+.fhir-title{
+    margin-top: 10px;
+    padding-bottom: 0.5rem;
+    border-bottom: 0.125rem solid #f2f0ef;
+    height:52px;
 
+}
+.fhir-title:not(first-child){
+    margin-top: 1rem;
+}
+
+.fhir-block{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.fhir-single-item{
+    height: 100%;
+    overflow:auto;
+}
+.fhir-single-item:not(first-child){
+    margin-top: 1rem;
+}
+.fhir-key{
+    text-align: right;
+}
+.fhir-item{
+    height:100%;
+    overflow:auto;
+}
+.fhir-button{
+    float: right;
+    padding-right: 0;
+}
+p.fhir_masked{
+    border-bottom: 0.125rem solid #f2f0ef;
+    height:46px;
 }
 body { padding-top: 70px; }
 
