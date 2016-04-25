@@ -141,8 +141,8 @@
         {% if patient_info.has_simple_domain() %}
             <li data-hashtabber-pair="Others">
                 <article>
-                    {% for domain in patient_info.sub_domains and domain.key in patient_info.select_keys %}
-                        {% if domain.domain_type=='value' %}
+                    {% for domain in patient_info.sub_domains  %}
+                        {% if domain.domain_type=='value' and domain.key in patient_info.select_keys %}
                             {{ domain.display_class2html(kind='surface')|safe }}
                         {% endif %}
                     {% endfor %}
