@@ -46,20 +46,20 @@ ol.hashTabber-data>li.active {
 	display:block
 }
 body {
-    background: #f9f9f9;
+    background: #e9eaed;
 	min-height:100%;
 	padding:1rem
 }
 a {
-	color:#00b464;
+	color:#586062;
 	outline:none;
 	text-decoration:none
 }
 a:visited {
-	color:#00b464
+	color:#586062
 }
 a:hover {
-	color:transparent
+	color:#586062
 }
 p a:hover,ol a:hover,ul a:hover,blockquote a:hover {
 	border-color:transparent
@@ -182,7 +182,7 @@ h2 {
 	font-size:2rem
 }
 h3 {
-	font-size:1.5rem
+	font-size:1.1rem
 }
 p:not(:first-child),pre:not(:first-child),section.example:not(:first-child) {
 	margin-top:1.5rem
@@ -367,7 +367,7 @@ nav.page-main-navigation a.close {
 	display:inline-block;
 	width:100%;
 	vertical-align:top;
-	background-color:#f9f9f9;
+	background-color:#e9eaed;
 	padding:1rem
 }
 ol.hashTabber-nav.hashTabber-sandstone,ol.hashTabber-data.hashTabber-sandstone {
@@ -429,6 +429,19 @@ ol.hashTabber-nav.hashTabber-sandstone>li>a {
 	text-decoration:none;
 	color:#66757f;
 	background-color:#ffffff;
+
+	font-size:0.875rem;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
+}
+ol.hashTabber-nav.hashTabber-sandstone>li.fhir-sidebar-label>a {
+	display:block;
+
+	padding:0.5rem 0.75rem;
+	text-decoration:none;
+	color:#66757f;
+	background-color:#f5f5f5;
 	border-top:0.0125rem solid #dddddd;
     border-left: 0.0125rem solid #dddddd;
     border-right: 0.0125rem solid #dddddd;
@@ -443,9 +456,13 @@ ol.hashTabber-nav.hashTabber-sandstone>li:last-child>a{
 	-ms-border-radius:0 0 0.25rem 0.25rem;
 	-o-border-radius:0 0 0.25rem 0.25rem;
 	border-radius: 0 0 0.25rem 0.25rem;
-    border:0.0125rem solid #dddddd
+
 }
 ol.hashTabber-nav.hashTabber-sandstone>li>a:hover {
+	background-color:#f5f5f5;
+	border-color:#dddddd
+}
+ol.hashTabber-nav.hashTabber-sandstone>li.fhir-sidebar-lable>a:hover {
 	background-color:#f5f5f5;
 	border-color:#dddddd
 }
@@ -462,9 +479,9 @@ ol.hashTabber-data.hashTabber-sandstone {
 	-ms-border-radius:0.25rem;
 	-o-border-radius:0.25rem;
 	border-radius:0.25rem;
-	color:#292f33;
-	background-color:#f9f9f9;
-	padding:1rem 1.5rem 1.5rem 1rem;
+	color:#586062;
+	background-color:#e9eaed;
+
 	font-size: 16px;
 	min-height:20rem
 }
@@ -478,11 +495,12 @@ ol.hashTabber-data.hashTabber-sandstone {
 	vertical-align:top
 }
 }ol.hashTabber-data.hashTabber-sandstone>li h3 {
-    color:#2d3e4f;
+    font-weight: bold;
 	padding-top: 0.5rem;
     padding-bottom:0.5rem;
-	border-bottom:0.125rem solid #f2f0ef
+
 }
+
 ol.hashTabber-data.hashTabber-sandstone>li h2{
     color:#66757f;
 }
@@ -491,9 +509,7 @@ ol.hashTabber-data.hashTabber-sandstone>li h2{
     background:;
     padding:0.5rem 0.75rem;
     border-radius: 0.25rem 0.25rem 0 0;
-    border-top:0.0125rem solid #dddddd;
-    border-left:0.0125rem solid #dddddd;
-    border-right:0.0125rem solid #dddddd;
+    width:100%;
     text-align:left
 }
 .submit-btn:hover{
@@ -503,10 +519,10 @@ p.col-sm-3{
     text-align: right
 }
 @media screen and (max-width:765px) {
-	p.col-sm-3{
+	.fhir-key>p{
         text-align: left
     }
-    p.col-sm-3:after{
+    .fhir-key>p:after{
         content:" :";
     }
 }
@@ -517,23 +533,31 @@ article > h2 {
     border-bottom: 0.125rem solid #f2f0ef;
     height:46px;
 }
-
 .fhir-title{
-    margin-top: 10px;
+
     padding-bottom: 0.5rem;
-    border-bottom: 0.125rem solid #f2f0ef;
-    height:52px;
-
-}
-.fhir-title:not(first-child){
-    margin-top: 1rem;
+    height:40px;
+    border-top: 0.125rem solid #f2f0ef;
 }
 
+.fhir-title:first-child{
+    border-top: none;
+}
+
+
+.fhir-panel{
+    background: #ffffff;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+
+}
 .fhir-block{
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+
+    margin-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 .fhir-single-item{
     height: 100%;
@@ -553,14 +577,18 @@ article > h2 {
     float: right;
     padding-right: 0;
 }
+.fhir-sidebar-label>a{
+    color: black;
+
+}
 p.fhir_masked{
     border-bottom: 0.125rem solid #f2f0ef;
     height:46px;
 }
 body { padding-top: 70px; }
 
-nav{ 
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2); 
+nav{
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
     border-bottom: none;
 }
 .simple_domain>p{
@@ -577,4 +605,7 @@ comments>p{
 }
 h3.popover-title{
     margin-top: 0;
+}
+ .setting-btn{
+    float:right
 }

@@ -77,6 +77,10 @@
           </form>
 
       </h2>
+        <li class="fhir-sidebar-label">
+            <a><span class="glyphicon glyphicon-menu-right"></span> Patient</a>
+        </li>
+
        {% for domain in patient_info.sub_domains %}
             {% if not domain.domain_type=='value' %}
 
@@ -93,8 +97,8 @@
             </li>
         {% endif %}
 
-        <li data-hashtabber-pair="Observation">
-            <a>Observation</a>
+        <li class="fhir-sidebar-label">
+            <a><span class="glyphicon glyphicon-menu-right"></span> Observation</a>
         </li>
         {% for domain in observation.sub_domains %}
             <li data-hashtabber-pair="{{domain.key}}">
@@ -102,7 +106,9 @@
             </li>
         {% endfor %}
 
-
+        <li class="fhir-sidebar-label">
+            <a><span class="glyphicon glyphicon-menu-right"></span> Sequence</a>
+        </li>
 
         <li data-hashtabber-pair="Sequence">
             <a>Sequence</a>
@@ -128,11 +134,14 @@
         {% if patient_info.has_simple_domain() %}
             <li data-hashtabber-pair="Others">
                 <article>
+                <div class="fhir-panel">
+                <div class="fhir-title"><h3>Others</h3></div>
                     {% for domain in patient_info.sub_domains %}
                         {% if domain.domain_type=='value' %}
                             {{ domain.class2html(kind='surface')|safe }}
                         {% endif %}
                     {% endfor %}
+                </div>
                 </article>
             </li>
         {% endif %}
@@ -142,11 +151,14 @@
         {% for d in observation.sub_domains %}
             <li data-hashtabber-pair="{{ d.key }}">
                 <article>
+                <div class="fhir-panel">
+                <div class="fhir-title"><h3>Others</h3></div>
                     {% for domain in d.sub_domains %}
                         {% if domain.domain_type=='value' %}
                             <p>{{ domain.class2html(kind='surface')|safe }}</p>
                         {% endif %}
                     {% endfor %}
+                </div>
 
                     {% for domain in d.sub_domains %}
                         {% if not domain.domain_type=='value' %}
@@ -161,9 +173,11 @@
 
         <li data-hashtabber-pair="Sequence">
             <article>
+            <div class="fhir-panel">
                 {% for domain in sequences.sub_domains %}
                     <p>{{ domain.class2html(kind='sequence')|safe }}</p>
                 {% endfor %}
+            </div>
             </article>
         </li>
 
@@ -194,11 +208,11 @@
             boolean_field.checked = !boolean_field.checked
 
             if(basic_layer){ basic_layer.style.display = "" }
-            if(fhir_value) {fhir_value.style.color="black"}
+            if(fhir_value) {fhir_value.style.color="#586062"}
 
 
-            obj.innerHTML = 'Hide'
-            obj.className = 'btn btn-success setting-btn'
+            obj.innerHTML = '<span class="glyphicon glyphicon-eye-close"></span> Hide'
+            obj.className = 'btn btn-success setting-btn  btn-xs'
 
         }else{
             boolean_field.checked = !boolean_field.checked
@@ -206,8 +220,8 @@
             if(basic_layer){ basic_layer.style.display = "none" }
             if(fhir_value) {fhir_value.style.color="lightgrey"}
 
-            obj.innerHTML = 'Show'
-            obj.className = 'btn btn-warning setting-btn'
+            obj.innerHTML = '<span class="glyphicon glyphicon-eye-open"></span> Show'
+            obj.className = 'btn btn-warning setting-btn  btn-xs'
         }
 
 
