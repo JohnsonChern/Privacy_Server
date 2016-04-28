@@ -7,10 +7,11 @@ import json
 import cgi
 import copy
 from config import AUTH_BASE, API_BASE, CLIENT_ID, REDIRECT_URI, PRIVACY_BASE
-from forms import SubmitForm, AuthenticationForm, SubmitDictForm,UserLoginForm,LoginForm,set_query_form,set_relative_info
+from forms import SubmitForm, AuthenticationForm, SubmitDictForm,UserLoginForm,LoginForm,set_query_form,set_relative_info,init_setting
 import set_private as sp
 from filter import TextFilter
-import private_extrace as pe
+import parser as pe
+import template as tp
 
 STATUS_OK = "OK"
 STATUS_ERROR = "ERROR"
@@ -169,7 +170,7 @@ def recv_code():
 def search():
     form = set_query_form()
     if form.validate_on_submit():
-        keys = pe.extend_option(form)
+        keys = tp.extend_option(form)
         #get the keys the doctor selected
 
         return redirect('/patient_test/%s/%s' % (form.identifier.data,form.disease.data))
@@ -189,7 +190,7 @@ def orientation():
 def doctor():
     form = set_query_form()
     if form.validate_on_submit():
-        keys = pe.extend_option(form)
+        keys = tp.extend_option(form)
         #get the keys the doctor selected
 
         forward_args = request.args.to_dict(flat=False)
@@ -250,34 +251,35 @@ def doctor():
         #print json.dumps(observation,indent= 4)
         #print json.dumps(sequence,indent= 4)
         print json.dumps(private_policy, indent= 4)
+
         if(len(cross_loc.filtered_Observation)>0):
             for observation in cross_loc.filtered_Observation:
                 resp = requests.get('%s/%s' %(PRIVACY_BASE,observation['id']), headers={'Content-Type': 'application/json'})
                 private_profile = json.loads(json.dumps(resp.json()))
-                for k,v in private_profile['Resource'].items():
-                    private_policy.append(v)
+                print private_profile
+                try:
+                    for k,v in private_profile['Resource'].items():
+                        private_policy.append(v)
+                except:
+                    pass
             for seq in cross_loc.correlated_genetic:
                 resp = requests.get('%s/%s' %(PRIVACY_BASE,seq['id']), headers={'Content-Type': 'application/json'})
                 private_profile = json.loads(json.dumps(resp.json()))
-                for k,v in private_profile['Resource'].items():
-                    private_policy.append(v)
-            patient, observation = pe.display(keys, private_policy, raw_patient_file, cross_loc.filtered_Observation[0] ,cross_loc.correlated_genetic)
+                try:
+                    for k,v in private_profile['Resource'].items():
+                        private_policy.append(v)
+                except:
+                    pass
+            patient, observation,sequences = pe.display(keys, private_policy, raw_patient_file, cross_loc.filtered_Observation ,cross_loc.correlated_genetic)
 
         else:
-            patient, observation =  pe.display(keys, private_policy, raw_patient_file, {"message": "No result"}, cross_loc.correlated_genetic)
+            patient, observation,sequences =  pe.display(keys, private_policy, raw_patient_file, [], cross_loc.correlated_genetic)
 
 
         #patient,observation = pe.display(selected_keys, private_profile, raw_json_patient,raw_ob,raw_seq)
-        return render_template('display_result.html',patient_info = patient,observation = observation)
+        return render_template('rebuild_show.html',patient_info = patient,observation = observation,sequences = sequences)
 
 
-
-        '''new_sequence= []
-        for s in sequence:
-            new_sequence.append(json.dumps(s,indent=4))
-        return render_template('query_enhance.html',token = 'Found',patient = json.dumps(patient,indent=4),
-                               observation = json.dumps(observation,indent=4 ),sequence = new_sequence
-        '''
         #return redirect('/patient_test/%s' % (form.identifier.data))
 
     return render_template('submit.html',
@@ -307,14 +309,6 @@ def forward_api(forwarded_url):
     forward_args['_format'] = 'json'
     api_url = '/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
     api_resp = api_call(api_url)
-    '''
-	The best way to add privacy policy on json data is to decorate it at serverside,
-	however this is not accomplished until now.
-	So, we apply a little bit complicated way:
-	remember to change the value of json data before
-        the apps will do some processing issues (e.g. encoding,extracting,rendering)
-	We extend the original example to claim how this works
-    '''
     bundle = api_resp.json()
     # Here we install the privacy policy for patient
     # There is a sudden change in server so this is modified to avoid throw TypeError
@@ -358,21 +352,23 @@ def set_form(patient_id,search_text):
     cross_loc.get_observation_list()
 
     #Then to locate the genetic info(i.e. Sequence Resource) in the data base
-    cross_loc.observation_prune()
+    #cross_loc.observation_prune()
     cross_loc.get_genetic_info()
-
-    patient_info_form,patient_info_class,observed = set_relative_info(json_file,cross_loc.filtered_Observation[0],cross_loc.correlated_genetic)
+    print cross_loc.filtered_Observation
+    patient_info_form,patient_info_class,observed,sequence = init_setting(json_file,cross_loc.filtered_Observation, cross_loc.correlated_genetic)
     #with the json file we now get from and class
 
     if patient_info_form.validate_on_submit():
-
-        patient_private,ob_private,seq_private =  pe.get_private_profile(patient_info_form,patient_info_class,observed,json_file,cross_loc.filtered_Observation[0],cross_loc.correlated_genetic)
+        print observed
+        patient_private,ob_private,seq_private =  pe.get_private_profile(patient_info_form,patient_info_class,observed,sequence,json_file)
         # now we get the private profile
         #print type(private_profile)
         #if 'id' in private_profile:
         #    private_profile['resourceID'] = private_profile['id']
         #    del private_profile['id']
 
+
+        '''
         resp = requests.put('%s/%s' %(PRIVACY_BASE,patient_private['resourceID']), data=json.dumps(patient_private), headers={'Content-Type': 'application/json'})
         for ob in cross_loc.filtered_Observation:
             ob_private['resourceID']=ob['id']
@@ -385,12 +381,15 @@ def set_form(patient_id,search_text):
             resp_seq = requests.put('%s/%s' %(PRIVACY_BASE,seq['resourceID']), data=json.dumps(seq), headers={'Content-Type': 'application/json'})
             if resp_seq.status_code ==404:
                 return STATUS_ERROR
+
         if resp.status_code == 404 :
             return STATUS_ERROR
         else:
+        '''
+        return json.dumps(ob_private,indent=4);
             #return render_template('temp.html',result = {"Patient":resp.json(), "Observation": resp_ob.json(), "Sequence": resp_seq.json()})
-            return redirect('/doctor')
-    return render_template('private_set.html',form = patient_info_form,patient_info = patient_info_class,observation=observed)
+            #return redirect('/doctor')
+    return render_template('rebuild_set.html',form = patient_info_form,patient_info = patient_info_class,observation=observed,sequences= sequence)
 
 
 

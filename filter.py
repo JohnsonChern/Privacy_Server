@@ -12,7 +12,7 @@ SCOPES = ['user/Sequence.read',
         'user/Patient.read',
 ]
 
-NO_USE_KEY = ['meta','extension','text']
+NO_USE_KEY = ['meta','text']
 
 def api_call(api_endpoint):
     '''
@@ -72,64 +72,69 @@ class TextFilter(object):
 
     @require_oauth
     def get_observation_list(self):
-        resource_type = 'Observation'
-        forward_args = request.args.to_dict(flat=False)
-        forward_args['_format'] = 'json'
-        forwarded_url =  resource_type
-        api_url = '/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
-        print api_url
-        resp = api_call(api_url)
-        bundle =resp.json();
-        if ('type' in bundle and bundle['type'] != 'searchset') or ('resourceType' in bundle and bundle['resourceType']!='Bundle'):
-            resource = bundle
-            bundle = {
-            'resourceType': resource['resourceType'],
-            'entry': [{
-                'resource': resource,
-                'id': forwarded_url
-            }],
-            'is_single_resource': True,
-        }
-        elif len(bundle.get('entry', [])) > 0:
-            bundle['resourceType'] = bundle['entry'][0]['resource']['resourceType']
 
         self.filtered_Observation=[]
         self.seq_id=[]
-        k=1;
+        for x in range(0,901,50):
+            resource_type = 'Observation'
+            forward_args = request.args.to_dict(flat=False)
+            forward_args['_format'] = 'json'
+            forward_args['_offset'] = str(x)
+            forwarded_url =  resource_type
+            api_url = '/%s?%s'% (forwarded_url, urlencode(forward_args, doseq=True))
+            print api_url
+            resp = api_call(api_url)
+            bundle =resp.json();
+            if ('type' in bundle and bundle['type'] != 'searchset') or ('resourceType' in bundle and bundle['resourceType']!='Bundle'):
+                resource = bundle
+                bundle = {
+                'resourceType': resource['resourceType'],
+                'entry': [{
+                    'resource': resource,
+                    'id': forwarded_url
+                }],
+                'is_single_resource': True,
+            }
+            elif len(bundle.get('entry', [])) > 0:
+                bundle['resourceType'] = bundle['entry'][0]['resource']['resourceType']
 
-        for i in range(len(bundle['entry'])):
-            resource = bundle['entry'][i]['resource']
-            #print resource
-            try:
-                resource_subject = resource['subject']['reference'].split('/')[-1]
-            except:
-                resource_subject = "Not want to be seen"
-            #print json.dumps(resource , indent= 2)
-            #print resource_subject
-            if resource_subject == self.patient_id:
-                if(self.search_text=='*'):
-                    self.filtered_Observation.append(resource)
-                    self.add_locale_info(resource)
-                    k+=1
-                else:
-                    list_resource = json2list(resource,'FindText')
-                    #print list_resource
-                    flag= False;
-                    for list in list_resource:
-                        try:
-                            print list
-                            if((list[-3]=='text' or list[-2]=='text') and (list[-1]==self.search_text or self.search_text in list[-1])):
-                                flag= True;
-                                break;
-                        except:
-                            pass
-                    if(flag):
-                        print type(resource)
-                        print "here\n\n\n"
+
+            k=1;
+
+            for i in range(len(bundle['entry'])):
+                resource = bundle['entry'][i]['resource']
+                #print resource
+                try:
+                    resource_subject = resource['subject']['reference'].split('/')[-1]
+                except:
+                    resource_subject = "Not want to be seen"
+                #print resource['id'],resource_subject
+                #print json.dumps(resource , indent= 2)
+                #print resource_subject
+                if resource_subject == self.patient_id:
+                    if(self.search_text=='*'):
                         self.filtered_Observation.append(resource)
+                        #print self.filtered_Observation
                         self.add_locale_info(resource)
                         k+=1
-        return json.dumps(self.filtered_Observation, indent=4)
+                    else:
+                        list_resource = json2list(resource,'FindText')
+                        #print list_resource
+                        flag= False;
+                        for list in list_resource:
+                            try:
+                                #print list
+                                if((list[-3]=='text' or list[-2]=='text') and (list[-1]==self.search_text or self.search_text in list[-1])):
+                                    flag= True;
+                                    break;
+                            except:
+                                pass
+                        if(flag):
+                            #print type(resource)
+                            #print "here\n\n\n"
+                            self.filtered_Observation.append(resource)
+                            self.add_locale_info(resource)
+                            k+=1
 
     def observation_prune(self):
         new_Observation = []
@@ -162,7 +167,7 @@ class TextFilter(object):
                 vs =v
                 #print v
                 for v in vs:
-                    print v
+                    #print v
                     if isinstance(v,dict):
                         if 'coding' in v and 'text' in v:
                             if isinstance(v['text'],list):
@@ -172,7 +177,7 @@ class TextFilter(object):
                             #print type(text_)
                             #print self.search_text
                             if text_== self.search_text or self.search_text=='*':
-                                print '3'
+                                #print '3'
                                 self.seq_id.append(v)
                         else:
                             self.add_locale_info(v)
@@ -227,14 +232,14 @@ class TextFilter(object):
         seq_id_new =[]
         for seq in self.seq_id:
             flag= False
-            print seq
+            #print seq
             for res in seq_id_new:
                 if self.get_code(res)==self.get_code(seq) and self.get_system(res)==self.get_system(seq):
                         flag= True
             if not flag:
                 seq_id_new.append(seq)
         self.seq_id=seq_id_new
-        print self.seq_id
+        #print self.seq_id
 
         for seq in bundle['entry']:
             resource = seq ['resource']

@@ -645,7 +645,7 @@ def get_private_profile(patient_form,patient_class,observation,sequences,patient
     :param patient_json: str type json file get from server
     :return: str type json file to be seved in our private server
     """
-
+    '''
     for field in patient_form:
         if field.type == 'BooleanField' and field.data == True:
             seq =  int(field.name[14:])
@@ -657,10 +657,6 @@ def get_private_profile(patient_form,patient_class,observation,sequences,patient
     masked_patient = patient_class.get_masked()
     masked_ob = observation.get_masked()
     masked_se = sequences.get_masked()
-
-    print masked_ob
-    print masked_se
-
 
     new_dict = {}
     if 'id' in patient_json :
@@ -685,15 +681,109 @@ def get_private_profile(patient_form,patient_class,observation,sequences,patient
         new_dict['Policy']['Sequence'] = masked_se
     else:
         new_dict['Policy']['Sequence'] = {}
+    return json.dumps(new_dict)
+    '''
+    """
+    based on the patient's info and patient's private setting get the private profile
+
+    :param patient_form: Form submit from the private setting page
+    :param patient_class: Patient_info class
+    :param patient_json: str type json file get from server
+    :return: str type json file to be seved in our private server
+    """
+
+    Hide_Info= ["observedAllele","text","species","coordinate","type","referenceAllele"]
+
+    for field in patient_form:
+        if field.type == 'BooleanField' and field.data == True:
+            seq =  int(field.name[14:])
+            patient_class.mask_by_seq(seq)
+            observation.mask_by_seq(seq)
+            sequences.mask_by_seq(seq)
+
+
+    masked_patient = patient_class.get_masked()
+    masked_ob= observation.get_masked()
+    masked_se = sequences.get_masked()
+    #print masked_ob
+    #print masked_se
+
+
+    new_dict = {}
+    if 'id' in patient_json :
+        new_dict['Identifier'] = new_dict['resourceID'] = patient_json['id']
+
+    if 'resourceType' in patient_json:
+        new_dict['resourceType'] = patient_json['resourceType']
+
+    #if 'resourceID' in patient_json:
+    #   new_dict['resourceID'] = patient_json['resourceID']
+
+    new_dict['Policy'] = {}
+    if masked_patient:
+        new_dict['Policy'] = masked_patient
+    else:
+        new_dict['Policy'] = {}
+
+
+    new_dict_ob = []
+    # Point to patient
+    for ob in observation:
+        for k,v in masked_ob.items():
+            if 'id' in ob and ob['id']==k:
+                new_subdict= {}
+                new_subdict['Identifier']= new_dict['Identifier']
+                new_subdict['resourceType'] = 'Observation'
+
+                if 'id' in seq :
+                    new_subdict['resourceID'] = ob['id']
+
+                new_subdict['Policy']=v
+                new_dict_ob.append(new_subdict)
+    '''
+    new_dict_ob['Identifier'] = new_dict['Identifier']
+
+    new_dict_ob['resourceType'] = 'Observation'
+
+    if 'id' in observation :
+        new_dict_ob['resourceID'] = observation['id']
+
+    if masked_ob:
+        new_dict_ob['Policy'] = {}
+        for k,v in masked_ob.items():
+            for key in v:
+                new_dict_ob['Policy'][key] = 'fhir_mask'
+    else:
+        new_dict_ob['Policy'] = {}
+    '''
+
+    new_dict_seq= []
+
+    for seq in sequences:
+        for id in masked_se:
+            if 'id' in seq and seq['id']==id:
+                new_subdict= {}
+                new_subdict['Identifier']= new_dict['Identifier']
+                new_subdict['resourceType'] = 'Sequence'
+
+                if 'id' in seq :
+                    new_subdict['resourceID'] = seq['id']
+
+                new_subdict['Policy']={}
+                for k in seq.keys():
+                    if k in Hide_Info:
+                        new_subdict['Policy'][k]= 'fhir_mask'
+                new_dict_seq.append(new_subdict)
+
 
 
     #print json.dumps(new_dict,indent=4)
 
     #retrive_patient_info(simple_key+complex_key,json.dumps(new_dict),json.dumps(jp.w))
 
-    print json.dumps(new_dict)
+    #print json.dumps(new_dict_seq)
 
-    return json.dumps(new_dict)
+    return new_dict,new_dict_ob,new_dict_seq
 
 
 def profile_find(name,profiles,id=None):
@@ -704,10 +794,11 @@ def profile_find(name,profiles,id=None):
                 return item['Policy']
         return None
     elif name == 'Observation':
+        ids= []
         for item in profiles:
-            if item['Policy_ResourceType'] == 'Observation' and item['ResourceIdentifier'] == id:
-                return item['Policy']
-        return None
+            if item['Policy_ResourceType'] == 'Observation':
+                ids.append(item['ResourceIdentifier'])
+        return ids
     elif name == 'Sequence':
         ids = []
         for item in profiles:
@@ -736,30 +827,24 @@ def display(selected_keys,private_profile,raw_json_patient,raw_ob,raw_seq):
 
     patient_profile = profile_find('Patient',private_profile)
     #profile = json.loads(private_profile)['Policy']
-    print patient_profile
-    print p_inst
+    #print patient_profile
+    #print p_inst
     p_inst.set_select_keys(selected_keys)
     if patient_profile is not None:
         p_inst.mask_broadcast(patient_profile)
 
     #print raw_ob
-    if isinstance(raw_ob, str):
-        ob = json.loads(raw_ob)
-    else:
-        ob = raw_ob
     ob_inst = observation()
-    ob_inst.load([ob])
-    num = ob_inst.init_seq(num)
-    if 'id' in ob:
-        ob_profile = profile_find('Observation',private_profile,ob['id'])
-    else:
-        ob_profile = None
+    ob_inst.load(raw_ob)
 
-    if ob_profile is not None:
-        ob_inst.mask_broadcast(ob_profile)
+    num = ob_inst.init_seq(num)
+    ob_profile = profile_find('Observation',private_profile)
+
+    if len(ob_profile)>0:
+       ob_inst.mask_broadcast(ob_profile)
 
     seq_profile = profile_find('Sequence',private_profile)
-    print raw_seq
+    #print raw_seq
     seq_inst = sequences()
     for s in raw_seq:
         if isinstance(s, str):
@@ -769,7 +854,7 @@ def display(selected_keys,private_profile,raw_json_patient,raw_ob,raw_seq):
 
     num = seq_inst.init_seq(num)
 
-    if seq_profile is not None:
+    if len(seq_profile)>0:
         seq_inst.mask_broadcast(seq_profile)
 
     return p_inst,ob_inst,seq_inst
