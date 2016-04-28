@@ -74,24 +74,19 @@
   </div>
 </nav>
 
+
+
 <div class="content">
 
 
 	<section class="hashTabber-sandstone-wrapper">
     <ol class="hashTabber-nav hashTabber-sandstone" data-hashtabber-id="fhir" data-hashtabber-default="pterosaur">
-            <h2>
-          <form action="" method="post" name="submit">
-            <input class="btn btn-primary submit-btn" type="submit" value="Submit">
-            <div class="form_field" style="display:none">
-                {% for field in form %}
-                    <p>{{ field }}</p>
-                {% endfor %}
-            </div>
-          </form>
+        <li class="fhir-sidebar-label">
+            <a><span class="glyphicon glyphicon-menu-right"></span> Patient</a>
+        </li>
 
-      </h2>
        {% for domain in patient_info.sub_domains %}
-            {% if not domain.domain_type=='value' %}
+            {% if not domain.domain_type=='value' and domain.key in patient_info.select_keys %}
 
             <li data-hashtabber-pair="{{domain.key}}">
                 <a>{{domain.key}}</a>
@@ -106,8 +101,8 @@
             </li>
         {% endif %}
 
-        <li data-hashtabber-pair="Observation">
-            <a>Observation</a>
+        <li class="fhir-sidebar-label">
+            <a><span class="glyphicon glyphicon-menu-right"></span> Observation</a>
         </li>
         {% for domain in observation.sub_domains %}
             <li data-hashtabber-pair="{{domain.key}}">
@@ -116,9 +111,11 @@
         {% endfor %}
 
 
-
+        <li class="fhir-sidebar-label">
+            <a><span class="glyphicon glyphicon-menu-right"></span> Sequences</a>
+        </li>
         <li data-hashtabber-pair="Sequence">
-            <a>Sequence</a>
+            <a>Sequences</a>
         </li>
 
 
@@ -126,10 +123,46 @@
     </ol><!--
  --><ol class="hashTabber-data hashTabber-sandstone" data-hashtabber-id="fhir">
 
+            {% for d in observation.sub_domains %}
+            <li data-hashtabber-pair="{{ d.key }}">
+                <article>
+                    <div class="fhir-panel">
+                    <div class="fhir-title"><h3>Others</h3></div>
+                    {% for domain in d.sub_domains %}
+                        {% if domain.domain_type=='value' %}
+                            {{ domain.display_class2html(kind='surface')|safe }}
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+
+
+                    {% for domain in d.sub_domains %}
+                        {% if not domain.domain_type=='value' %}
+                            {{ domain.display_class2html(kind='surface')|safe }}
+                        {% endif %}
+                    {% endfor %}
+
+
+
+                </article>
+            </li>
+        {% endfor %}
+
+        <li data-hashtabber-pair="Sequence">
+            <article>
+                {% for domain in sequences.sub_domains %}
+                    <div class="fhir-panel">
+                    {{ domain.display_class2html(kind='sequence')|safe }}
+                    </div>
+                {% endfor %}
+            </article>
+        </li>
+
         {% for domain in patient_info.sub_domains %}
-            {% if not domain.domain_type=='value' and domain.key in patient_info.select_keys %}
+            {% if not domain.domain_type=='value'and domain.key in patient_info.select_keys %}
             <li data-hashtabber-pair="{{ domain.key }}">
                 <article>
+
 
                   {{ domain.display_class2html(kind='surface')|safe }}
 
@@ -141,44 +174,19 @@
         {% if patient_info.has_simple_domain() %}
             <li data-hashtabber-pair="Others">
                 <article>
-                    {% for domain in patient_info.sub_domains and domain.key in patient_info.select_keys %}
-                        {% if domain.domain_type=='value' %}
+                <div class="fhir-panel">
+                <div class="fhir-title"><h3>Others</h3></div>
+                    {% for domain in patient_info.sub_domains %}
+                        {% if domain.domain_type=='value'and domain.key in patient_info.select_keys %}
                             {{ domain.display_class2html(kind='surface')|safe }}
                         {% endif %}
                     {% endfor %}
+                </div>
                 </article>
             </li>
         {% endif %}
 
 
-
-        {% for d in observation.sub_domains %}
-            <li data-hashtabber-pair="{{ d.key }}">
-                <article>
-                    {% for domain in d.sub_domains %}
-                        {% if domain.domain_type=='value' %}
-                            <p>{{ domain.display_class2html(kind='surface')|safe }}</p>
-                        {% endif %}
-                    {% endfor %}
-
-                    {% for domain in d.sub_domains %}
-                        {% if not domain.domain_type=='value' %}
-                            <p>{{ domain.display_class2html(kind='surface')|safe }}</p>
-                        {% endif %}
-                    {% endfor %}
-
-
-                </article>
-            </li>
-        {% endfor %}
-
-        <li data-hashtabber-pair="Sequence">
-            <article>
-                {% for domain in sequences.sub_domains %}
-                    <p>{{ domain.display_class2html(kind='sequence')|safe }}</p>
-                {% endfor %}
-            </article>
-        </li>
 
 
 
@@ -186,11 +194,7 @@
 
     </ol>
 </section>
-
-
 </div>
-
-
 </div>
 
 
@@ -215,11 +219,11 @@
             boolean_field.checked = !boolean_field.checked
 
             if(basic_layer){ basic_layer.style.display = "" }
-            if(fhir_value) {fhir_value.style.color="black"}
+            if(fhir_value) {fhir_value.style.color="#586062"}
 
 
-            obj.innerHTML = 'Hide'
-            obj.className = 'btn btn-success setting-btn'
+            obj.innerHTML = '<span class="glyphicon glyphicon-eye-close"></span> Hide'
+            obj.className = 'btn btn-success setting-btn  btn-xs'
 
         }else{
             boolean_field.checked = !boolean_field.checked
@@ -227,8 +231,8 @@
             if(basic_layer){ basic_layer.style.display = "none" }
             if(fhir_value) {fhir_value.style.color="lightgrey"}
 
-            obj.innerHTML = 'Show'
-            obj.className = 'btn btn-warning setting-btn'
+            obj.innerHTML = '<span class="glyphicon glyphicon-eye-open"></span> Show'
+            obj.className = 'btn btn-warning setting-btn  btn-xs'
         }
 
 
